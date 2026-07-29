@@ -8,6 +8,7 @@ type Inquiry = "consultation" | "quote";
 const copy = {
   en: {
     nav: {
+      threats: "Why CyberShield",
       solution: "Solution",
       performance: "Performance",
       applications: "Applications",
@@ -28,16 +29,41 @@ const copy = {
       ["2.0 mm PAN", "Modular galvanized steel"],
     ],
     proof: ["Engineering heritage since 1987", "5 global locations", "Presence in 80+ countries", "Turnkey delivery"],
+    whyEyebrow: "WHY THE RISK IS GROWING",
+    whyTitle: "More value is being concentrated behind the same physical walls.",
+    whyBody:
+      "AI and sovereign workloads concentrate exceptional compute, data and operational dependency in a small number of facilities. The IEA expects electricity use from AI-focused data centres to triple between 2025 and 2030—a clear signal of how quickly critical digital capacity is scaling.",
+    whyMetric: "3×",
+    whyMetricLabel: "Projected growth in AI-focused data-centre electricity use, 2025–2030",
+    assetCards: [
+      ["Confidentiality", "Models, cryptographic material, classified information and customer data remain sensitive even when the network is segmented."],
+      ["Availability", "A localized electromagnetic event can upset electronics, controls or communications without a conventional cyber intrusion."],
+      ["Capital & continuity", "High-density compute, cooling and power infrastructure turn one protected room into a concentrated operational dependency."],
+    ],
+    source: "Source",
     threatEyebrow: "THE SECURITY LAYER SOFTWARE CANNOT PROVIDE",
     threatTitle: "Not every threat enters through the network.",
     threatBody:
       "Encryption and zero-trust protect the digital domain. CyberShield addresses physical and electromagnetic exposure at the facility boundary.",
     threats: [
-      ["Compromising emanations", "Reduce exposure to unintended electromagnetic signals that can disclose sensitive processing activity."],
-      ["Intentional interference", "Create a hardened boundary against localized high-power RF and electromagnetic disruption."],
-      ["EMP / HEMP exposure", "Support project-specific protection architectures for critical continuity requirements."],
-      ["Boundary vulnerabilities", "Control doors, ventilation, power, data, cooling and utility penetrations as one system."],
+      ["Compromising emanations", "Sensitive processing activity can be exposed through unintended electromagnetic signals—without touching the network.", "Confidentiality exposed"],
+      ["Intentional interference", "Localized high-power RF or electromagnetic energy can disrupt electronics, controls and communications.", "Service interruption"],
+      ["EMP / HEMP exposure", "Radiated and conducted pulse effects can challenge critical systems and continuity architectures.", "Mission continuity risk"],
+      ["Boundary vulnerabilities", "Doors, ventilation, power, data, cooling and utility penetrations can become the weakest path through the shield.", "Protection degraded"],
     ],
+    impactLabel: "Potential impact",
+    responseEyebrow: "FROM EXPOSURE TO ASSURANCE",
+    responseTitle: "Protection requires more than surrounding the room with metal.",
+    responseBody:
+      "Effective electromagnetic protection starts with the mission and ends with measured evidence. CyberShield turns that requirement into a managed engineering lifecycle.",
+    responseSteps: [
+      ["01", "Model the threat", "Classify assets, operating dependencies, exposure paths and credible threat scenarios."],
+      ["02", "Define measurable requirements", "Set the frequency range, attenuation, standards and acceptance criteria before design begins."],
+      ["03", "Engineer every point of entry", "Integrate panels, doors, vents, power, data, cooling and utility penetrations as one boundary."],
+      ["04", "Test the installed boundary", "Measure shielding effectiveness on site, locate leakage and document acceptance evidence."],
+      ["05", "Control change and revalidate", "Inspect, maintain and retest after operational or facility changes."],
+    ],
+    evidenceTitle: "Evidence base",
     systemEyebrow: "MODULAR PAN SHIELDING SYSTEM",
     systemTitle: "A secure room engineered around the reality of your facility.",
     systemBody:
@@ -113,6 +139,7 @@ const copy = {
   },
   ko: {
     nav: {
+      threats: "필요성",
       solution: "솔루션",
       performance: "성능",
       applications: "적용 분야",
@@ -133,16 +160,41 @@ const copy = {
       ["2.0 mm PAN", "모듈형 아연도금 강판"],
     ],
     proof: ["1987년부터 축적한 엔지니어링", "글로벌 5개 거점", "80개국 이상 공급 네트워크", "턴키 제공"],
+    whyEyebrow: "증가하는 위험",
+    whyTitle: "같은 물리적 공간에 더 많은 가치와 운영 의존성이 집중되고 있습니다.",
+    whyBody:
+      "AI와 소버린 워크로드는 막대한 컴퓨팅 자원, 데이터 및 업무 연속성을 소수 시설에 집중시킵니다. IEA는 2025~2030년 AI 중심 데이터센터의 전력 사용량이 약 3배 증가할 것으로 전망합니다. 이는 보호해야 할 핵심 디지털 역량이 얼마나 빠르게 확대되는지를 보여줍니다.",
+    whyMetric: "3배",
+    whyMetricLabel: "2025~2030년 AI 중심 데이터센터 전력 사용량 전망",
+    assetCards: [
+      ["기밀성", "모델, 암호 키, 기밀 정보와 고객 데이터는 네트워크가 분리되어 있어도 여전히 보호해야 할 민감 자산입니다."],
+      ["가용성", "국소적인 전자기 사건은 일반적인 사이버 침입 없이도 전자장비, 제어 및 통신에 장애를 일으킬 수 있습니다."],
+      ["자본과 업무 연속성", "고밀도 컴퓨팅, 냉각 및 전력 인프라는 하나의 보호 공간을 핵심 운영 의존점으로 만듭니다."],
+    ],
+    source: "출처",
     threatEyebrow: "소프트웨어만으로 제공할 수 없는 보안 계층",
     threatTitle: "모든 위협이 네트워크를 통해 들어오지는 않습니다.",
     threatBody:
       "암호화와 제로 트러스트는 디지털 영역을 보호합니다. CyberShield는 시설 경계에서 발생하는 물리적·전자기적 노출을 통제합니다.",
     threats: [
-      ["전자기 정보 방사", "민감한 처리 활동을 노출할 수 있는 비의도적 전자기 신호의 외부 노출을 줄입니다."],
-      ["의도적 전자기 간섭", "국소 고출력 RF 및 전자기 교란에 대응하는 강화된 경계를 구축합니다."],
-      ["EMP / HEMP 노출", "중요 업무 연속성 요구를 위한 프로젝트별 보호 아키텍처를 지원합니다."],
-      ["경계 구성요소 취약점", "도어, 환기, 전원, 데이터, 냉각 및 설비 관통부를 하나의 시스템으로 통제합니다."],
+      ["전자기 정보 방사", "네트워크에 접촉하지 않고도 비의도적 전자기 신호를 통해 민감한 처리 활동이 노출될 수 있습니다.", "기밀성 노출"],
+      ["의도적 전자기 간섭", "국소 고출력 RF 또는 전자기 에너지는 전자장비, 제어 및 통신을 교란할 수 있습니다.", "서비스 중단"],
+      ["EMP / HEMP 노출", "방사 및 전도성 펄스 영향은 중요 시스템과 업무 연속성 아키텍처를 위협할 수 있습니다.", "업무 연속성 위험"],
+      ["경계 구성요소 취약점", "도어, 환기, 전원, 데이터, 냉각 및 설비 관통부가 차폐 경계의 가장 약한 경로가 될 수 있습니다.", "보호 성능 저하"],
     ],
+    impactLabel: "잠재 영향",
+    responseEyebrow: "노출에서 보증으로",
+    responseTitle: "금속으로 공간을 둘러싸는 것만으로는 충분하지 않습니다.",
+    responseBody:
+      "효과적인 전자기 보호는 미션 분석에서 시작해 측정된 증거로 완성됩니다. CyberShield는 이 요구를 관리 가능한 엔지니어링 생애주기로 전환합니다.",
+    responseSteps: [
+      ["01", "위협 모델링", "자산, 운영 의존성, 노출 경로 및 현실적인 위협 시나리오를 분류합니다."],
+      ["02", "측정 가능한 요구사항 정의", "설계 전 주파수 범위, 감쇠 성능, 적용 표준 및 인수 기준을 정합니다."],
+      ["03", "모든 진입점 통합 설계", "패널, 도어, 환기, 전원, 데이터, 냉각 및 설비 관통부를 하나의 경계로 통합합니다."],
+      ["04", "설치 경계 현장 시험", "차폐효과를 현장에서 측정하고 누설을 탐지해 인수 증거를 문서화합니다."],
+      ["05", "변경 관리와 재검증", "운영 또는 시설 변경 후 점검, 유지보수 및 재시험을 수행합니다."],
+    ],
+    evidenceTitle: "근거 자료",
     systemEyebrow: "모듈형 PAN 차폐 시스템",
     systemTitle: "시설의 현실을 반영해 설계하는 보안 공간.",
     systemBody:
@@ -269,6 +321,7 @@ export default function Home() {
           <span><b>FRANKONIA</b><small>CYBERSHIELD</small></span>
         </a>
         <nav aria-label="Primary navigation">
+          <a href="#why">{t.nav.threats}</a>
           <a href="#solution">{t.nav.solution}</a>
           <a href="#performance">{t.nav.performance}</a>
           <a href="#applications">{t.nav.applications}</a>
@@ -308,21 +361,72 @@ export default function Home() {
         {t.proof.map((item, index) => <span key={item}><b>0{index + 1}</b>{item}</span>)}
       </div>
 
-      <section className="threat-section section-dark">
+      <section className="why-section" id="why">
+        <div className="why-intro">
+          <div>
+            <p className="eyebrow">{t.whyEyebrow}</p>
+            <h2>{t.whyTitle}</h2>
+            <p className="lead">{t.whyBody}</p>
+          </div>
+          <aside className="why-metric" aria-label={t.whyMetricLabel}>
+            <strong>{t.whyMetric}</strong>
+            <span>{t.whyMetricLabel}</span>
+            <a href="https://www.iea.org/reports/key-questions-on-energy-and-ai/executive-summary" target="_blank" rel="noreferrer">
+              {t.source}: IEA, 2026 ↗
+            </a>
+          </aside>
+        </div>
+        <div className="asset-grid">
+          {t.assetCards.map(([title, body], index) => (
+            <article key={title}>
+              <span>0{index + 1}</span>
+              <h3>{title}</h3>
+              <p>{body}</p>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section className="threat-section section-dark" aria-labelledby="threat-title">
         <div className="section-heading">
           <p className="eyebrow">{t.threatEyebrow}</p>
-          <h2>{t.threatTitle}</h2>
+          <h2 id="threat-title">{t.threatTitle}</h2>
           <p>{t.threatBody}</p>
         </div>
         <div className="threat-grid">
-          {t.threats.map(([title, body], index) => (
+          {t.threats.map(([title, body, impact], index) => (
             <article key={title}>
               <span className="threat-number">0{index + 1}</span>
               <div className="signal-icon"><i /><i /><i /></div>
               <h3>{title}</h3>
               <p>{body}</p>
+              <div className="impact-tag"><span>{t.impactLabel}</span><strong>{impact}</strong></div>
             </article>
           ))}
+        </div>
+      </section>
+
+      <section className="response-section">
+        <div className="response-heading">
+          <p className="eyebrow">{t.responseEyebrow}</p>
+          <h2>{t.responseTitle}</h2>
+          <p>{t.responseBody}</p>
+        </div>
+        <div className="response-flow">
+          {t.responseSteps.map(([num, title, body]) => (
+            <article key={num}>
+              <span>{num}</span>
+              <h3>{title}</h3>
+              <p>{body}</p>
+            </article>
+          ))}
+        </div>
+        <div className="evidence-row">
+          <strong>{t.evidenceTitle}</strong>
+          <a href="https://www.ncsc.gov.uk/information/tempest-and-electromagnetic-security" target="_blank" rel="noreferrer">NCSC · TEMPEST &amp; Electromagnetic Security ↗</a>
+          <a href="https://csrc.nist.gov/CSRC/media/Projects/risk-management/800-53%20Downloads/800-53r5/SP_800-53_v5_1-derived-OSCAL.pdf" target="_blank" rel="noreferrer">NIST · SP 800-53 PE-19 ↗</a>
+          <a href="https://www.cisa.gov/sites/default/files/publications/CISA%20Resilient%20Power%20Best%20Practices%20for%20Critical%20Facilities%20and%20Sites.pdf" target="_blank" rel="noreferrer">CISA · Resilient Power ↗</a>
+          <a href="https://www.iea.org/reports/key-questions-on-energy-and-ai/executive-summary" target="_blank" rel="noreferrer">IEA · Energy &amp; AI ↗</a>
         </div>
       </section>
 
