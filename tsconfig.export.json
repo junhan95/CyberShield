@@ -1,0 +1,5 @@
+{
+  "extends": "./tsconfig.json",
+  "comment": "Static export build. Skips Cloudflare Workers code, which is not part of the exported site and cannot type-check without the Workers runtime types.",
+  "exclude": ["node_modules", "db", "worker", "examples", "drizzle.config.ts"]
+}

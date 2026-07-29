@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
-import { headers } from "next/headers";
 import type { Lang } from "./landing";
+import { asset, route, siteOrigin } from "./site-config";
 
 const content = {
   en: {
@@ -15,39 +15,36 @@ const content = {
   },
 } as const;
 
-export async function buildSiteMetadata(lang: Lang): Promise<Metadata> {
-  const requestHeaders = await headers();
-  const host = requestHeaders.get("host") ?? "localhost:3000";
-  const protocol = requestHeaders.get("x-forwarded-proto") ?? (host.includes("localhost") ? "http" : "https");
-  const origin = `${protocol}://${host}`;
+export function buildSiteMetadata(lang: Lang): Metadata {
   const { title, description } = content[lang];
-  const path = lang === "ko" ? "/ko" : "/";
+  const canonical = `${siteOrigin}${route(lang === "ko" ? "/ko" : "/")}`;
+  const ogImage = `${siteOrigin}${asset("/og.png")}`;
 
   return {
     title,
     description,
-    icons: { icon: "/favicon.svg" },
+    icons: { icon: asset("/favicon.svg") },
     alternates: {
-      canonical: `${origin}${path}`,
+      canonical,
       languages: {
-        en: `${origin}/`,
-        ko: `${origin}/ko`,
-        "x-default": `${origin}/`,
+        en: `${siteOrigin}${route("/")}`,
+        ko: `${siteOrigin}${route("/ko")}`,
+        "x-default": `${siteOrigin}${route("/")}`,
       },
     },
     openGraph: {
       title,
       description,
       type: "website",
-      url: `${origin}${path}`,
+      url: canonical,
       locale: lang === "ko" ? "ko_KR" : "en_US",
-      images: [{ url: `${origin}/og.png`, width: 1200, height: 630, alt: "Frankonia CyberShield" }],
+      images: [{ url: ogImage, width: 1200, height: 630, alt: "Frankonia CyberShield" }],
     },
     twitter: {
       card: "summary_large_image",
       title,
       description,
-      images: [`${origin}/og.png`],
+      images: [ogImage],
     },
   };
 }
