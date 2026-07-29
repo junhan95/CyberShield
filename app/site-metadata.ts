@@ -18,7 +18,9 @@ const content = {
 export function buildSiteMetadata(lang: Lang): Metadata {
   const { title, description } = content[lang];
   const canonical = `${siteOrigin}${route(lang === "ko" ? "/ko" : "/")}`;
-  const ogImage = `${siteOrigin}${asset("/og.png")}`;
+  // Social platforms cache preview images by URL, so the version bumps when
+  // the artwork changes.
+  const ogImage = `${siteOrigin}${asset("/og.png")}?v=2`;
 
   return {
     title,
