@@ -1,0 +1,645 @@
+"use client";
+
+import { FormEvent, useEffect, useState } from "react";
+
+export type Lang = "en" | "ko";
+type Inquiry = "consultation" | "quote";
+
+const copy = {
+  en: {
+    nav: {
+      threats: "Why CyberShield",
+      solution: "Solution",
+      performance: "Performance",
+      applications: "Applications",
+      engineering: "Engineering",
+      contact: "Contact",
+    },
+    langLabel: "이 페이지를 한국어로 보기",
+    menuOpenLabel: "Open menu",
+    menuCloseLabel: "Close menu",
+    consultation: "Book a consultation",
+    quote: "Request a quote",
+    eyebrow: "PHYSICAL & ELECTROMAGNETIC SECURITY FOR CRITICAL COMPUTE",
+    heroTitle: "Protect the compute.",
+    heroAccent: "Contain the signal.",
+    heroBody:
+      "CyberShield creates a measurable electromagnetic security boundary around mission-critical data infrastructure—engineered, integrated and verified as one complete system.",
+    explore: "Explore the system",
+    metrics: [
+      ["10 kHz–40 GHz", "Broadband protection range"],
+      ["Up to ≥120 dB", "Guaranteed attenuation*"],
+      ["2.0 mm PAN", "Modular galvanized steel"],
+    ],
+    proof: ["Engineering heritage since 1987", "5 global locations", "Presence in 80+ countries", "Turnkey delivery"],
+    whyEyebrow: "WHY THE RISK IS GROWING",
+    whyTitle: "More value is being concentrated behind the same physical walls.",
+    whyBody:
+      "AI and sovereign workloads concentrate exceptional compute, data and operational dependency in a small number of facilities. The IEA expects electricity use from AI-focused data centres to triple between 2025 and 2030—a clear signal of how quickly critical digital capacity is scaling.",
+    whyMetric: "3×",
+    whyMetricLabel: "Projected growth in AI-focused data-centre electricity use, 2025–2030",
+    assetCards: [
+      ["Confidentiality", "Models, cryptographic material, classified information and customer data remain sensitive even when the network is segmented."],
+      ["Availability", "A localized electromagnetic event can upset electronics, controls or communications without a conventional cyber intrusion."],
+      ["Capital & continuity", "High-density compute, cooling and power infrastructure turn one protected room into a concentrated operational dependency."],
+    ],
+    source: "Source",
+    threatEyebrow: "THE SECURITY LAYER SOFTWARE CANNOT PROVIDE",
+    threatTitle: "Not every threat enters through the network.",
+    threatBody:
+      "Encryption and zero-trust protect the digital domain. CyberShield addresses physical and electromagnetic exposure at the facility boundary.",
+    threats: [
+      ["Compromising emanations", "Sensitive processing activity can be exposed through unintended electromagnetic signals—without touching the network.", "Confidentiality exposed"],
+      ["Intentional interference", "Localized high-power RF or electromagnetic energy can disrupt electronics, controls and communications.", "Service interruption"],
+      ["EMP / HEMP exposure", "Radiated and conducted pulse effects can challenge critical systems and continuity architectures.", "Mission continuity risk"],
+      ["Boundary vulnerabilities", "Doors, ventilation, power, data, cooling and utility penetrations can become the weakest path through the shield.", "Protection degraded"],
+    ],
+    impactLabel: "Potential impact",
+    responseEyebrow: "FROM EXPOSURE TO ASSURANCE",
+    responseTitle: "Protection requires more than surrounding the room with metal.",
+    responseBody:
+      "Effective electromagnetic protection starts with the mission and ends with measured evidence. CyberShield turns that requirement into a managed engineering lifecycle.",
+    responseSteps: [
+      ["01", "Model the threat", "Classify assets, operating dependencies, exposure paths and credible threat scenarios."],
+      ["02", "Define measurable requirements", "Set the frequency range, attenuation, standards and acceptance criteria before design begins."],
+      ["03", "Engineer every point of entry", "Integrate panels, doors, vents, power, data, cooling and utility penetrations as one boundary."],
+      ["04", "Test the installed boundary", "Measure shielding effectiveness on site, locate leakage and document acceptance evidence."],
+      ["05", "Control change and revalidate", "Inspect, maintain and retest after operational or facility changes."],
+    ],
+    evidenceTitle: "Evidence base",
+    systemEyebrow: "MODULAR PAN SHIELDING SYSTEM",
+    systemTitle: "A secure room engineered around the reality of your facility.",
+    systemBody:
+      "Prefabricated PAN modules pass through standard building doors, assemble from the inside and can be installed close to existing walls. No glue. No welding. No irreversible commitment.",
+    features: [
+      ["01", "Precision assembly", "Panels are bolted every 75 mm with predefined torque and conductive mesh gaskets."],
+      ["02", "Architectural integration", "Designed around raised floors, racks, fire systems, lighting, cooling and access control."],
+      ["03", "Adaptable by design", "Dismountable without damage for expansion, modification or complete relocation."],
+      ["04", "Complete boundary", "Shielding structure, doors, filters, honeycombs and waveguides are treated as one system."],
+    ],
+    performanceEyebrow: "2026 GUARANTEED PERFORMANCE",
+    performanceTitle: "Protection you can specify—and verify.",
+    performanceBody:
+      "Guaranteed attenuation values for the 2026 high-performance configuration. Final acceptance criteria are agreed per project and verified after installation.",
+    frequency: "Frequency",
+    attenuation: "Attenuation",
+    field: "Field",
+    fields: { magnetic: "Magnetic field", plane: "Plane wave", microwave: "Microwave" },
+    standardNote:
+      "Measurement according to EN 50147-1. IEEE 299 available as a project option. TEMPEST and HEMP requirements are subject to project-specific design, authority approval and validation.",
+    brochure: "Download performance sheet",
+    applicationsEyebrow: "BUILT FOR HIGH-VALUE ENVIRONMENTS",
+    applicationsTitle: "One platform. Four mission profiles.",
+    applications: [
+      ["Sovereign Compute Vault", "Government & sovereign cloud", "Create a controlled processing zone for classified or nationally sensitive workloads."],
+      ["AI & HPC Shielded Zone", "AI labs & hyperscale operators", "Protect high-value models, training data and accelerated compute infrastructure."],
+      ["Colocation Shielded Vault", "Colocation providers", "Offer a measurable premium security tier for regulated enterprise customers."],
+      ["Mission Continuity Suite", "Defense, finance & communications", "Support continuity architectures exposed to electromagnetic disruption risks."],
+    ],
+    lifecycleEyebrow: "ASSURANCE ACROSS THE LIFECYCLE",
+    lifecycleTitle: "Identify. Engineer. Verify. Maintain.",
+    steps: [
+      ["01", "Identify", "Site review, ambient RF assessment and definition of assets, threats and acceptance criteria."],
+      ["02", "Engineer", "3D/CAD/BIM integration of the shield, access, cooling, power, data and utilities."],
+      ["03", "Verify", "On-site shielding effectiveness measurement and documented acceptance testing."],
+      ["04", "Maintain", "Preventive service, leak detection, modifications and periodic revalidation."],
+    ],
+    insideEyebrow: "ENGINEERED FOR OPERATIONS",
+    insideTitle: "High assurance without compromising the data hall.",
+    insideBody:
+      "CyberShield integrates the systems a modern data hall needs—from airflow and raised floors to emergency access and monitored RF doors.",
+    renderNote: "Representative image",
+    contactEyebrow: "START WITH YOUR RISK PROFILE",
+    contactTitle: "Let’s define the right protection boundary.",
+    contactBody:
+      "Tell us what you need to protect. A Frankonia specialist will review your project and respond by email.",
+    labels: {
+      type: "Request type",
+      name: "Name",
+      company: "Company",
+      email: "Business email",
+      country: "Country / region",
+      project: "Project type",
+      stage: "Project stage",
+      message: "Project requirements",
+      consent: "I agree that Frankonia may use this information to respond to my request.",
+      submitConsultation: "Prepare consultation email",
+      submitQuote: "Prepare quote request email",
+    },
+    options: {
+      newBuild: "New build",
+      retrofit: "Retrofit / expansion",
+      confidential: "Confidential / to be discussed",
+      concept: "Concept / feasibility",
+      planning: "Design / specification",
+      procurement: "Procurement / tender",
+      urgent: "Active project / urgent",
+    },
+    emailNote:
+      "Submitting opens your email application with the project details pre-filled. No form data is stored on this website.",
+    footer:
+      "CyberShield is a high-assurance engineering solution. Performance, standards and certification scope depend on the agreed project configuration and final validation.",
+  },
+  ko: {
+    nav: {
+      threats: "필요성",
+      solution: "솔루션",
+      performance: "성능",
+      applications: "적용 분야",
+      engineering: "엔지니어링",
+      contact: "문의",
+    },
+    langLabel: "View this page in English",
+    menuOpenLabel: "메뉴 열기",
+    menuCloseLabel: "메뉴 닫기",
+    consultation: "상담 예약",
+    quote: "견적 요청",
+    eyebrow: "핵심 컴퓨팅을 위한 물리·전자기 보안",
+    heroTitle: "컴퓨팅 자산을 보호하고,",
+    heroAccent: "신호를 경계 안에 가두십시오.",
+    heroBody:
+      "CyberShield는 미션 크리티컬 데이터 인프라 주변에 측정 가능한 전자기 보안 경계를 구축합니다. 설계부터 통합, 현장 검증까지 하나의 완전한 시스템으로 제공합니다.",
+    explore: "시스템 살펴보기",
+    metrics: [
+      ["10 kHz–40 GHz", "광대역 보호 범위"],
+      ["최대 ≥120 dB", "보증 감쇠 성능*"],
+      ["2.0 mm PAN", "모듈형 아연도금 강판"],
+    ],
+    proof: ["1987년부터 축적한 엔지니어링", "글로벌 5개 거점", "80개국 이상 공급 네트워크", "턴키 제공"],
+    whyEyebrow: "증가하는 위험",
+    whyTitle: "같은 물리적 공간에 더 많은 가치와 운영 의존성이 집중되고 있습니다.",
+    whyBody:
+      "AI와 소버린 워크로드는 막대한 컴퓨팅 자원, 데이터 및 업무 연속성을 소수 시설에 집중시킵니다. IEA는 2025~2030년 AI 중심 데이터센터의 전력 사용량이 약 3배 증가할 것으로 전망합니다. 이는 보호해야 할 핵심 디지털 역량이 얼마나 빠르게 확대되는지를 보여줍니다.",
+    whyMetric: "3배",
+    whyMetricLabel: "2025~2030년 AI 중심 데이터센터 전력 사용량 전망",
+    assetCards: [
+      ["기밀성", "모델, 암호 키, 기밀 정보와 고객 데이터는 네트워크가 분리되어 있어도 여전히 보호해야 할 민감 자산입니다."],
+      ["가용성", "국소적인 전자기 사건은 일반적인 사이버 침입 없이도 전자장비, 제어 및 통신에 장애를 일으킬 수 있습니다."],
+      ["자본과 업무 연속성", "고밀도 컴퓨팅, 냉각 및 전력 인프라는 하나의 보호 공간을 핵심 운영 의존점으로 만듭니다."],
+    ],
+    source: "출처",
+    threatEyebrow: "소프트웨어만으로 제공할 수 없는 보안 계층",
+    threatTitle: "모든 위협이 네트워크를 통해 들어오지는 않습니다.",
+    threatBody:
+      "암호화와 제로 트러스트는 디지털 영역을 보호합니다. CyberShield는 시설 경계에서 발생하는 물리적·전자기적 노출을 통제합니다.",
+    threats: [
+      ["전자기 정보 방사", "네트워크에 접촉하지 않고도 비의도적 전자기 신호를 통해 민감한 처리 활동이 노출될 수 있습니다.", "기밀성 노출"],
+      ["의도적 전자기 간섭", "국소 고출력 RF 또는 전자기 에너지는 전자장비, 제어 및 통신을 교란할 수 있습니다.", "서비스 중단"],
+      ["EMP / HEMP 노출", "방사 및 전도성 펄스 영향은 중요 시스템과 업무 연속성 아키텍처를 위협할 수 있습니다.", "업무 연속성 위험"],
+      ["경계 구성요소 취약점", "도어, 환기, 전원, 데이터, 냉각 및 설비 관통부가 차폐 경계의 가장 약한 경로가 될 수 있습니다.", "보호 성능 저하"],
+    ],
+    impactLabel: "잠재 영향",
+    responseEyebrow: "노출에서 보증으로",
+    responseTitle: "금속으로 공간을 둘러싸는 것만으로는 충분하지 않습니다.",
+    responseBody:
+      "효과적인 전자기 보호는 미션 분석에서 시작해 측정된 증거로 완성됩니다. CyberShield는 이 요구를 관리 가능한 엔지니어링 생애주기로 전환합니다.",
+    responseSteps: [
+      ["01", "위협 모델링", "자산, 운영 의존성, 노출 경로 및 현실적인 위협 시나리오를 분류합니다."],
+      ["02", "측정 가능한 요구사항 정의", "설계 전 주파수 범위, 감쇠 성능, 적용 표준 및 인수 기준을 정합니다."],
+      ["03", "모든 진입점 통합 설계", "패널, 도어, 환기, 전원, 데이터, 냉각 및 설비 관통부를 하나의 경계로 통합합니다."],
+      ["04", "설치 경계 현장 시험", "차폐효과를 현장에서 측정하고 누설을 탐지해 인수 증거를 문서화합니다."],
+      ["05", "변경 관리와 재검증", "운영 또는 시설 변경 후 점검, 유지보수 및 재시험을 수행합니다."],
+    ],
+    evidenceTitle: "근거 자료",
+    systemEyebrow: "모듈형 PAN 차폐 시스템",
+    systemTitle: "시설의 현실을 반영해 설계하는 보안 공간.",
+    systemBody:
+      "사전 제작된 PAN 모듈은 표준 건물 출입문으로 반입할 수 있고 내부에서 조립되며 기존 벽에 근접 설치할 수 있습니다. 접착제와 용접 없이 확장과 이전이 가능합니다.",
+    features: [
+      ["01", "정밀 조립", "75 mm 간격의 체결, 사전 정의된 토크 및 전도성 메시 개스킷을 적용합니다."],
+      ["02", "건축 통합", "이중바닥, 랙, 소방, 조명, 냉각 및 출입통제 시스템을 통합 설계합니다."],
+      ["03", "확장 가능한 구조", "손상 없이 해체해 확장, 변경 또는 전체 이전에 재사용할 수 있습니다."],
+      ["04", "완전한 보호 경계", "차폐 구조, 도어, 필터, 허니콤 및 도파관을 하나의 시스템으로 구성합니다."],
+    ],
+    performanceEyebrow: "2026 보증 성능",
+    performanceTitle: "명확하게 규정하고 현장에서 검증하는 보호 성능.",
+    performanceBody:
+      "2026 고성능 구성의 보증 감쇠 수치입니다. 최종 인수 기준은 프로젝트별로 합의하고 설치 완료 후 현장에서 검증합니다.",
+    frequency: "주파수",
+    attenuation: "감쇠 성능",
+    field: "필드 유형",
+    fields: { magnetic: "자기장", plane: "평면파", microwave: "마이크로파" },
+    standardNote:
+      "EN 50147-1에 따른 측정. IEEE 299는 프로젝트 옵션으로 제공됩니다. TEMPEST 및 HEMP 요구사항은 프로젝트별 설계, 승인기관 검토 및 검증을 전제로 합니다.",
+    brochure: "성능 자료 다운로드",
+    applicationsEyebrow: "고가치 환경을 위한 솔루션",
+    applicationsTitle: "하나의 플랫폼, 네 가지 미션 프로파일.",
+    applications: [
+      ["Sovereign Compute Vault", "정부·소버린 클라우드", "기밀 또는 국가 중요 워크로드를 위한 통제된 처리 구역을 구축합니다."],
+      ["AI & HPC Shielded Zone", "AI 연구소·하이퍼스케일", "고가치 모델, 학습 데이터 및 가속 컴퓨팅 인프라를 보호합니다."],
+      ["Colocation Shielded Vault", "코로케이션 사업자", "규제 산업 고객을 위한 측정 가능한 프리미엄 보안 등급을 제공합니다."],
+      ["Mission Continuity Suite", "국방·금융·통신", "전자기 교란 위험에 노출된 중요 업무의 연속성 아키텍처를 지원합니다."],
+    ],
+    lifecycleEyebrow: "전 생애주기 보증",
+    lifecycleTitle: "진단하고, 설계하고, 검증하고, 유지합니다.",
+    steps: [
+      ["01", "진단", "현장 조사와 주변 RF 평가를 통해 자산, 위협 및 인수 기준을 정의합니다."],
+      ["02", "설계", "차폐, 출입, 냉각, 전원, 데이터 및 설비를 3D/CAD/BIM으로 통합합니다."],
+      ["03", "검증", "현장 차폐효과 측정과 문서화된 인수시험을 수행합니다."],
+      ["04", "유지", "예방정비, 누설 탐지, 시설 변경 및 주기적 재검증을 제공합니다."],
+    ],
+    insideEyebrow: "운영 환경을 고려한 엔지니어링",
+    insideTitle: "데이터홀 운영을 방해하지 않는 고보증 보안.",
+    insideBody:
+      "CyberShield는 공기 흐름과 이중바닥부터 비상 동선 및 모니터링 RF 도어까지 현대적인 데이터홀에 필요한 시스템을 통합합니다.",
+    renderNote: "연출된 참고 이미지",
+    contactEyebrow: "위험 프로파일에서 시작하십시오",
+    contactTitle: "필요한 보호 경계를 함께 정의하겠습니다.",
+    contactBody:
+      "보호해야 할 자산과 프로젝트 정보를 알려주십시오. Frankonia 전문가가 검토한 후 이메일로 연락드립니다.",
+    labels: {
+      type: "문의 유형",
+      name: "이름",
+      company: "회사",
+      email: "업무용 이메일",
+      country: "국가 / 지역",
+      project: "프로젝트 유형",
+      stage: "프로젝트 단계",
+      message: "프로젝트 요구사항",
+      consent: "Frankonia가 문의 회신을 위해 이 정보를 사용하는 데 동의합니다.",
+      submitConsultation: "상담 이메일 작성",
+      submitQuote: "견적요청 이메일 작성",
+    },
+    options: {
+      newBuild: "신규 시설",
+      retrofit: "기존 시설 개조 / 확장",
+      confidential: "기밀 프로젝트 / 추후 협의",
+      concept: "개념 / 타당성 검토",
+      planning: "설계 / 사양 작성",
+      procurement: "조달 / 입찰",
+      urgent: "진행 중 / 긴급",
+    },
+    emailNote:
+      "제출하면 입력한 프로젝트 정보가 포함된 이메일 작성 화면이 열립니다. 이 웹사이트에는 양식 데이터가 저장되지 않습니다.",
+    footer:
+      "CyberShield는 고보증 엔지니어링 솔루션입니다. 성능, 적용 규격 및 인증 범위는 합의된 프로젝트 구성과 최종 검증 결과에 따라 결정됩니다.",
+  },
+} as const;
+
+const performance = [
+  ["10 kHz", "≥ 90 dB", "magnetic"],
+  ["100 kHz", "≥ 100 dB", "magnetic"],
+  ["1 MHz", "≥ 110 dB", "magnetic"],
+  ["100 MHz", "≥ 120 dB", "plane"],
+  ["400 MHz", "≥ 120 dB", "plane"],
+  ["1 GHz", "≥ 110 dB", "plane"],
+  ["18 GHz", "≥ 100 dB", "microwave"],
+  ["40 GHz", "≥ 100 dB", "microwave"],
+] as const;
+
+export function Landing({ lang }: { lang: Lang }) {
+  const [inquiry, setInquiry] = useState<Inquiry>("consultation");
+  const [menuOpen, setMenuOpen] = useState(false);
+  const t = copy[lang];
+  const otherLangHref = lang === "en" ? "/ko" : "/";
+
+  useEffect(() => {
+    document.documentElement.lang = lang;
+  }, [lang]);
+
+  const goContact = (type: Inquiry) => {
+    setInquiry(type);
+    setMenuOpen(false);
+    document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  const submit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const data = new FormData(event.currentTarget);
+    const subject =
+      inquiry === "quote"
+        ? "[CyberShield] Quote request"
+        : "[CyberShield] Consultation request";
+    const body = [
+      `Request: ${inquiry}`,
+      `Name: ${data.get("name")}`,
+      `Company: ${data.get("company")}`,
+      `Email: ${data.get("email")}`,
+      `Country / region: ${data.get("country")}`,
+      `Project type: ${data.get("project")}`,
+      `Project stage: ${data.get("stage")}`,
+      "",
+      "Requirements:",
+      String(data.get("message") || ""),
+    ].join("\n");
+    window.location.href = `mailto:sales@frankoniagroup.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  };
+
+  const navLinks = (
+    <>
+      <a href="#why" onClick={() => setMenuOpen(false)}>{t.nav.threats}</a>
+      <a href="#solution" onClick={() => setMenuOpen(false)}>{t.nav.solution}</a>
+      <a href="#performance" onClick={() => setMenuOpen(false)}>{t.nav.performance}</a>
+      <a href="#applications" onClick={() => setMenuOpen(false)}>{t.nav.applications}</a>
+      <a href="#engineering" onClick={() => setMenuOpen(false)}>{t.nav.engineering}</a>
+    </>
+  );
+
+  return (
+    <main>
+      <header className="site-header">
+        <a className="brand" href="#top" aria-label="CyberShield home">
+          <span className="brand-mark">F</span>
+          <span><b>FRANKONIA</b><small>CYBERSHIELD</small></span>
+        </a>
+        <nav className="nav-desktop" aria-label="Primary navigation">
+          {navLinks}
+        </nav>
+        <div className="header-actions">
+          <a className="language" href={otherLangHref} aria-label={t.langLabel}>
+            {lang === "en" ? "KO" : "EN"}
+          </a>
+          <button className="button button-small" onClick={() => goContact("quote")}>{t.quote}</button>
+          <button
+            className={menuOpen ? "menu-toggle open" : "menu-toggle"}
+            aria-expanded={menuOpen}
+            aria-label={menuOpen ? t.menuCloseLabel : t.menuOpenLabel}
+            onClick={() => setMenuOpen(!menuOpen)}
+          >
+            <i /><i /><i />
+          </button>
+        </div>
+      </header>
+
+      {menuOpen && (
+        <nav className="mobile-menu" aria-label="Mobile navigation">
+          {navLinks}
+          <button className="button" onClick={() => goContact("quote")}>{t.quote}</button>
+        </nav>
+      )}
+
+      <section className="hero" id="top">
+        <div className="hero-grid">
+          <div className="hero-copy">
+            <p className="eyebrow">{t.eyebrow}</p>
+            <h1>{t.heroTitle}<br /><span>{t.heroAccent}</span></h1>
+            <p className="hero-body">{t.heroBody}</p>
+            <div className="hero-actions">
+              <button className="button" onClick={() => goContact("consultation")}>{t.consultation}<span>↗</span></button>
+              <a className="text-link" href="#solution">{t.explore}<span>↓</span></a>
+            </div>
+          </div>
+          <div className="hero-visual">
+            <div className="visual-ring" />
+            <img
+              src="/images/hero-datahall.jpg"
+              width={1200}
+              height={798}
+              fetchPriority="high"
+              alt={lang === "en" ? "Server racks inside a protected data hall" : "보호된 데이터홀 내부의 서버 랙"}
+            />
+            <p>{t.renderNote}</p>
+          </div>
+        </div>
+        <div className="metrics">
+          {t.metrics.map(([value, label]) => <div key={label}><strong>{value}</strong><span>{label}</span></div>)}
+        </div>
+      </section>
+
+      <div className="proof-strip">
+        {t.proof.map((item, index) => <span key={item}><b>0{index + 1}</b>{item}</span>)}
+      </div>
+
+      <section className="why-section" id="why">
+        <div className="why-intro">
+          <div>
+            <p className="eyebrow">{t.whyEyebrow}</p>
+            <h2>{t.whyTitle}</h2>
+            <p className="lead">{t.whyBody}</p>
+          </div>
+          <aside className="why-metric" aria-label={t.whyMetricLabel}>
+            <strong>{t.whyMetric}</strong>
+            <span>{t.whyMetricLabel}</span>
+            <a href="https://www.iea.org/reports/key-questions-on-energy-and-ai/executive-summary" target="_blank" rel="noreferrer">
+              {t.source}: IEA, 2026 ↗
+            </a>
+          </aside>
+        </div>
+        <div className="asset-grid">
+          {t.assetCards.map(([title, body], index) => (
+            <article key={title}>
+              <span>0{index + 1}</span>
+              <h3>{title}</h3>
+              <p>{body}</p>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section className="threat-section section-dark" aria-labelledby="threat-title">
+        <div className="section-heading">
+          <p className="eyebrow">{t.threatEyebrow}</p>
+          <h2 id="threat-title">{t.threatTitle}</h2>
+          <p>{t.threatBody}</p>
+        </div>
+        <div className="threat-grid">
+          {t.threats.map(([title, body, impact], index) => (
+            <article key={title}>
+              <span className="threat-number">0{index + 1}</span>
+              <div className="signal-icon"><i /><i /><i /></div>
+              <h3>{title}</h3>
+              <p>{body}</p>
+              <div className="impact-tag"><span>{t.impactLabel}</span><strong>{impact}</strong></div>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section className="response-section">
+        <div className="response-heading">
+          <p className="eyebrow">{t.responseEyebrow}</p>
+          <h2>{t.responseTitle}</h2>
+          <p>{t.responseBody}</p>
+        </div>
+        <div className="response-flow">
+          {t.responseSteps.map(([num, title, body]) => (
+            <article key={num}>
+              <span>{num}</span>
+              <h3>{title}</h3>
+              <p>{body}</p>
+            </article>
+          ))}
+        </div>
+        <div className="evidence-row">
+          <strong>{t.evidenceTitle}</strong>
+          <a href="https://www.ncsc.gov.uk/information/tempest-and-electromagnetic-security" target="_blank" rel="noreferrer">NCSC · TEMPEST &amp; Electromagnetic Security ↗</a>
+          <a href="https://csrc.nist.gov/CSRC/media/Projects/risk-management/800-53%20Downloads/800-53r5/SP_800-53_v5_1-derived-OSCAL.pdf" target="_blank" rel="noreferrer">NIST · SP 800-53 PE-19 ↗</a>
+          <a href="https://www.cisa.gov/sites/default/files/publications/CISA%20Resilient%20Power%20Best%20Practices%20for%20Critical%20Facilities%20and%20Sites.pdf" target="_blank" rel="noreferrer">CISA · Resilient Power ↗</a>
+          <a href="https://www.iea.org/reports/key-questions-on-energy-and-ai/executive-summary" target="_blank" rel="noreferrer">IEA · Energy &amp; AI ↗</a>
+        </div>
+      </section>
+
+      <section className="system-section" id="solution">
+        <div className="system-image">
+          <img
+            src="/images/facility-aerial.jpg"
+            width={1024}
+            height={1024}
+            loading="lazy"
+            decoding="async"
+            alt={lang === "en" ? "Aerial view of a data-centre facility campus" : "데이터센터 시설 단지의 항공 전경"}
+          />
+          <span className="image-label">{t.renderNote}</span>
+        </div>
+        <div className="system-content">
+          <p className="eyebrow">{t.systemEyebrow}</p>
+          <h2>{t.systemTitle}</h2>
+          <p className="lead">{t.systemBody}</p>
+          <div className="feature-list">
+            {t.features.map(([num, title, body]) => (
+              <article key={num}>
+                <span>{num}</span>
+                <div><h3>{title}</h3><p>{body}</p></div>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="performance-section" id="performance">
+        <div className="performance-intro">
+          <p className="eyebrow">{t.performanceEyebrow}</p>
+          <h2>{t.performanceTitle}</h2>
+          <p>{t.performanceBody}</p>
+          <a className="download-link" href="/CyberShield-Performance-2026.pdf" download>
+            <span>PDF</span>{t.brochure}<b>↓</b>
+          </a>
+        </div>
+        <div className="performance-card">
+          <div className="table-head"><span>{t.frequency}</span><span>{t.attenuation}</span><span>{t.field}</span></div>
+          {performance.map(([frequency, attenuation, field]) => (
+            <div className="table-row" key={frequency}>
+              <span>{frequency}</span><strong>{attenuation}</strong><span>{t.fields[field]}</span>
+            </div>
+          ))}
+          <p className="performance-note">{t.standardNote}</p>
+        </div>
+      </section>
+
+      <section className="applications-section" id="applications">
+        <div className="section-heading light">
+          <p className="eyebrow">{t.applicationsEyebrow}</p>
+          <h2>{t.applicationsTitle}</h2>
+        </div>
+        <div className="application-grid">
+          {t.applications.map(([title, audience, body], index) => (
+            <article key={title}>
+              <div className="application-top"><span>0{index + 1}</span><b>↗</b></div>
+              <p className="audience">{audience}</p>
+              <h3>{title}</h3>
+              <p>{body}</p>
+              <button onClick={() => goContact("consultation")}>{t.consultation}</button>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section className="lifecycle-section" id="engineering">
+        <div className="lifecycle-visual">
+          <img
+            src="/images/datahall-rows.jpg"
+            width={1200}
+            height={800}
+            loading="lazy"
+            decoding="async"
+            alt={lang === "en" ? "Rows of racks inside a large-scale data hall" : "대규모 데이터홀 내부의 서버 랙 열"}
+          />
+          <span>{t.renderNote}</span>
+        </div>
+        <div className="lifecycle-content">
+          <p className="eyebrow">{t.lifecycleEyebrow}</p>
+          <h2>{t.lifecycleTitle}</h2>
+          <div className="step-list">
+            {t.steps.map(([num, title, body]) => (
+              <article key={num}><span>{num}</span><div><h3>{title}</h3><p>{body}</p></div></article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="inside-section">
+        <div className="inside-copy">
+          <p className="eyebrow">{t.insideEyebrow}</p>
+          <h2>{t.insideTitle}</h2>
+          <p>{t.insideBody}</p>
+        </div>
+        <div className="inside-images">
+          <figure>
+            <img
+              src="/images/engineer-inspection.jpg"
+              width={800}
+              height={800}
+              loading="lazy"
+              decoding="async"
+              alt={lang === "en" ? "Engineer inspecting racks inside a protected server aisle" : "보호 구역 서버 통로에서 랙을 점검하는 엔지니어"}
+            />
+            <figcaption>{t.renderNote}</figcaption>
+          </figure>
+          <figure>
+            <img
+              src="/images/technician-verification.jpg"
+              width={768}
+              height={1376}
+              loading="lazy"
+              decoding="async"
+              alt={lang === "en" ? "Technician verifying systems inside the data hall" : "데이터홀 내부에서 시스템을 검증하는 기술자"}
+            />
+            <figcaption>{t.renderNote}</figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <section className="contact-section" id="contact">
+        <div className="contact-intro">
+          <p className="eyebrow">{t.contactEyebrow}</p>
+          <h2>{t.contactTitle}</h2>
+          <p>{t.contactBody}</p>
+          <a href="mailto:sales@frankoniagroup.com">sales@frankoniagroup.com</a>
+        </div>
+        <form onSubmit={submit}>
+          <fieldset className="request-toggle">
+            <legend>{t.labels.type}</legend>
+            <label className={inquiry === "consultation" ? "selected" : ""}>
+              <input type="radio" name="request" value="consultation" checked={inquiry === "consultation"} onChange={() => setInquiry("consultation")} />
+              {t.consultation}
+            </label>
+            <label className={inquiry === "quote" ? "selected" : ""}>
+              <input type="radio" name="request" value="quote" checked={inquiry === "quote"} onChange={() => setInquiry("quote")} />
+              {t.quote}
+            </label>
+          </fieldset>
+          <div className="form-grid">
+            <label>{t.labels.name}<input required name="name" autoComplete="name" /></label>
+            <label>{t.labels.company}<input required name="company" autoComplete="organization" /></label>
+            <label>{t.labels.email}<input required type="email" name="email" autoComplete="email" /></label>
+            <label>{t.labels.country}<input required name="country" autoComplete="country-name" /></label>
+            <label>{t.labels.project}
+              <select name="project" required defaultValue="">
+                <option value="" disabled>—</option>
+                <option>{t.options.newBuild}</option><option>{t.options.retrofit}</option><option>{t.options.confidential}</option>
+              </select>
+            </label>
+            <label>{t.labels.stage}
+              <select name="stage" required defaultValue="">
+                <option value="" disabled>—</option>
+                <option>{t.options.concept}</option><option>{t.options.planning}</option><option>{t.options.procurement}</option><option>{t.options.urgent}</option>
+              </select>
+            </label>
+            <label className="full">{t.labels.message}<textarea required name="message" rows={5} /></label>
+          </div>
+          <label className="consent"><input type="checkbox" required /> <span>{t.labels.consent}</span></label>
+          <button className="button submit" type="submit">
+            {inquiry === "quote" ? t.labels.submitQuote : t.labels.submitConsultation}<span>↗</span>
+          </button>
+          <p className="email-note">{t.emailNote}</p>
+        </form>
+      </section>
+
+      <footer>
+        <div className="footer-brand"><span className="brand-mark">F</span><span><b>FRANKONIA</b><small>CYBERSHIELD</small></span></div>
+        <p>{t.footer}</p>
+        <div><a href="https://frankonia-solutions.com/privacy/" target="_blank" rel="noreferrer">Privacy</a><a href="https://frankonia-solutions.com/imprint/" target="_blank" rel="noreferrer">Imprint</a><span>© 2026 Frankonia Group</span></div>
+      </footer>
+    </main>
+  );
+}
