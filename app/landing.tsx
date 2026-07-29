@@ -1,6 +1,7 @@
 "use client";
 
 import { FormEvent, useEffect, useRef, useState } from "react";
+import { asset, route } from "./site-config";
 
 export type Lang = "en" | "ko";
 type Inquiry = "consultation" | "quote";
@@ -400,7 +401,7 @@ export function Landing({ lang }: { lang: Lang }) {
   const heroVideoRef = useRef<HTMLVideoElement>(null);
   const metricRef = useRef<HTMLElement>(null);
   const t = copy[lang];
-  const otherLangHref = lang === "en" ? "/ko" : "/";
+  const otherLangHref = route(lang === "en" ? "/ko" : "/");
 
   useEffect(() => {
     document.documentElement.lang = lang;
@@ -574,7 +575,7 @@ export function Landing({ lang }: { lang: Lang }) {
     <main>
       <header className="site-header">
         <a className="brand" href="#top" aria-label="CyberShield home">
-          <img className="brand-logo" src="/frankonia-mark.svg" width={1116} height={746} alt="" aria-hidden="true" />
+          <img className="brand-logo" src={asset("/frankonia-mark.svg")} width={1116} height={746} alt="" aria-hidden="true" />
           <span><b>FRANKONIA</b><small>CYBERSHIELD</small></span>
         </a>
         <nav className="nav-desktop" aria-label="Primary navigation">
@@ -619,8 +620,8 @@ export function Landing({ lang }: { lang: Lang }) {
             <div className="visual-ring" />
             <video
               ref={heroVideoRef}
-              src="/hero-render.mp4"
-              poster="/images/hero-render-poster.jpg"
+              src={asset("/hero-render.mp4")}
+              poster={asset("/images/hero-render-poster.jpg")}
               width={1920}
               height={1080}
               muted
@@ -687,7 +688,7 @@ export function Landing({ lang }: { lang: Lang }) {
       <section className="system-section" id="solution">
         <div className="system-image">
           <img
-            src="/images/facility-aerial.jpg"
+            src={asset("/images/facility-aerial.jpg")}
             width={1024}
             height={1024}
             loading="lazy"
@@ -721,7 +722,7 @@ export function Landing({ lang }: { lang: Lang }) {
               <div key={name}><strong>{name}</strong><span>{note}</span></div>
             ))}
           </div>
-          <a className="download-link" href="/CyberShield-Performance-2026.pdf" download>
+          <a className="download-link" href={asset("/CyberShield-Performance-2026.pdf")} download>
             <span>PDF</span>{t.brochure}<b>↓</b>
           </a>
           <div className="evidence-row">
@@ -734,7 +735,7 @@ export function Landing({ lang }: { lang: Lang }) {
         </div>
         <div className="verify-visual">
           <img
-            src="/images/technician-verification.jpg"
+            src={asset("/images/technician-verification.jpg")}
             width={768}
             height={1376}
             loading="lazy"
@@ -784,7 +785,7 @@ export function Landing({ lang }: { lang: Lang }) {
       <section className="lifecycle-section" id="process">
         <div className="lifecycle-visual">
           <img
-            src="/images/engineer-inspection.jpg"
+            src={asset("/images/engineer-inspection.jpg")}
             width={800}
             height={800}
             loading="lazy"
@@ -865,7 +866,7 @@ export function Landing({ lang }: { lang: Lang }) {
       </section>
 
       <footer>
-        <div className="footer-brand"><img className="brand-logo" src="/frankonia-mark.svg" width={1116} height={746} alt="Frankonia logo" /><span><b>FRANKONIA</b><small>CYBERSHIELD</small></span></div>
+        <div className="footer-brand"><img className="brand-logo" src={asset("/frankonia-mark.svg")} width={1116} height={746} alt="Frankonia logo" /><span><b>FRANKONIA</b><small>CYBERSHIELD</small></span></div>
         <p>{t.footer}</p>
         <div><a href="https://frankonia-solutions.com/privacy/" target="_blank" rel="noreferrer">Privacy</a><a href="https://frankonia-solutions.com/imprint/" target="_blank" rel="noreferrer">Imprint</a><span>© 2026 Frankonia Group</span></div>
       </footer>
