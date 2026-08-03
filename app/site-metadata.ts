@@ -25,7 +25,7 @@ export function buildSiteMetadata(lang: Lang): Metadata {
   const canonical = `${siteOrigin}${route(langPath(lang))}`;
   // Social platforms cache preview images by URL, so the version bumps when
   // the artwork changes.
-  const ogImage = `${siteOrigin}${asset("/og.png")}?v=2`;
+  const ogImage = `${siteOrigin}${asset("/og.png")}?v=3`;
 
   return {
     title,
