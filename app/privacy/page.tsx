@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { company, LegalPage } from "../legal";
-import { asset, route, siteOrigin } from "../site-config";
+import { asset, isIndexable, route, siteOrigin } from "../site-config";
 
 export const metadata: Metadata = {
   title: "Privacy Policy | Frankonia CyberShield",
@@ -8,7 +8,7 @@ export const metadata: Metadata = {
     "How Frankonia handles personal data in connection with the CyberShield website and enquiries.",
   icons: { icon: asset("/favicon.svg") },
   alternates: { canonical: `${siteOrigin}${route("/privacy")}` },
-  robots: { index: true, follow: true },
+  robots: isIndexable ? { index: true, follow: true } : { index: false, follow: false },
 };
 
 export default function Privacy() {

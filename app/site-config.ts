@@ -18,6 +18,19 @@ export const langPath = (lang: Lang) => languages.find(([code]) => code === lang
 export const siteOrigin =
   process.env.NEXT_PUBLIC_SITE_ORIGIN ?? "http://localhost:3000";
 
+/**
+ * Search engines are kept out until the site moves to its own domain. Indexing
+ * the GitHub Pages staging URL would park the ranking signals on a personal
+ * subdomain and leave duplicate content behind at launch.
+ *
+ * Set NEXT_PUBLIC_INDEXABLE=1 in the deploy workflow to open it up.
+ *
+ * Note this has to ride on the per-page robots meta tag: a project page serves
+ * from /CyberShield/, and crawlers only read robots.txt from the host root,
+ * which belongs to a different repository.
+ */
+export const isIndexable = process.env.NEXT_PUBLIC_INDEXABLE === "1";
+
 /** Prefix a file in `public/` (e.g. `/images/hero.jpg`). */
 export const asset = (path: string) => `${basePath}${path}`;
 

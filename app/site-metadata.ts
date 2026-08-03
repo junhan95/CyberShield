@@ -1,22 +1,22 @@
 import type { Metadata } from "next";
 import type { Lang } from "./site-config";
-import { asset, langPath, route, siteOrigin } from "./site-config";
+import { asset, isIndexable, langPath, route, siteOrigin } from "./site-config";
 
 const content = {
   en: {
-    title: "Frankonia CyberShield | Electromagnetic Security for Critical Compute",
+    title: "Frankonia CyberShield | RF Shielded Rooms for Data Centres",
     description:
-      "Modular, verifiable electromagnetic shielding for AI, sovereign cloud, colocation and mission-critical data infrastructure.",
+      "Modular RF shielding for AI, sovereign cloud and colocation data centres. Up to 120 dB attenuation from 10 kHz to 40 GHz, measured on site per EN 50147-1.",
   },
   de: {
-    title: "Frankonia CyberShield | Elektromagnetische Sicherheit für kritische Rechenleistung",
+    title: "Frankonia CyberShield | HF-Abschirmung für Rechenzentren",
     description:
-      "Modulare, messtechnisch nachgewiesene elektromagnetische Abschirmung für KI, souveräne Cloud, Colocation und geschäftskritische Dateninfrastruktur.",
+      "Modulare, messtechnisch nachgewiesene HF-Abschirmung für KI-, Cloud- und Colocation-Rechenzentren. Schirmdämpfung bis 120 dB, geprüft nach EN 50147-1.",
   },
   ko: {
-    title: "Frankonia CyberShield | 핵심 컴퓨팅을 위한 전자기 보안",
+    title: "Frankonia CyberShield | 데이터센터 전자기 차폐 솔루션",
     description:
-      "AI, 소버린 클라우드, 코로케이션 및 미션 크리티컬 데이터 인프라를 위한 모듈형 검증 전자기 차폐 솔루션.",
+      "AI·소버린 클라우드·코로케이션 데이터센터를 위한 모듈형 전자기 차폐(EMC/TEMPEST) 솔루션. 10 kHz~40 GHz 최대 120 dB, EN 50147-1 현장 검증.",
   },
 } as const;
 
@@ -31,6 +31,9 @@ export function buildSiteMetadata(lang: Lang): Metadata {
     title,
     description,
     icons: { icon: asset("/favicon.svg") },
+    robots: isIndexable
+      ? { index: true, follow: true }
+      : { index: false, follow: false, nocache: true },
     alternates: {
       canonical,
       languages: {

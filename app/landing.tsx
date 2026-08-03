@@ -2,6 +2,7 @@
 
 import { FormEvent, useEffect, useRef, useState } from "react";
 import { BrandLockup, WordmarkDefs } from "./brand";
+import { StructuredData } from "./structured-data";
 import { asset, languages, route } from "./site-config";
 import type { Lang } from "./site-config";
 
@@ -823,8 +824,7 @@ const revealSelector = [
   ".scenario-grid article",
   ".compare-row",
   ".ecosystem-grid article",
-  ".attenuation-chart > div",
-  ".scope-list article",
+  ".scope-list tbody tr",
   ".standards-row div",
   ".faq-list details",
   ".why-metric",
@@ -873,7 +873,29 @@ export function Landing({ lang }: { lang: Lang }) {
   useEffect(() => {
     const video = heroVideoRef.current;
     if (!video || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    video.play().catch(() => {});
+
+    // The clip is 3.5 MB, so it is only fetched once it is actually on screen —
+    // eager preloading competed with the hero for bandwidth on first paint.
+    const start = () => {
+      video.preload = "auto";
+      video.play().catch(() => {});
+    };
+
+    if (!("IntersectionObserver" in window)) {
+      start();
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting) return;
+        observer.disconnect();
+        start();
+      },
+      { rootMargin: "200px" },
+    );
+    observer.observe(video);
+    return () => observer.disconnect();
   }, []);
 
   // Reveal cards as they scroll into view; anything already on screen stays visible.
@@ -1037,6 +1059,12 @@ export function Landing({ lang }: { lang: Lang }) {
 
   return (
     <main>
+      <StructuredData
+        lang={lang}
+        faqs={t.faqs}
+        productLines={t.ecosystemCards}
+        description={t.heroBody}
+      />
       <WordmarkDefs />
 
       <header className="site-header">
@@ -1121,7 +1149,7 @@ export function Landing({ lang }: { lang: Lang }) {
               muted
               loop
               playsInline
-              preload="auto"
+              preload="none"
               aria-label={t.heroVideoLabel}
             />
           </div>
@@ -1210,17 +1238,22 @@ export function Landing({ lang }: { lang: Lang }) {
           <h2 id="compare-title">{t.compareTitle}</h2>
           <p>{t.compareBody}</p>
         </div>
-        <div className="compare-table">
-          <div className="compare-head" aria-hidden="true">
-            {t.compareHead.map((label) => <span key={label}>{label}</span>)}
-          </div>
-          {t.compareRows.map(([criterion, standard, advantage]) => (
-            <div className="compare-row" key={criterion}>
-              <h3>{criterion}</h3>
-              <p className="standard">{standard}</p>
-              <p className="advantage">{advantage}</p>
-            </div>
-          ))}
+        <div className="table-scroll" role="region" tabIndex={0} aria-label={t.compareTitle}>
+          <table className="compare-table">
+            <caption className="visually-hidden">{t.compareBody}</caption>
+            <thead>
+              <tr>{t.compareHead.map((label) => <th key={label} scope="col">{label}</th>)}</tr>
+            </thead>
+            <tbody>
+              {t.compareRows.map(([criterion, standard, advantage]) => (
+                <tr className="compare-row" key={criterion}>
+                  <th scope="row">{criterion}</th>
+                  <td className="standard">{standard}</td>
+                  <td className="advantage">{advantage}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
       </section>
 
@@ -1281,15 +1314,30 @@ export function Landing({ lang }: { lang: Lang }) {
           <h2 id="attenuation-title">{t.attenuationTitle}</h2>
           <p>{t.attenuationBody}</p>
         </div>
-        <div className="attenuation-chart">
-          {attenuationRows.map(([frequency, db, field]) => (
-            <div key={frequency}>
-              <b>{frequency}</b>
-              <div className="attenuation-bar" aria-hidden="true"><i style={{ height: barHeight(db) }} /></div>
-              <strong>≥ {db} dB</strong>
-              <span>{t.fieldTypes[field]}</span>
-            </div>
-          ))}
+        <div className="table-scroll" role="region" tabIndex={0} aria-label={t.attenuationTitle}>
+          <table className="attenuation-chart">
+            <caption className="visually-hidden">{t.attenuationTitle}</caption>
+            <thead>
+              <tr>
+                {attenuationRows.map(([frequency]) => <th key={frequency} scope="col">{frequency}</th>)}
+              </tr>
+            </thead>
+            <tbody>
+              <tr className="attenuation-bars" aria-hidden="true">
+                {attenuationRows.map(([frequency, db]) => (
+                  <td key={frequency}>
+                    <span className="attenuation-bar"><i style={{ height: barHeight(db) }} /></span>
+                  </td>
+                ))}
+              </tr>
+              <tr className="attenuation-values">
+                {attenuationRows.map(([frequency, db]) => <td key={frequency}>&ge; {db} dB</td>)}
+              </tr>
+              <tr className="attenuation-fields">
+                {attenuationRows.map(([frequency, , field]) => <td key={frequency}>{t.fieldTypes[field]}</td>)}
+              </tr>
+            </tbody>
+          </table>
         </div>
         <p className="attenuation-note">{t.attenuationNote}</p>
       </section>
@@ -1359,22 +1407,29 @@ export function Landing({ lang }: { lang: Lang }) {
           <h2 id="scope-title">{t.scopeTitle}</h2>
           <p>{t.scopeBody}</p>
         </div>
-        <div className="scope-list">
-          <div className="scope-head" aria-hidden="true">
-            {t.scopeHead.map((label) => <span key={label}>{label}</span>)}
-          </div>
-          {t.scopeRows.map(([category, tag, detail], index) => {
-            const [rating, tone] = scopeMeta[index];
-            return (
-              <article key={category}>
-                <h3>{category}</h3>
-                <div className="scope-rating" aria-label={`${rating} / 5`}>
-                  {[1, 2, 3, 4, 5].map((dot) => <i key={dot} className={dot <= rating ? "on" : ""} />)}
-                </div>
-                <p><span className={`scope-tag ${tone}`}>{tag}</span>{detail}</p>
-              </article>
-            );
-          })}
+        <div className="table-scroll" role="region" tabIndex={0} aria-label={t.scopeTitle}>
+          <table className="scope-list">
+            <caption className="visually-hidden">{t.scopeBody}</caption>
+            <thead>
+              <tr>{t.scopeHead.map((label) => <th key={label} scope="col">{label}</th>)}</tr>
+            </thead>
+            <tbody>
+              {t.scopeRows.map(([category, tag, detail], index) => {
+                const [rating, tone] = scopeMeta[index];
+                return (
+                  <tr key={category}>
+                    <th scope="row">{category}</th>
+                    <td>
+                      <span className="scope-rating" aria-label={`${rating} / 5`}>
+                        {[1, 2, 3, 4, 5].map((dot) => <i key={dot} className={dot <= rating ? "on" : ""} />)}
+                      </span>
+                    </td>
+                    <td><span className={`scope-tag ${tone}`}>{tag}</span>{detail}</td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
         </div>
       </section>
 
@@ -1443,6 +1498,15 @@ export function Landing({ lang }: { lang: Lang }) {
         <div className="footer-brand"><BrandLockup /></div>
         <p>{t.footer}</p>
         <div>
+          {/* The header switcher only renders its links once opened, so these
+              are the crawlable path to the other locales. */}
+          <nav className="footer-langs" aria-label={t.langLabel}>
+            {languages.map(([code, , label, path]) => (
+              <a key={code} href={route(path)} hrefLang={code} lang={code} aria-current={code === lang ? "true" : undefined}>
+                {label}
+              </a>
+            ))}
+          </nav>
           <a href={route("/privacy")}>Privacy</a>
           <a href={route("/imprint")}>Imprint</a>
           <a href="https://frankonia-solutions.com/" target="_blank" rel="noreferrer">© 1987 Frankonia Group</a>

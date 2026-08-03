@@ -1,13 +1,13 @@
 import type { Metadata } from "next";
 import { company, LegalPage } from "../legal";
-import { asset, route, siteOrigin } from "../site-config";
+import { asset, isIndexable, route, siteOrigin } from "../site-config";
 
 export const metadata: Metadata = {
   title: "Imprint | Frankonia CyberShield",
   description: "Legal notice and provider identification for the Frankonia CyberShield website.",
   icons: { icon: asset("/favicon.svg") },
   alternates: { canonical: `${siteOrigin}${route("/imprint")}` },
-  robots: { index: true, follow: true },
+  robots: isIndexable ? { index: true, follow: true } : { index: false, follow: false },
 };
 
 export default function Imprint() {
