@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import type { Lang } from "./site-config";
 import { asset, isIndexable, langPath, route, siteOrigin } from "./site-config";
 
@@ -30,7 +30,14 @@ export function buildSiteMetadata(lang: Lang): Metadata {
   return {
     title,
     description,
-    icons: { icon: asset("/favicon.svg") },
+    icons: {
+      icon: [
+        { url: asset("/favicon.svg"), type: "image/svg+xml" },
+        { url: asset("/favicon.ico"), sizes: "32x32 48x48" },
+      ],
+      apple: asset("/apple-touch-icon.png"),
+    },
+    manifest: asset("/site.webmanifest"),
     robots: isIndexable
       ? { index: true, follow: true }
       : { index: false, follow: false, nocache: true },
@@ -59,3 +66,6 @@ export function buildSiteMetadata(lang: Lang): Metadata {
     },
   };
 }
+
+/** themeColor belongs to the viewport export, not metadata. */
+export const siteViewport: Viewport = { themeColor: "#25282b" };

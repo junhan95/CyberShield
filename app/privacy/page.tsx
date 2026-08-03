@@ -1,12 +1,22 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { company, LegalPage } from "../legal";
+import { siteViewport } from "../site-metadata";
 import { asset, isIndexable, route, siteOrigin } from "../site-config";
+
+export const viewport: Viewport = siteViewport;
 
 export const metadata: Metadata = {
   title: "Privacy Policy | Frankonia CyberShield",
   description:
     "How Frankonia handles personal data in connection with the CyberShield website and enquiries.",
-  icons: { icon: asset("/favicon.svg") },
+  icons: {
+    icon: [
+      { url: asset("/favicon.svg"), type: "image/svg+xml" },
+      { url: asset("/favicon.ico"), sizes: "32x32 48x48" },
+    ],
+    apple: asset("/apple-touch-icon.png"),
+  },
+  manifest: asset("/site.webmanifest"),
   alternates: { canonical: `${siteOrigin}${route("/privacy")}` },
   robots: isIndexable ? { index: true, follow: true } : { index: false, follow: false },
 };
