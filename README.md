@@ -1,98 +1,134 @@
-# vinext-starter
+<div align="center">
 
-A clean full-stack starter running on
-[vinext](https://github.com/cloudflare/vinext), with optional Cloudflare D1 and
-Drizzle support.
+<img src="public/og.png" alt="Frankonia CyberShield" width="820">
 
-## Prerequisites
+# Frankonia CyberShield
 
-- Node.js `>=22.13.0`
+**Physical and electromagnetic security for critical compute.**
 
-## Quick Start
+The product site for Frankonia's modular RF-shielded enclosures — the rooms that wrap
+AI clusters, sovereign cloud and colocation halls in a measurable electromagnetic boundary.
+
+[![Deploy](https://github.com/junhan95/CyberShield/actions/workflows/deploy-pages.yml/badge.svg)](https://github.com/junhan95/CyberShield/actions/workflows/deploy-pages.yml)
+![Next.js](https://img.shields.io/badge/Next.js-16.2-000000?logo=nextdotjs&logoColor=white)
+![React](https://img.shields.io/badge/React-19.2-149ECA?logo=react&logoColor=white)
+![TypeScript](https://img.shields.io/badge/TypeScript-5.9-3178C6?logo=typescript&logoColor=white)
+![Static export](https://img.shields.io/badge/output-static%20export-2ea44f)
+
+### [English](https://junhan95.github.io/CyberShield/) · [Deutsch](https://junhan95.github.io/CyberShield/de/) · [한국어](https://junhan95.github.io/CyberShield/ko/)
+
+</div>
+
+---
+
+## What this is
+
+A single-page product site, prerendered to static HTML and served from GitHub Pages.
+Three fully translated locales, two standalone legal pages, no client-side data fetching
+and no tracking of any kind.
+
+| Route | Locale | Page |
+|---|---|---|
+| [`/`](https://junhan95.github.io/CyberShield/) | English | Landing |
+| [`/de/`](https://junhan95.github.io/CyberShield/de/) | Deutsch | Landing |
+| [`/ko/`](https://junhan95.github.io/CyberShield/ko/) | 한국어 | Landing |
+| [`/privacy/`](https://junhan95.github.io/CyberShield/privacy/) | English | Privacy policy |
+| [`/imprint/`](https://junhan95.github.io/CyberShield/imprint/) | English | Imprint |
+
+## Highlights
+
+**Trilingual from one component.** Every string lives in a single `copy` object keyed by
+locale, so EN / DE / KO render from the same tree. The German copy uses real EMC shielding
+terminology — *Schirmdämpfung*, *Wabenkamin*, *Hohlleiter* — rather than a literal
+translation of the English.
+
+**Cut-metal wordmark, drawn in SVG.** `CYBERSHIELD` is a brushed steel sheet shown through
+a double-contour letterform mask, with a polished chamfer from `feSpecularLighting` and a
+cast shadow. The filter values are tuned to the 26 px header size on purpose: SVG filters
+rasterise at final render scale, so a grain tuned on a large canvas dissolves into flat
+grey when scaled down.
+
+**A hero that loops both ways.** The render plays forward for 8 s, holds, runs backward,
+holds, and repeats. Reversing in the browser means seeking frame by frame, which measured
+at roughly 2–3 fps on this 1080p source — so the whole cycle is baked into the file and
+played back natively.
+
+**Measured, not asserted.** The attenuation band charts guaranteed shielding performance
+from 10 kHz to 40 GHz against EN 50147-1 / IEEE 299, with bar heights derived from the
+decibel figures rather than hand-placed.
+
+**The brand lockup is the real artwork.** `frankonia-logo.svg` is built from vector
+outlines extracted from the official brand PDF, not approximated with a web font, so the
+FRANKONIA wordmark is glyph-exact.
+
+## Stack
+
+| | |
+|---|---|
+| Framework | Next.js 16 (App Router, RSC) |
+| Runtime | React 19 · TypeScript 5.9 |
+| Dev server | [vinext](https://github.com/cloudflare/vinext) on Vite 8 |
+| Styling | Hand-written CSS in `app/globals.css` (Tailwind 4 is installed but barely used) |
+| Hosting | GitHub Pages, static export |
+
+## Local development
 
 ```bash
 npm install
 npm run dev
-npm run build
 ```
 
-This starter does not use `wrangler.jsonc`.
+The dev server runs at `http://localhost:3000`.
 
-## Included Shape
+To reproduce the production build exactly — including the `/CyberShield` base path that
+GitHub Pages needs baked in at build time:
 
-- edit site code under `app/`
-- `.openai/hosting.json` declares optional Sites D1 and R2 bindings
-- `vite.config.ts` simulates declared bindings for local development
-- `db/schema.ts` starts intentionally empty
-- `examples/d1/` contains an optional D1 example surface
-- `drizzle.config.ts` supports local migration generation when needed
-
-## Workspace Auth Headers
-
-OpenAI workspace sites can read the current user's email from
-`oai-authenticated-user-email`.
-
-SIWC-authenticated workspace sites may also receive
-`oai-authenticated-user-full-name` when the user's SIWC profile has a non-empty
-`name` claim. The full-name value is percent-encoded UTF-8 and is accompanied by
-`oai-authenticated-user-full-name-encoding: percent-encoded-utf-8`.
-
-Treat the full name as optional and fall back to email when it is absent:
-
-```tsx
-import { headers } from "next/headers";
-
-export default async function Home() {
-  const requestHeaders = await headers();
-  const email = requestHeaders.get("oai-authenticated-user-email");
-  const encodedFullName = requestHeaders.get("oai-authenticated-user-full-name");
-  const fullName =
-    encodedFullName &&
-    requestHeaders.get("oai-authenticated-user-full-name-encoding") ===
-      "percent-encoded-utf-8"
-      ? decodeURIComponent(encodedFullName)
-      : null;
-
-  const displayName = fullName ?? email;
-  // ...
-}
+```bash
+STATIC_EXPORT=1 NEXT_PUBLIC_BASE_PATH=/CyberShield NEXT_PUBLIC_SITE_ORIGIN=https://junhan95.github.io npx next build
 ```
 
-## Optional Dispatch-Owned ChatGPT Sign-In
+Output lands in `out/`.
 
-Import the ready-to-use helpers from `app/chatgpt-auth.ts` when the site needs
-optional or required ChatGPT sign-in:
+> **On Windows, run that from PowerShell rather than Git Bash.** Git Bash rewrites
+> `/CyberShield` into a Windows path and the build fails with an invalid `basePath`.
 
-- Use `getChatGPTUser()` for optional signed-in UI.
-- Use `requireChatGPTUser(returnTo)` for server-rendered pages that should send
-  anonymous visitors through Sign in with ChatGPT.
-- Use `chatGPTSignInPath(returnTo)` and `chatGPTSignOutPath(returnTo)` for
-  browser links or actions.
-- Pass a same-origin relative `returnTo` path for the destination after sign-in
-  or sign-out. The helper validates and safely encodes it.
-- Mark protected pages with `export const dynamic = "force-dynamic"` because
-  they depend on per-request identity headers.
+## Layout
 
-Dispatch owns `/signin-with-chatgpt`, `/signout-with-chatgpt`, `/callback`, the
-OAuth cookies, and identity header injection. Do not implement app routes for
-those reserved paths. Routes that do not import and call the helper remain
-anonymous-compatible.
+```
+app/
+  landing.tsx        # the whole landing page, and all copy keyed by locale
+  brand.tsx          # cut-metal wordmark definitions, shared across pages
+  legal.tsx          # shell and company details for the legal pages
+  site-config.ts     # base path, locale table, asset/route helpers
+  site-metadata.ts   # per-locale title, description, hreflang, Open Graph
+  page.tsx           # /
+  de/  ko/           # /de/  /ko/
+  privacy/ imprint/  # standalone legal pages
+public/
+  frankonia-logo.svg     # brand lockup, vector outlines from the brand PDF
+  hero-render-loop.mp4   # 20 s ping-pong cycle
+  images/                # facility photography
+```
 
-SIWC establishes identity only; it does not prove workspace membership. Use the
-Sites hosting platform's access policy controls for workspace-wide restrictions,
-or enforce explicit server-side membership or allowlist checks.
+`db/`, `worker/`, `examples/` and `drizzle.config.ts` are scaffolding left over from the
+project starter. The site does not use them.
 
-Use SIWC for account pages, user-specific dashboards, saved records, and write
-actions tied to the current ChatGPT user. Leave public content anonymous.
+## Deployment
 
-## Useful Commands
+Pushing to `main` triggers [`deploy-pages.yml`](.github/workflows/deploy-pages.yml), which
+runs the static export and publishes `out/` to GitHub Pages. There is no manual step.
 
-- `npm run dev`: start local development
-- `npm run build`: verify the vinext build output
-- `npm test`: build the starter and verify its rendered loading skeleton
-- `npm run db:generate`: generate Drizzle migrations after schema changes
+## Notes
 
-## Learn More
+- Content is derived from Frankonia's CyberShield product documentation. Performance
+  figures, standards and certification scope depend on the agreed project configuration
+  and final on-site validation.
+- The site sets no cookies and embeds no analytics. The only third-party request is
+  Google Fonts.
+- The imprint carries the statutory details of Frankonia Germany EMC Solutions GmbH.
 
-- [vinext Documentation](https://github.com/cloudflare/vinext)
-- [Drizzle D1 Guide](https://orm.drizzle.team/docs/get-started/d1-new)
+---
+
+<div align="center">
+<sub>© 1987 Frankonia Group · <a href="https://frankonia-solutions.com/">frankonia-solutions.com</a></sub>
+</div>
