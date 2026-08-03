@@ -1,40 +1,44 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import { hotspots } from "./cutaway";
+import { useState } from "react";
+import type { GroupId } from "./cutaway";
+import { groups, hotspots } from "./cutaway";
 import type { Lang } from "./site-config";
 import { asset } from "./site-config";
 
 /**
- * The cutaway render with the original callouts turned into hotspots. Pointing
- * at a marker — or at its entry in the list — spotlights that part of the room
- * and raises the matching description. Everything is a button, so the same
- * pairing works from the keyboard and from a tap.
+ * The cutaway render with the original callouts turned into hotspots.
+ *
+ * The render sits on its own, the parts are listed underneath in four groups,
+ * and a caption directly below the image carries the description — so the text
+ * appears next to the highlight rather than off at the side. Pointing at a
+ * marker or at its entry works the same, as does a tap or the keyboard.
  */
-export function CutawayMap({ lang, alt }: { lang: Lang; alt: string }) {
+export function CutawayMap({ lang, alt, hint }: { lang: Lang; alt: string; hint: string }) {
   const [active, setActive] = useState<string | null>(null);
-  const listRef = useRef<HTMLOListElement>(null);
+  const [group, setGroup] = useState<GroupId | null>(null);
+
   const current = hotspots.find((spot) => spot.id === active) ?? null;
 
-  // The list scrolls, so a part picked on the render has to be brought into view.
-  useEffect(() => {
-    if (!active) return;
-    const row = listRef.current?.querySelector(`[data-spot="${active}"]`);
-    row?.scrollIntoView({ block: "nearest" });
-  }, [active]);
-
-  const bind = (id: string) => ({
+  const bindSpot = (id: string) => ({
     onMouseEnter: () => setActive(id),
     onFocus: () => setActive(id),
     onClick: () => setActive((previous) => (previous === id ? null : id)),
   });
 
+  const bindGroup = (id: GroupId) => ({
+    onMouseEnter: () => setGroup(id),
+    onFocus: () => setGroup(id),
+    onMouseLeave: () => setGroup(null),
+    onBlur: () => setGroup(null),
+  });
+
+  const dimmed = (spot: (typeof hotspots)[number]) =>
+    (active !== null && spot.id !== active) || (group !== null && spot.group !== group);
+
   return (
-    <div
-      className={active ? "cutaway is-active" : "cutaway"}
-      onMouseLeave={() => setActive(null)}
-    >
-      <figure className="cutaway-stage">
+    <div className={active || group ? "cutaway is-active" : "cutaway"}>
+      <figure className="cutaway-stage" onMouseLeave={() => setActive(null)}>
         <img src={asset("/images/cutaway.webp")} width={1800} height={1009} alt={alt} />
 
         {/* Dims everything but a circle around the selected part. */}
@@ -45,7 +49,7 @@ export function CutawayMap({ lang, alt }: { lang: Lang; alt: string }) {
             current
               ? {
                   opacity: 1,
-                  background: `radial-gradient(circle 150px at ${current.x}% ${current.y}%, rgba(18,20,22,0) 0, rgba(18,20,22,0) 72px, rgba(18,20,22,.8) 150px)`,
+                  background: `radial-gradient(circle 160px at ${current.x}% ${current.y}%, rgba(18,20,22,0) 0, rgba(18,20,22,0) 76px, rgba(18,20,22,.82) 160px)`,
                 }
               : undefined
           }
@@ -55,36 +59,60 @@ export function CutawayMap({ lang, alt }: { lang: Lang; alt: string }) {
           <button
             key={spot.id}
             type="button"
-            className={spot.id === active ? "cutaway-pin is-on" : "cutaway-pin"}
+            className={`cutaway-pin${spot.id === active ? " is-on" : ""}${dimmed(spot) ? " is-off" : ""}`}
             style={{ left: `${spot.x}%`, top: `${spot.y}%` }}
+            aria-label={spot.title[lang]}
             aria-pressed={spot.id === active}
-            {...bind(spot.id)}
+            {...bindSpot(spot.id)}
           >
-            <span aria-hidden="true">{index + 1}</span>
-            <em>{spot.title[lang]}</em>
+            {index + 1}
           </button>
         ))}
       </figure>
 
-      <ol className="cutaway-list" ref={listRef}>
-        {hotspots.map((spot, index) => (
-          <li key={spot.id}>
-            <button
-              type="button"
-              data-spot={spot.id}
-              className={spot.id === active ? "is-on" : undefined}
-              aria-pressed={spot.id === active}
-              {...bind(spot.id)}
+      <p className={current ? "cutaway-caption is-on" : "cutaway-caption"} aria-live="polite">
+        {current ? (
+          <>
+            <strong>{current.title[lang]}</strong>
+            <span>{current.detail[lang]}</span>
+          </>
+        ) : (
+          <span className="cutaway-hint">{hint}</span>
+        )}
+      </p>
+
+      <div className="cutaway-groups">
+        {groups.map((entry) => {
+          const members = hotspots.filter((spot) => spot.group === entry.id);
+          return (
+            <section
+              key={entry.id}
+              className={group === entry.id ? "cutaway-group is-on" : "cutaway-group"}
+              {...bindGroup(entry.id)}
             >
-              <b>{String(index + 1).padStart(2, "0")}</b>
-              <span>
-                <strong>{spot.title[lang]}</strong>
-                <small>{spot.detail[lang]}</small>
-              </span>
-            </button>
-          </li>
-        ))}
-      </ol>
+              <h3>
+                {entry.label[lang]}
+                <b>{members.length}</b>
+              </h3>
+              <ul>
+                {members.map((spot) => (
+                  <li key={spot.id}>
+                    <button
+                      type="button"
+                      className={spot.id === active ? "is-on" : undefined}
+                      aria-pressed={spot.id === active}
+                      {...bindSpot(spot.id)}
+                    >
+                      <b>{String(hotspots.indexOf(spot) + 1).padStart(2, "0")}</b>
+                      {spot.title[lang]}
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            </section>
+          );
+        })}
+      </div>
     </div>
   );
 }

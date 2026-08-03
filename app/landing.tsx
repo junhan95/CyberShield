@@ -84,6 +84,7 @@ const copy = {
     cutawayBody:
       "Attenuation is only ever as good as the weakest crossing. Point at any part of the room to see what it is and how it holds the boundary.",
     cutawayAlt: "Cutaway view of a CyberShield shielded data hall with its structure, doors, filters, ducts and power room",
+    cutawayHint: "Point at a number on the render, or at any part listed below.",
     compareEyebrow: "ENGINEERED BEYOND THE INDUSTRY BASELINE",
     compareTitle: "Where standard shielding stops, the engineering starts.",
     compareBody:
@@ -371,6 +372,7 @@ const copy = {
     cutawayBody:
       "Die Dämpfung ist immer nur so gut wie der schwächste Übergang. Zeigen Sie auf einen Teil des Raums, um zu sehen, worum es sich handelt und wie er die Grenze hält.",
     cutawayAlt: "Schnittansicht einer geschirmten CyberShield-Datenhalle mit Konstruktion, Türen, Filtern, Kanälen und Stromversorgungsraum",
+    cutawayHint: "Zeigen Sie auf eine Nummer im Schnitt oder auf einen der Bauteile darunter.",
     compareEyebrow: "ENGINEERING JENSEITS DES BRANCHENSTANDARDS",
     compareTitle: "Wo übliche Abschirmung endet, beginnt das Engineering.",
     compareBody:
@@ -608,6 +610,7 @@ const copy = {
     cutawayBody:
       "차폐 성능은 가장 약한 관통부 이상으로 올라가지 않습니다. 도면의 각 부분에 마우스를 올리면 해당 요소와 경계를 유지하는 방식이 표시됩니다.",
     cutawayAlt: "구조, 도어, 필터, 덕트, 전력실을 포함한 CyberShield 차폐 데이터홀 단면도",
+    cutawayHint: "도면의 번호 또는 아래 항목에 마우스를 올려보세요.",
     compareEyebrow: "업계 기준을 넘어서는 엔지니어링",
     compareTitle: "일반적인 차폐가 멈추는 지점에서 엔지니어링이 시작됩니다.",
     compareBody:
@@ -1299,7 +1302,7 @@ export function Landing({ lang }: { lang: Lang }) {
           <h2 id="cutaway-title">{t.cutawayTitle}</h2>
           <p>{t.cutawayBody}</p>
         </div>
-        <CutawayMap lang={lang} alt={t.cutawayAlt} />
+        <CutawayMap lang={lang} alt={t.cutawayAlt} hint={t.cutawayHint} />
       </section>
 
       <section className="compare-section" aria-labelledby="compare-title">
