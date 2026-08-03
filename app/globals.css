@@ -243,9 +243,16 @@ h1 span { color: var(--primary); }
 
 /* ── Cutaway map: hotspots over the shielded-room render ─ */
 .cutaway-section { padding: 120px max(4vw, calc((100% - 1400px) / 2)); background: var(--ink); color: #fff; }
-.cutaway { display: block; }
+/* Render on the left, part list on the right. The render and its caption stay
+   pinned, so whichever entry the pointer reaches, the highlighted marker and
+   the words describing it are on screen together. */
+.cutaway {
+  display: grid; grid-template-columns: minmax(0, 1fr) clamp(320px, 29%, 430px);
+  gap: 44px; align-items: start;
+}
+.cutaway-view { position: sticky; top: 96px; }
 
-.cutaway-stage { position: relative; margin: 0 auto; max-width: 1180px; border-radius: var(--radius); overflow: hidden; }
+.cutaway-stage { position: relative; margin: 0; border-radius: var(--radius); overflow: hidden; }
 .cutaway-stage img { display: block; width: 100%; height: auto; }
 .cutaway-spot { position: absolute; inset: 0; opacity: 0; pointer-events: none; transition: opacity .3s ease, background .3s ease; }
 
@@ -264,9 +271,12 @@ h1 span { color: var(--primary); }
 }
 .cutaway-pin.is-off { background: rgba(255, 255, 255, .28); border-color: rgba(255, 255, 255, .45); opacity: .75; }
 
-/* Caption sits under the render so the words land next to the highlight. */
+/* Caption sits under the render, inside the pinned column. Keeping it out of
+   the list's column means its per-part height never moves the rows. */
 .cutaway-caption {
-  max-width: 1180px; margin: 20px auto 0; min-height: 62px;
+  /* 88px is the hint line and a one-line part description at the same height,
+     so switching between them never nudges what is stacked below. */
+  margin: 20px 0 0; min-height: 88px;
   padding: 16px 20px; border-left: 3px solid rgba(255, 255, 255, .18);
   transition: border-color .25s ease;
 }
@@ -276,11 +286,12 @@ h1 span { color: var(--primary); }
 .cutaway-hint { color: rgba(255, 255, 255, .45); font-size: 15px; }
 
 .cutaway-groups {
-  max-width: 1180px; margin: 42px auto 0;
-  display: grid; grid-template-columns: repeat(4, 1fr); gap: 26px;
+  min-width: 0; margin: 0;
+  display: grid; grid-template-columns: 1fr; gap: 0;
   border-top: 1px solid rgba(255, 255, 255, .2); padding-top: 8px;
 }
 .cutaway-group { padding-top: 18px; transition: opacity .25s ease; }
+.cutaway-group + .cutaway-group { margin-top: 20px; border-top: 1px solid rgba(255, 255, 255, .14); }
 .cutaway.is-active .cutaway-group:not(.is-on) { opacity: 1; }
 .cutaway-group h3 {
   display: flex; align-items: baseline; gap: 9px; margin: 0 0 12px;
@@ -291,12 +302,15 @@ h1 span { color: var(--primary); }
 .cutaway-group li + li { border-top: 1px solid rgba(255, 255, 255, .1); }
 .cutaway-group button {
   width: 100%; display: grid; grid-template-columns: 26px 1fr; gap: 8px; align-items: start;
-  padding: 9px 8px 9px 0; border: 0; background: none; color: rgba(255, 255, 255, .8);
+  padding: 9px 8px; border: 0; background: none; color: rgba(255, 255, 255, .8);
   text-align: left; cursor: pointer; font-size: 14px; line-height: 1.4;
-  transition: background .2s ease, padding-left .2s ease, color .2s ease;
+  box-shadow: inset 2px 0 0 transparent;
+  /* Geometry has to stay put on hover. Moving the padding narrows the label,
+     re-wraps it, changes the row height and flickers the pointer between rows. */
+  transition: background .2s ease, box-shadow .2s ease, color .2s ease;
 }
 .cutaway-group button b { color: rgba(255, 255, 255, .38); font-size: 11px; font-weight: 800; line-height: 1.5; }
-.cutaway-group button:hover, .cutaway-group button.is-on { background: rgba(255, 255, 255, .08); padding-left: 8px; color: #fff; }
+.cutaway-group button:hover, .cutaway-group button.is-on { background: rgba(255, 255, 255, .08); color: #fff; box-shadow: inset 2px 0 0 var(--primary); }
 .cutaway-group button.is-on b { color: var(--primary); }
 
 /* ── Comparison table: soft canvas, red advantage rail ── */
@@ -645,6 +659,15 @@ input:focus-visible, select:focus-visible, textarea:focus-visible {
   .nav-desktop { display: none; }
   .menu-toggle { display: inline-flex; }
   .mobile-menu { display: flex; }
+  /* Too narrow for a side rail — render, caption, then the parts underneath. */
+  .cutaway { grid-template-columns: 1fr; gap: 0; }
+  .cutaway-view { position: static; }
+  .cutaway-stage { max-width: 1180px; margin: 0 auto; }
+  /* Stacked, the caption sits above the list, so reserve two description lines
+     — otherwise a longer part shoves the rows the pointer is aiming at. */
+  .cutaway-caption { max-width: 1180px; margin: 20px auto 0; min-height: 112px; }
+  .cutaway-groups { max-width: 1180px; margin: 42px auto 0; grid-template-columns: repeat(4, 1fr); gap: 26px; }
+  .cutaway-group + .cutaway-group { margin-top: 0; border-top: 0; }
 }
 
 @media (max-width: 1100px) {

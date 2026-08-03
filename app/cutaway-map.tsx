@@ -9,10 +9,11 @@ import { asset } from "./site-config";
 /**
  * The cutaway render with the original callouts turned into hotspots.
  *
- * The render sits on its own, the parts are listed underneath in four groups,
- * and a caption directly below the image carries the description — so the text
- * appears next to the highlight rather than off at the side. Pointing at a
- * marker or at its entry works the same, as does a tap or the keyboard.
+ * The render holds the left column and stays pinned while the part list scrolls
+ * beside it on the right, so the highlighted marker and the words describing it
+ * are on screen together. The caption pins to the top of that column for the
+ * same reason. Pointing at a marker or at its entry works the same, as does a
+ * tap or the keyboard. Below 1240px the two columns stack back up.
  */
 export function CutawayMap({ lang, alt, hint }: { lang: Lang; alt: string; hint: string }) {
   const [active, setActive] = useState<string | null>(null);
@@ -38,48 +39,52 @@ export function CutawayMap({ lang, alt, hint }: { lang: Lang; alt: string; hint:
 
   return (
     <div className={active || group ? "cutaway is-active" : "cutaway"}>
-      <figure className="cutaway-stage" onMouseLeave={() => setActive(null)}>
-        <img src={asset("/images/cutaway.webp")} width={1800} height={1009} alt={alt} />
+      <div className="cutaway-view">
+        <figure className="cutaway-stage" onMouseLeave={() => setActive(null)}>
+          <img src={asset("/images/cutaway.webp")} width={1800} height={1009} alt={alt} />
 
-        {/* Dims everything but a circle around the selected part. */}
-        <span
-          className="cutaway-spot"
-          aria-hidden="true"
-          style={
-            current
-              ? {
-                  opacity: 1,
-                  background: `radial-gradient(circle 160px at ${current.x}% ${current.y}%, rgba(18,20,22,0) 0, rgba(18,20,22,0) 76px, rgba(18,20,22,.82) 160px)`,
-                }
-              : undefined
-          }
-        />
+          {/* Dims everything but a circle around the selected part. */}
+          <span
+            className="cutaway-spot"
+            aria-hidden="true"
+            style={
+              current
+                ? {
+                    opacity: 1,
+                    background: `radial-gradient(circle 160px at ${current.x}% ${current.y}%, rgba(18,20,22,0) 0, rgba(18,20,22,0) 76px, rgba(18,20,22,.82) 160px)`,
+                  }
+                : undefined
+            }
+          />
 
-        {hotspots.map((spot, index) => (
-          <button
-            key={spot.id}
-            type="button"
-            className={`cutaway-pin${spot.id === active ? " is-on" : ""}${dimmed(spot) ? " is-off" : ""}`}
-            style={{ left: `${spot.x}%`, top: `${spot.y}%` }}
-            aria-label={spot.title[lang]}
-            aria-pressed={spot.id === active}
-            {...bindSpot(spot.id)}
-          >
-            {index + 1}
-          </button>
-        ))}
-      </figure>
+          {hotspots.map((spot, index) => (
+            <button
+              key={spot.id}
+              type="button"
+              className={`cutaway-pin${spot.id === active ? " is-on" : ""}${dimmed(spot) ? " is-off" : ""}`}
+              style={{ left: `${spot.x}%`, top: `${spot.y}%` }}
+              aria-label={spot.title[lang]}
+              aria-pressed={spot.id === active}
+              {...bindSpot(spot.id)}
+            >
+              {index + 1}
+            </button>
+          ))}
+        </figure>
 
-      <p className={current ? "cutaway-caption is-on" : "cutaway-caption"} aria-live="polite">
-        {current ? (
-          <>
-            <strong>{current.title[lang]}</strong>
-            <span>{current.detail[lang]}</span>
-          </>
-        ) : (
-          <span className="cutaway-hint">{hint}</span>
-        )}
-      </p>
+        {/* Caption rides with the render, not with the list: its height changes
+            per part, and above the list that would shove rows under the cursor. */}
+        <p className={current ? "cutaway-caption is-on" : "cutaway-caption"} aria-live="polite">
+          {current ? (
+            <>
+              <strong>{current.title[lang]}</strong>
+              <span>{current.detail[lang]}</span>
+            </>
+          ) : (
+            <span className="cutaway-hint">{hint}</span>
+          )}
+        </p>
+      </div>
 
       <div className="cutaway-groups">
         {groups.map((entry) => {
