@@ -421,7 +421,10 @@ legend { margin-bottom: 12px; color: var(--body-text); font-size: 12px; font-wei
 }
 
 /* ── Footer: ink band ─────────────────────────────────── */
-footer { padding: 55px 4vw; display: grid; grid-template-columns: .6fr 1fr .8fr; gap: 5vw; align-items: start; background: var(--ink); color: white; }
+/* The lockup track is sized to its content: the logo and wordmark are replaced
+   elements with width:auto, so they contribute nothing to a fr track's minimum
+   and the mark would spill over the disclaimer. */
+footer { padding: 55px 4vw; display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 5vw; align-items: start; background: var(--ink); color: white; }
 footer > p { margin: 0; color: rgba(255, 255, 255, .55); font-size: 14px; line-height: 1.6; }
 footer > div:last-child { display: flex; justify-content: flex-end; align-items: center; gap: 20px; flex-wrap: wrap; color: rgba(255, 255, 255, .55); font-size: 14px; }
 .footer-langs { display: flex; gap: 14px; padding-right: 20px; border-right: 1px solid rgba(255, 255, 255, .2); }
@@ -564,6 +567,10 @@ input:focus-visible, select:focus-visible, textarea:focus-visible {
 }
 
 @media (max-width: 1100px) {
+  footer { grid-template-columns: auto minmax(0, 1fr); row-gap: 30px; column-gap: 4vw; }
+  footer > .footer-brand { grid-column: 1; grid-row: 1; }
+  footer > div:last-child { grid-column: 2; grid-row: 1; }
+  footer > p { grid-column: 1 / -1; grid-row: 2; max-width: 680px; }
   .hero-grid { grid-template-columns: 1fr; }
   .hero-copy { max-width: 760px; }
   .hero-visual { min-height: 440px; }
@@ -636,7 +643,8 @@ input:focus-visible, select:focus-visible, textarea:focus-visible {
   .form-grid, .request-toggle { grid-template-columns: 1fr; }
   .request-toggle legend, .form-grid .full { grid-column: auto; }
   form { padding: 25px 20px; }
-  footer { grid-template-columns: 1fr; padding: 45px 18px; }
+  footer { grid-template-columns: 1fr; padding: 45px 18px; row-gap: 26px; }
+  footer > .footer-brand, footer > p, footer > div:last-child { grid-column: auto; grid-row: auto; }
   footer > div:last-child { justify-content: flex-start; }
 }
 
