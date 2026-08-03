@@ -15,6 +15,7 @@ left pointing at a half-uploaded tree.
 
 import os
 import posixpath
+import stat
 import sys
 import time
 
@@ -83,7 +84,38 @@ def main() -> int:
             print(f"  {index}/{len(files)} files")
 
     sftp.put(HTACCESS, posixpath.join(REMOTE, ".htaccess"))
-    print("uploaded .htaccess - deployment complete")
+    print("uploaded .htaccess")
+
+    # Remove what the build no longer produces, so renamed or dropped assets do
+    # not linger. Guarded on the upload having actually delivered a site, so a
+    # broken build cannot empty the document root.
+    if len(files) < 40:
+        print(f"only {len(files)} files uploaded - skipping prune as a safety check")
+    else:
+        keep = {rel for _local, rel in files} | {".htaccess"}
+        removed = 0
+
+        def prune(remote_dir: str, prefix: str = "") -> None:
+            nonlocal removed
+            for entry in sftp.listdir_attr(remote_dir):
+                name = entry.filename
+                rel = f"{prefix}{name}"
+                remote = posixpath.join(remote_dir, name)
+                if stat.S_ISDIR(entry.st_mode):
+                    prune(remote, f"{rel}/")
+                    continue
+                # Keep operator-managed files: backups and anything hidden.
+                if name.startswith("."):
+                    continue
+                if rel not in keep:
+                    sftp.remove(remote)
+                    print(f"  removed stale {rel}")
+                    removed += 1
+
+        prune(REMOTE)
+        print(f"pruned {removed} stale file(s)")
+
+    print("deployment complete")
 
     transport.close()
     return 0
