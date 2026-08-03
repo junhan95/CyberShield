@@ -2,6 +2,7 @@
 
 import { FormEvent, useEffect, useRef, useState } from "react";
 import { BrandLockup, WordmarkDefs } from "./brand";
+import { CutawayMap } from "./cutaway-map";
 import { StructuredData } from "./structured-data";
 import { asset, languages, route } from "./site-config";
 import type { Lang } from "./site-config";
@@ -78,6 +79,11 @@ const copy = {
       ["03", "Adaptable by design", "Dismountable without damage for expansion, modification or complete relocation."],
       ["04", "Complete boundary", "Shielding structure, doors, filters, honeycombs and waveguides are treated as one system."],
     ],
+    cutawayEyebrow: "EVERY PART OF THE BOUNDARY",
+    cutawayTitle: "Twenty-one places a shielded room can leak — and how each one is closed.",
+    cutawayBody:
+      "Attenuation is only ever as good as the weakest crossing. Point at any part of the room to see what it is and how it holds the boundary.",
+    cutawayAlt: "Cutaway view of a CyberShield shielded data hall with its structure, doors, filters, ducts and power room",
     compareEyebrow: "ENGINEERED BEYOND THE INDUSTRY BASELINE",
     compareTitle: "Where standard shielding stops, the engineering starts.",
     compareBody:
@@ -360,6 +366,11 @@ const copy = {
     fieldTypes: { magnetic: "Magnetfeld", plane: "Ebene Welle", microwave: "Mikrowelle" },
     attenuationNote:
       "Die Werte beschreiben den garantierten Leistungsbereich des Standard-PAN-Systems. Der für Ihr Projekt geltende Umfang wird in der Spezifikation und durch die Abnahmemessung vor Ort bestätigt.",
+    cutawayEyebrow: "JEDER TEIL DER SCHIRMGRENZE",
+    cutawayTitle: "Einundzwanzig Stellen, an denen ein Schirmraum undicht wird — und wie jede geschlossen wird.",
+    cutawayBody:
+      "Die Dämpfung ist immer nur so gut wie der schwächste Übergang. Zeigen Sie auf einen Teil des Raums, um zu sehen, worum es sich handelt und wie er die Grenze hält.",
+    cutawayAlt: "Schnittansicht einer geschirmten CyberShield-Datenhalle mit Konstruktion, Türen, Filtern, Kanälen und Stromversorgungsraum",
     compareEyebrow: "ENGINEERING JENSEITS DES BRANCHENSTANDARDS",
     compareTitle: "Wo übliche Abschirmung endet, beginnt das Engineering.",
     compareBody:
@@ -592,6 +603,11 @@ const copy = {
       ["03", "확장 가능한 구조", "손상 없이 해체해 확장, 변경 또는 전체 이전에 재사용할 수 있습니다."],
       ["04", "완전한 보호 경계", "차폐 구조, 도어, 필터, 허니콤 및 도파관을 하나의 시스템으로 구성합니다."],
     ],
+    cutawayEyebrow: "차폐 경계를 이루는 모든 요소",
+    cutawayTitle: "차폐실이 새는 스물한 곳, 그리고 각각을 막는 방법.",
+    cutawayBody:
+      "차폐 성능은 가장 약한 관통부 이상으로 올라가지 않습니다. 도면의 각 부분에 마우스를 올리면 해당 요소와 경계를 유지하는 방식이 표시됩니다.",
+    cutawayAlt: "구조, 도어, 필터, 덕트, 전력실을 포함한 CyberShield 차폐 데이터홀 단면도",
     compareEyebrow: "업계 기준을 넘어서는 엔지니어링",
     compareTitle: "일반적인 차폐가 멈추는 지점에서 엔지니어링이 시작됩니다.",
     compareBody:
@@ -1275,6 +1291,15 @@ export function Landing({ lang }: { lang: Lang }) {
             ))}
           </div>
         </div>
+      </section>
+
+      <section className="cutaway-section" aria-labelledby="cutaway-title">
+        <div className="section-heading">
+          <p className="eyebrow">{t.cutawayEyebrow}</p>
+          <h2 id="cutaway-title">{t.cutawayTitle}</h2>
+          <p>{t.cutawayBody}</p>
+        </div>
+        <CutawayMap lang={lang} alt={t.cutawayAlt} />
       </section>
 
       <section className="compare-section" aria-labelledby="compare-title">

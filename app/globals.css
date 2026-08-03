@@ -241,6 +241,59 @@ h1 span { color: var(--primary); }
 .feature-list h3, .step-list h3 { margin-bottom: 7px; font-size: 18px; font-weight: 700; }
 .feature-list p, .step-list p { margin: 0; color: var(--body-text); font-size: 15px; line-height: 1.55; }
 
+/* ── Cutaway map: hotspots over the shielded-room render ─ */
+.cutaway-section { padding: 120px max(4vw, calc((100% - 1400px) / 2)); background: var(--ink); color: #fff; }
+.cutaway { display: grid; grid-template-columns: 1.35fr .65fr; gap: 40px; align-items: start; }
+
+.cutaway-stage { position: relative; margin: 0; border-radius: var(--radius); overflow: hidden; }
+.cutaway-stage img { display: block; width: 100%; height: auto; }
+/* Dim layer with a hole punched at the active hotspot. */
+.cutaway-spot {
+  position: absolute; inset: 0; opacity: 0; pointer-events: none;
+  transition: opacity .3s ease, background .3s ease;
+}
+
+.cutaway-pin {
+  position: absolute; z-index: 2; transform: translate(-50%, -50%);
+  width: 26px; height: 26px; padding: 0;
+  display: grid; place-items: center;
+  border: 2px solid rgba(255, 255, 255, .9); border-radius: 50%;
+  background: var(--primary); color: #fff; cursor: pointer;
+  font-size: 12px; font-weight: 800; line-height: 1;
+  transition: transform .25s cubic-bezier(.22, .61, .36, 1), box-shadow .25s ease, background .25s ease;
+}
+.cutaway-pin:hover, .cutaway-pin.is-on { transform: translate(-50%, -50%) scale(1.25); box-shadow: 0 0 0 6px rgba(230, 0, 0, .35); }
+.cutaway.is-active .cutaway-pin:not(.is-on) { background: rgba(255, 255, 255, .3); border-color: rgba(255, 255, 255, .5); }
+/* Label rides alongside the marker, only while it is the active one. */
+.cutaway-pin em {
+  position: absolute; left: 34px; top: 50%; transform: translateY(-50%);
+  padding: 7px 12px; border-radius: var(--radius);
+  background: #fff; color: var(--ink);
+  font-style: normal; font-size: 13px; font-weight: 700; line-height: 1.3;
+  white-space: nowrap; opacity: 0; pointer-events: none;
+  transition: opacity .2s ease;
+}
+.cutaway-pin.is-on em { opacity: 1; }
+/* Markers near the right edge flip their label to the other side. */
+.cutaway-pin[style*="left: 7"] em, .cutaway-pin[style*="left: 8"] em { left: auto; right: 34px; }
+
+.cutaway-list { margin: 0; padding: 0; list-style: none; max-height: 620px; overflow-y: auto; }
+.cutaway-list li { border-bottom: 1px solid rgba(255, 255, 255, .12); }
+.cutaway-list button {
+  width: 100%; display: grid; grid-template-columns: 30px 1fr; gap: 12px;
+  padding: 13px 12px 13px 0; border: 0; background: none; color: inherit;
+  text-align: left; cursor: pointer; transition: background .2s ease, padding-left .2s ease;
+}
+.cutaway-list button:hover, .cutaway-list button.is-on { background: rgba(255, 255, 255, .07); padding-left: 12px; }
+.cutaway-list b { color: var(--primary); font-size: 12px; font-weight: 800; line-height: 1.5; }
+.cutaway-list strong { display: block; font-size: 14.5px; font-weight: 700; line-height: 1.35; }
+.cutaway-list small {
+  display: block; margin-top: 5px; max-height: 0; overflow: hidden;
+  color: rgba(255, 255, 255, .62); font-size: 13px; line-height: 1.5;
+  transition: max-height .3s ease, margin-top .3s ease;
+}
+.cutaway-list button:hover small, .cutaway-list button.is-on small { max-height: 120px; }
+
 /* ── Comparison table: soft canvas, red advantage rail ── */
 .compare-section { padding: 120px max(4vw, calc((100% - 1400px) / 2)); background: var(--canvas-soft); }
 .table-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
@@ -609,6 +662,8 @@ input:focus-visible, select:focus-visible, textarea:focus-visible {
   .verify-visual { min-height: 440px; }
   .scenario-grid { grid-template-columns: 1fr; }
   .ecosystem-grid { grid-template-columns: repeat(2, 1fr); }
+  .cutaway { grid-template-columns: 1fr; }
+  .cutaway-list { max-height: none; }
   .compare-row > *, .scope-list tbody th, .scope-list tbody td { padding-right: 24px; }
   .contact-section { grid-template-columns: 1fr; }
   .contact-intro { position: static; }
@@ -637,7 +692,9 @@ input:focus-visible, select:focus-visible, textarea:focus-visible {
   .proof-strip { grid-template-columns: 1fr 1fr; padding: 0 18px; }
   .proof-strip span { padding: 17px 7px; font-size: 13px; }
   .why-section, .threat-section, .applications-section, .verify-section, .scenario-section, .faq-section, .contact-section,
-  .compare-section, .ecosystem-section, .attenuation-section, .scope-section { padding: 85px 18px; }
+  .compare-section, .ecosystem-section, .attenuation-section, .scope-section, .cutaway-section { padding: 85px 18px; }
+  .cutaway-pin { width: 22px; height: 22px; font-size: 11px; }
+  .cutaway-pin em { display: none; }
   .section-heading h2, .system-content h2, .verify-content h2, .lifecycle-content h2, .faq-inner h2, .contact-intro h2 { font-size: 32px; }
   .section-heading { margin-bottom: 45px; }
   .threat-grid, .application-grid { grid-template-columns: 1fr; }
