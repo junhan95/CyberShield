@@ -132,6 +132,7 @@ const copy = {
       ["ISO/IEC 27001", "Supports the physical and environmental security controls"],
     ],
     brochure: "Download performance sheet",
+    certificates: "Test certificates & technical downloads",
     evidenceTitle: "Evidence base",
     evidenceNote: "The following publications were consulted in preparing this page:",
     sourceNote: "Source: IEA, Energy and AI (2026)",
@@ -177,6 +178,7 @@ const copy = {
       ],
     ],
     scenarioNote: "Representative scenarios based on typical project profiles.",
+    scenarioLink: "See Frankonia project references",
     processEyebrow: "WHAT HAPPENS WHEN YOU REACH OUT",
     processTitle: "From first conversation to verified protection.",
     processSteps: [
@@ -232,6 +234,8 @@ const copy = {
     contactTitle: "Let’s define the right protection boundary.",
     contactBody:
       "Tell us what you need to protect. A Frankonia specialist will review your project and respond by email.",
+    contactPhoneLabel: "",
+    contactPhone: "",
     labels: {
       type: "Request type",
       name: "Name",
@@ -337,6 +341,7 @@ const copy = {
       ["ISO/IEC 27001", "Unterstützt die physischen und umgebungsbezogenen Sicherheitsmaßnahmen"],
     ],
     brochure: "Leistungsdatenblatt herunterladen",
+    certificates: "Prüfzeugnisse & technische Downloads",
     evidenceTitle: "Quellen und Nachweise",
     evidenceNote: "Für diese Seite wurden die folgenden Veröffentlichungen herangezogen:",
     sourceNote: "Quelle: IEA, Energy and AI (2026)",
@@ -426,6 +431,7 @@ const copy = {
       ],
     ],
     scenarioNote: "Repräsentative Szenarien auf Basis typischer Projektprofile.",
+    scenarioLink: "Frankonia Projektreferenzen ansehen",
     processEyebrow: "WAS NACH IHRER ANFRAGE PASSIERT",
     processTitle: "Vom ersten Gespräch zum nachgewiesenen Schutz.",
     processSteps: [
@@ -481,6 +487,8 @@ const copy = {
     contactTitle: "Definieren wir die passende Schutzgrenze.",
     contactBody:
       "Sagen Sie uns, was Sie schützen müssen. Ein Frankonia-Spezialist prüft Ihr Projekt und antwortet per E-Mail.",
+    contactPhoneLabel: "Direkt aus Heideck",
+    contactPhone: "+49 9177 98-500",
     labels: {
       type: "Art der Anfrage",
       name: "Name",
@@ -630,6 +638,7 @@ const copy = {
       ["ISO/IEC 27001", "물리적·환경적 보안 통제 항목 지원"],
     ],
     brochure: "성능 자료 다운로드",
+    certificates: "시험성적서 · 기술 자료실",
     evidenceTitle: "근거 자료",
     evidenceNote: "이 페이지는 다음 자료를 참조했습니다:",
     sourceNote: "출처: IEA, Energy and AI (2026)",
@@ -675,6 +684,7 @@ const copy = {
       ],
     ],
     scenarioNote: "일반적인 프로젝트 유형을 바탕으로 구성한 예시입니다.",
+    scenarioLink: "Frankonia 프로젝트 레퍼런스 보기",
     processEyebrow: "문의하시면 이렇게 진행됩니다",
     processTitle: "첫 상담부터 검증된 보호까지.",
     processSteps: [
@@ -730,6 +740,8 @@ const copy = {
     contactTitle: "필요한 보호 경계를 함께 정의하겠습니다.",
     contactBody:
       "보호해야 할 자산과 프로젝트 정보를 알려주십시오. Frankonia 전문가가 검토한 후 이메일로 연락드립니다.",
+    contactPhoneLabel: "",
+    contactPhone: "",
     labels: {
       type: "문의 유형",
       name: "이름",
@@ -1285,9 +1297,19 @@ export function Landing({ lang }: { lang: Lang }) {
               <div key={name}><strong>{name}</strong><span>{note}</span></div>
             ))}
           </div>
-          <a className="download-link" href={asset("/CyberShield-Performance-2026.pdf")} download>
-            <span>PDF</span>{t.brochure}<b>↓</b>
-          </a>
+          <div className="download-row">
+            <a className="download-link" href={asset("/CyberShield-Performance-2026.pdf")} download>
+              <span>PDF</span>{t.brochure}<b>↓</b>
+            </a>
+            <a
+              className="download-link"
+              href="https://frankonia-solutions.com/anechoic-chambers/download-area_anechoic-chambers/"
+              target="_blank"
+              rel="noreferrer"
+            >
+              <span>DOC</span>{t.certificates}<b>↗</b>
+            </a>
+          </div>
           <div className="evidence-row">
             <strong>{t.evidenceTitle}</strong>
             <p className="evidence-note">{t.evidenceNote}</p>
@@ -1376,7 +1398,17 @@ export function Landing({ lang }: { lang: Lang }) {
             </article>
           ))}
         </div>
-        <p className="scenario-note">{t.scenarioNote}</p>
+        <p className="scenario-note">
+          {t.scenarioNote}
+          <a
+            className="outbound"
+            href="https://frankonia-solutions.com/anechoic-chambers/references_anechoic-chambers/"
+            target="_blank"
+            rel="noreferrer"
+          >
+            {t.scenarioLink}<span aria-hidden="true">↗</span>
+          </a>
+        </p>
       </section>
 
       <section className="lifecycle-section" id="process">
@@ -1454,6 +1486,12 @@ export function Landing({ lang }: { lang: Lang }) {
           <h2>{t.contactTitle}</h2>
           <p>{t.contactBody}</p>
           <a href="mailto:sales@frankoniagroup.com">sales@frankoniagroup.com</a>
+          {t.contactPhone && (
+            <a className="contact-phone" href={`tel:${t.contactPhone.replace(/[^+\d]/g, "")}`}>
+              <small>{t.contactPhoneLabel}</small>
+              {t.contactPhone}
+            </a>
+          )}
         </div>
         <form onSubmit={submit}>
           <fieldset className="request-toggle">
