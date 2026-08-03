@@ -420,6 +420,11 @@ legend { margin-bottom: 12px; color: var(--body-text); font-size: 12px; font-wei
   background: #fdf0f0; color: var(--primary); font-size: 14px; font-weight: 600; white-space: nowrap;
 }
 
+.notfound-body { min-height: 46vh; }
+.notfound-links { display: flex; gap: 26px; flex-wrap: wrap; margin-top: 30px; padding-top: 26px; border-top: 1px solid var(--ink); }
+.notfound-links a { padding-bottom: 4px; border-bottom: 1px solid var(--mute); color: var(--body-text); font-size: 15px; font-weight: 600; transition: border-color .25s ease, color .25s ease; }
+.notfound-links a:hover { border-color: var(--primary); color: var(--primary); }
+
 /* ── Footer: ink band ─────────────────────────────────── */
 /* The lockup track is sized to its content: the logo and wordmark are replaced
    elements with width:auto, so they contribute nothing to a fr track's minimum

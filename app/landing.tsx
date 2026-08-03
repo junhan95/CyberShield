@@ -30,8 +30,8 @@ const copy = {
     },
     consultation: "Book a consultation",
     quote: "Request a quote",
-    eyebrow: "PHYSICAL & ELECTROMAGNETIC SECURITY FOR CRITICAL COMPUTE",
-    heroTitle: "Protect the compute.",
+    eyebrow: "PHYSICAL & ELECTROMAGNETIC SECURITY FOR AI DATA CENTRE BUILDS",
+    heroTitle: "Protect the AI data centre.",
     heroAccent: "Contain the signal.",
     heroBody:
       "CyberShield creates a measurable electromagnetic security boundary around mission-critical data infrastructure—engineered, integrated and verified as one complete system.",
@@ -279,8 +279,8 @@ const copy = {
     },
     consultation: "Beratung vereinbaren",
     quote: "Angebot anfordern",
-    eyebrow: "PHYSISCHE UND ELEKTROMAGNETISCHE SICHERHEIT FÜR KRITISCHE RECHENLEISTUNG",
-    heroTitle: "Rechenleistung schützen.",
+    eyebrow: "PHYSISCHE UND ELEKTROMAGNETISCHE SICHERHEIT BEIM BAU VON KI-RECHENZENTREN",
+    heroTitle: "KI-Rechenzentren schützen.",
     heroAccent: "Signale einschließen.",
     heroBody:
       "CyberShield schafft eine messbare elektromagnetische Sicherheitsgrenze um geschäftskritische Dateninfrastruktur – geplant, integriert und nachgewiesen als ein durchgängiges System.",
@@ -528,8 +528,8 @@ const copy = {
     },
     consultation: "상담 예약",
     quote: "견적 요청",
-    eyebrow: "핵심 컴퓨팅을 위한 물리·전자기 보안",
-    heroTitle: "컴퓨팅 자산을 보호하고,",
+    eyebrow: "AI 데이터센터 구축을 위한 물리·전자기 보안",
+    heroTitle: "AI 데이터센터를 보호하고,",
     heroAccent: "신호를 경계 안에 가두십시오.",
     heroBody:
       "CyberShield는 미션 크리티컬 데이터 인프라 주변에 측정 가능한 전자기 보안 경계를 구축합니다. 설계부터 통합, 현장 검증까지 하나의 완전한 시스템으로 제공합니다.",
@@ -1143,7 +1143,7 @@ export function Landing({ lang }: { lang: Lang }) {
             <video
               ref={heroVideoRef}
               src={asset("/hero-render-loop.mp4")}
-              poster={asset("/images/hero-render-poster.jpg")}
+              poster={asset("/images/hero-render-poster.webp")}
               width={1920}
               height={1080}
               muted
@@ -1209,7 +1209,7 @@ export function Landing({ lang }: { lang: Lang }) {
       <section className="system-section" id="solution">
         <div className="system-image">
           <img
-            src={asset("/images/facility-aerial.jpg")}
+            src={asset("/images/facility-aerial.webp")}
             width={1024}
             height={1024}
             loading="lazy"
@@ -1298,7 +1298,7 @@ export function Landing({ lang }: { lang: Lang }) {
         </div>
         <div className="verify-visual">
           <img
-            src={asset("/images/technician-verification.jpg")}
+            src={asset("/images/technician-verification.webp")}
             width={768}
             height={1376}
             loading="lazy"
@@ -1382,7 +1382,7 @@ export function Landing({ lang }: { lang: Lang }) {
       <section className="lifecycle-section" id="process">
         <div className="lifecycle-visual">
           <img
-            src={asset("/images/engineer-inspection.jpg")}
+            src={asset("/images/engineer-inspection.webp")}
             width={800}
             height={800}
             loading="lazy"

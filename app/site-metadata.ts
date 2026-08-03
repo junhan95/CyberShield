@@ -6,7 +6,7 @@ const content = {
   en: {
     title: "Frankonia CyberShield | RF Shielded Rooms for Data Centres",
     description:
-      "Modular RF shielding for AI, sovereign cloud and colocation data centres. Up to 120 dB attenuation from 10 kHz to 40 GHz, measured on site per EN 50147-1.",
+      "Modular RF shielding for AI data centre builds. Up to 120 dB attenuation from 10 kHz to 40 GHz, measured on site to EN 50147-1.",
   },
   de: {
     title: "Frankonia CyberShield | HF-Abschirmung für Rechenzentren",
