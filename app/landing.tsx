@@ -42,16 +42,20 @@ const copy = {
       ["Built to change", "Dismount, expand or relocate the room without damage"],
     ],
     proof: ["Engineering heritage since 1987", "5 global locations", "Presence in 80+ countries", "Turnkey delivery"],
-    whyEyebrow: "WHY THE RISK IS GROWING",
-    whyTitle: "More value is being concentrated behind the same physical walls.",
+    whyEyebrow: "SECURITY BEYOND SOFTWARE",
+    whyTitle: "AI data centre security no longer ends at the software layer.",
     whyBody:
-      "AI and sovereign workloads concentrate exceptional compute, data and operational dependency in a small number of facilities. The IEA expects electricity use from AI-focused data centres to triple between 2025 and 2030—a clear signal of how quickly critical digital capacity is scaling.",
-    whyMetric: "3×",
-    whyMetricLabel: "Projected growth in AI-focused data-centre electricity use, 2025–2030",
+      "Firewalls, encryption and zero trust stop what arrives over the network. As the value held inside an AI data centre grows, the paths that never touch the network—through physical space and through electromagnetic coupling—have become a real part of the assessment. Software security and physical security now have to be designed together.",
+    whyMetric: "2.5 ns",
+    whyMetricLabel: "Rise time of the E1 HEMP pulse — over before surge protection rated for lightning has reacted",
+    whyValueLabel: "WHAT CYBERSHIELD ADDS",
+    whyValueTitle: "One boundary — designed, built and measured under a single responsibility.",
+    whyValueBody:
+      "Shielding structure, doors, filters, ventilation waveguides and every penetration are engineered as one continuous boundary, assembled weld-free alongside live operations, then measured on site to EN 50147-1 / IEEE 299 and handed over as documented evidence. What you keep at the end is a measurement, not an assurance.",
     assetCards: [
-      ["Confidentiality", "Models, cryptographic material, classified information and customer data remain sensitive even when the network is segmented."],
-      ["Availability", "A localized electromagnetic event can upset electronics, controls or communications without a conventional cyber intrusion."],
-      ["Capital & continuity", "High-density compute, cooling and power infrastructure turn one protected room into a concentrated operational dependency."],
+      ["A national strategic asset", "AI compute is already treated as national capability. Model weights, training data and sovereign workloads are corporate property and a matter of state interest at once — which is exactly what makes them worth targeting."],
+      ["EMC and EMP exposed by design", "Dense GPU racks take tens of kilowatts through switching electronics, and 400G/800G interconnects work to noise budgets measured in millivolts. As power density rises, emission goes up and immunity headroom comes down. Protection sized for a conventional server room does not cover this."],
+      ["Protection from what is outside", "Data centres sit near industry, transmitters and transport infrastructure. The ambient RF environment is not yours to control and only gets busier. Intentional interference can be assembled from commercially available parts — which is why IEC 61000-4-36 exists as a test standard in its own right."],
     ],
     threatEyebrow: "THE SECURITY LAYER SOFTWARE CANNOT PROVIDE",
     threatTitle: "Not every threat enters through the network.",
@@ -135,7 +139,7 @@ const copy = {
     certificates: "Test certificates & technical downloads",
     evidenceTitle: "Evidence base",
     evidenceNote: "The following publications were consulted in preparing this page:",
-    sourceNote: "Source: IEA, Energy and AI (2026)",
+    sourceNote: "Source: IEC 61000-2-9, HEMP waveform definition",
     attenuationEyebrow: "GUARANTEED ATTENUATION PERFORMANCE",
     attenuationTitle: "One shielding envelope, verified from 10 kHz to 40 GHz.",
     attenuationBody:
@@ -295,16 +299,20 @@ const copy = {
       ["Auf Veränderung ausgelegt", "Rückbau, Erweiterung oder Umzug des Raums ohne Beschädigung"],
     ],
     proof: ["Engineering-Erfahrung seit 1987", "5 Standorte weltweit", "Präsenz in über 80 Ländern", "Schlüsselfertige Umsetzung"],
-    whyEyebrow: "WARUM DAS RISIKO WÄCHST",
-    whyTitle: "Immer mehr Wert konzentriert sich hinter denselben physischen Wänden.",
+    whyEyebrow: "SICHERHEIT ÜBER SOFTWARE HINAUS",
+    whyTitle: "Die Sicherheit eines KI-Rechenzentrums endet nicht mehr auf der Softwareebene.",
     whyBody:
-      "KI- und Sovereign-Cloud-Workloads konzentrieren enorme Rechenleistung und Datenbestände – und damit die betriebliche Abhängigkeit – auf wenige Rechenzentren. Die IEA erwartet, dass sich der Stromverbrauch KI-orientierter Rechenzentren zwischen 2025 und 2030 verdreifacht – ein deutliches Signal dafür, wie schnell kritische digitale Kapazität wächst.",
-    whyMetric: "3×",
-    whyMetricLabel: "Prognostiziertes Wachstum des Stromverbrauchs KI-orientierter Rechenzentren, 2025–2030",
+      "Firewalls, Verschlüsselung und Zero Trust halten auf, was über das Netzwerk kommt. Je größer der Wert wird, der in einem KI-Rechenzentrum liegt, desto ernsthafter gehören auch die Wege in die Betrachtung, die das Netzwerk nie berühren – über den physischen Raum und über elektromagnetische Kopplung. Software- und physische Sicherheit müssen heute gemeinsam geplant werden.",
+    whyMetric: "2,5 ns",
+    whyMetricLabel: "Anstiegszeit des E1-NEMP-Impulses — vorbei, bevor blitzschutzgerechte Ableiter reagiert haben",
+    whyValueLabel: "WAS CYBERSHIELD BEITRÄGT",
+    whyValueTitle: "Eine Grenze – geplant, gebaut und gemessen aus einer Hand.",
+    whyValueBody:
+      "Schirmkonstruktion, Türen, Filter, Lüftungs-Hohlleiter und jede Durchführung entstehen als eine durchgängige Grenze, werden schweißfrei im laufenden Betrieb montiert und anschließend vor Ort nach EN 50147-1 / IEEE 299 gemessen und dokumentiert übergeben. Am Ende steht ein Messwert, keine Zusicherung.",
     assetCards: [
-      ["Vertraulichkeit", "Modelle, kryptografisches Material, Verschlusssachen und Kundendaten bleiben sensibel – auch bei segmentiertem Netzwerk."],
-      ["Verfügbarkeit", "Ein lokales elektromagnetisches Ereignis kann Elektronik, Steuerungen und Kommunikation stören, ganz ohne klassischen Cyberangriff."],
-      ["Kapital und Kontinuität", "Hochdichte Rechen-, Kühl- und Stromversorgungstechnik macht einen geschützten Raum zur konzentrierten betrieblichen Abhängigkeit."],
+      ["Nationales strategisches Gut", "KI-Rechenleistung gilt längst als nationale Fähigkeit. Modellgewichte, Trainingsdaten und souveräne Workloads sind Unternehmenseigentum und staatliches Interesse zugleich – und genau das macht sie zum lohnenden Ziel."],
+      ["Bauartbedingt EMV- und NEMP-exponiert", "Dichte GPU-Racks beziehen Dutzende Kilowatt über Schaltelektronik, 400G- und 800G-Interconnects arbeiten mit Störabständen im Millivoltbereich. Mit der Leistungsdichte steigt die Abstrahlung und sinkt die Störfestigkeitsreserve. Schutz, der für einen klassischen Serverraum ausgelegt ist, deckt das nicht ab."],
+      ["Schutz vor dem, was draußen ist", "Rechenzentren stehen nahe an Industrie, Sendeanlagen und Verkehrsinfrastruktur. Die HF-Umgebung lässt sich nicht kontrollieren und wird dichter. Vorsätzliche Störbeeinflussung lässt sich aus handelsüblichen Komponenten aufbauen – deshalb gibt es IEC 61000-4-36 als eigene Prüfnorm."],
     ],
     threatEyebrow: "DIE SICHERHEITSEBENE, DIE SOFTWARE NICHT LIEFERN KANN",
     threatTitle: "Nicht jede Bedrohung kommt über das Netzwerk.",
@@ -344,7 +352,7 @@ const copy = {
     certificates: "Prüfzeugnisse & technische Downloads",
     evidenceTitle: "Quellen und Nachweise",
     evidenceNote: "Für diese Seite wurden die folgenden Veröffentlichungen herangezogen:",
-    sourceNote: "Quelle: IEA, Energy and AI (2026)",
+    sourceNote: "Quelle: IEC 61000-2-9, Definition der NEMP-Wellenform",
     attenuationEyebrow: "GARANTIERTE SCHIRMDÄMPFUNG",
     attenuationTitle: "Eine Schirmhülle, nachgewiesen von 10 kHz bis 40 GHz.",
     attenuationBody:
@@ -548,16 +556,20 @@ const copy = {
       ["확장·이전 가능", "손상 없이 해체해 확장·변경·이전에 재사용"],
     ],
     proof: ["1987년부터 축적한 엔지니어링", "글로벌 5개 거점", "80개국 이상 공급 네트워크", "턴키 제공"],
-    whyEyebrow: "증가하는 위험",
-    whyTitle: "같은 물리적 공간에 더 많은 가치와 운영 의존성이 집중되고 있습니다.",
+    whyEyebrow: "소프트웨어를 넘어선 보안",
+    whyTitle: "AI 데이터센터의 보안은 이제 소프트웨어에서 끝나지 않습니다.",
     whyBody:
-      "AI와 소버린 클라우드 워크로드는 막대한 컴퓨팅 자원과 데이터, 그리고 그에 따르는 운영 의존성을 소수 시설에 집중시킵니다. IEA는 2025~2030년 AI 중심 데이터센터의 전력 사용량이 약 3배 증가할 것으로 전망합니다. 이는 보호해야 할 핵심 디지털 역량이 얼마나 빠르게 확대되는지를 보여줍니다.",
-    whyMetric: "3배",
-    whyMetricLabel: "2025~2030년 AI 중심 데이터센터 전력 사용량 전망",
+      "방화벽과 암호화, 제로 트러스트는 네트워크를 통해 들어오는 위협을 막습니다. 그러나 AI 데이터센터가 품는 자산의 가치가 커지면서, 네트워크를 거치지 않고 물리 공간과 전자기 결합으로 접근하는 경로까지 검토 대상이 되었습니다. 이제 소프트웨어 보안과 물리적 보안은 함께 설계되어야 합니다.",
+    whyMetric: "2.5 ns",
+    whyMetricLabel: "E1 HEMP 펄스 상승 시간 — 낙뢰 기준 서지 보호기가 반응하기 전에 끝납니다",
+    whyValueLabel: "CYBERSHIELD의 핵심 가치",
+    whyValueTitle: "설계부터 시공, 측정까지 하나의 책임으로 묶인 단일 경계.",
+    whyValueBody:
+      "차폐 구조와 도어, 필터, 환기 도파관, 모든 관통부를 하나의 연속된 경계로 설계하고, 운영을 멈추지 않는 무용접 방식으로 시공한 뒤, EN 50147-1 / IEEE 299에 따라 현장에서 측정해 문서로 인도합니다. 마지막에 남는 것은 약속이 아니라 측정값입니다.",
     assetCards: [
-      ["기밀성", "모델, 암호 키, 기밀 정보와 고객 데이터는 네트워크가 분리되어 있어도 여전히 보호해야 할 민감 자산입니다."],
-      ["가용성", "국소적인 전자기 사건은 일반적인 사이버 침입 없이도 전자장비, 제어 및 통신에 장애를 일으킬 수 있습니다."],
-      ["자본과 업무 연속성", "고밀도 컴퓨팅, 냉각 및 전력 인프라는 하나의 보호 공간을 핵심 운영 의존점으로 만듭니다."],
+      ["국가적 전략자산", "AI 컴퓨팅 역량은 이미 국가 경쟁력의 기반으로 다뤄집니다. 모델 가중치와 학습 데이터, 소버린 워크로드는 기업 자산인 동시에 국가적 보호 대상이며, 바로 그 점이 표적이 되는 이유이기도 합니다."],
+      ["EMC·EMP에 취약한 구조", "고밀도 GPU 랙은 수십 킬로와트를 스위칭 전자장비로 공급받고, 400G·800G 인터커넥트는 밀리볼트 단위의 잡음 여유로 동작합니다. 전력 밀도가 올라갈수록 방사는 강해지고 내성 여유는 줄어듭니다. 일반 전산실 기준으로 설계된 보호로는 이 조건을 감당하지 못합니다."],
+      ["외부 전파 방호", "데이터센터는 대개 산업 지역과 송신 시설, 교통 인프라 인근에 세워집니다. 주변 전파 환경은 통제할 수 없고 갈수록 혼잡해집니다. 의도적 전자기 간섭 장비는 상용 부품으로도 구성할 수 있어, IEC 61000-4-36이 별도의 시험 규격으로 존재합니다."],
     ],
     threatEyebrow: "소프트웨어만으로 제공할 수 없는 보안 계층",
     threatTitle: "모든 위협이 네트워크를 통해 들어오지는 않습니다.",
@@ -641,7 +653,7 @@ const copy = {
     certificates: "시험성적서 · 기술 자료실",
     evidenceTitle: "근거 자료",
     evidenceNote: "이 페이지는 다음 자료를 참조했습니다:",
-    sourceNote: "출처: IEA, Energy and AI (2026)",
+    sourceNote: "출처: IEC 61000-2-9, HEMP 파형 정의",
     attenuationEyebrow: "보증 차폐 성능",
     attenuationTitle: "하나의 차폐 외피, 10 kHz에서 40 GHz까지 검증합니다.",
     attenuationBody:
@@ -815,10 +827,12 @@ const barHeight = (db: number) => `${Math.round(((db - 80) / 45) * 100)}%`;
 // Publication names, listed as plain text rather than links — the page does not
 // send visitors to external sites.
 const evidenceSources = [
+  "IEC 61000-2-9 · HEMP radiated environment and waveform",
+  "IEC 61000-4-36 · IEMI immunity test methods",
   "NCSC · TEMPEST and Electromagnetic Security",
   "NIST · SP 800-53, control PE-19",
   "CISA · Resilient Power Best Practices for Critical Facilities and Sites",
-  "IEA · Energy and AI (2026)",
+  "EN 50600 · Data centre facilities and infrastructures",
 ];
 
 // Importance rating and responsibility tone, aligned with the scope rows above.
@@ -968,9 +982,21 @@ export function Landing({ lang }: { lang: Lang }) {
   useEffect(() => {
     const el = metricRef.current;
     if (!el) return;
-    const target = parseFloat(t.whyMetric);
+    // The figure may be decimal, and German writes it with a comma, so the
+    // number is pulled out of the string rather than assumed to lead it.
+    const found = t.whyMetric.match(/[\d.,]+/);
+    if (!found) return;
+    const numeric = found[0];
+    const comma = numeric.includes(",");
+    const target = parseFloat(comma ? numeric.replace(",", ".") : numeric);
     if (Number.isNaN(target) || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    const suffix = t.whyMetric.replace(/^[\d.]+/, "");
+    const decimals = (numeric.split(/[.,]/)[1] ?? "").length;
+    const prefix = t.whyMetric.slice(0, found.index);
+    const suffix = t.whyMetric.slice((found.index ?? 0) + numeric.length);
+    const render = (value: number) => {
+      const shown = value.toFixed(decimals);
+      return prefix + (comma ? shown.replace(".", ",") : shown) + suffix;
+    };
 
     let frame = 0;
     const observer = new IntersectionObserver(
@@ -981,7 +1007,7 @@ export function Landing({ lang }: { lang: Lang }) {
         const step = (now: number) => {
           const progress = Math.min(1, (now - started) / 1000);
           const eased = 1 - Math.pow(1 - progress, 3);
-          el.textContent = `${Math.round(target * eased)}${suffix}`;
+          el.textContent = render(target * eased);
           if (progress < 1) frame = requestAnimationFrame(step);
         };
         frame = requestAnimationFrame(step);
@@ -1196,6 +1222,13 @@ export function Landing({ lang }: { lang: Lang }) {
               <p>{body}</p>
             </article>
           ))}
+        </div>
+        <div className="why-value">
+          <div>
+            <p className="eyebrow">{t.whyValueLabel}</p>
+            <h3>{t.whyValueTitle}</h3>
+          </div>
+          <p>{t.whyValueBody}</p>
         </div>
       </section>
 

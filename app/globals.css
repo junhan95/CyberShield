@@ -192,6 +192,16 @@ h1 span { color: var(--primary); }
 .asset-grid h3 { margin: 40px 0 14px; font-size: 24px; font-weight: 700; }
 .asset-grid p { margin-bottom: 0; color: var(--body-text); font-size: 15px; line-height: 1.6; }
 
+/* Closing statement of the why section: what CyberShield contributes. */
+.why-value {
+  margin-top: 26px; padding: 40px 44px;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 20px 6vw; align-items: start;
+  background: var(--canvas-soft); border-left: 3px solid var(--primary); border-radius: var(--radius);
+}
+.why-value .eyebrow { margin-bottom: 14px; font-size: 12px; letter-spacing: .5px; }
+.why-value h3 { margin: 0; font-size: clamp(22px, 2.1vw, 28px); line-height: 1.25; font-weight: 300; }
+.why-value > p { margin: 0; color: var(--body-text); font-size: 15.5px; line-height: 1.7; }
+
 /* ── Threat band: ink polarity flip ───────────────────── */
 .section-dark { background: var(--ink); color: white; }
 .threat-section { padding: 120px max(4vw, calc((100% - 1400px) / 2)); }
@@ -590,6 +600,7 @@ input:focus-visible, select:focus-visible, textarea:focus-visible {
   .hero-visual img, .hero-visual video { width: 100%; }
   .why-intro { grid-template-columns: 1fr; gap: 50px; }
   .why-metric { max-width: 520px; }
+  .why-value { grid-template-columns: 1fr; padding: 34px 30px; }
   .threat-grid, .application-grid { grid-template-columns: repeat(2, 1fr); }
   .threat-grid article:nth-child(2), .application-grid article:nth-child(2) { border-right: 0; }
   .system-section, .lifecycle-section { grid-template-columns: 1fr; }
