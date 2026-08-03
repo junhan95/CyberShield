@@ -1,12 +1,17 @@
 import type { Metadata } from "next";
-import type { Lang } from "./landing";
-import { asset, route, siteOrigin } from "./site-config";
+import type { Lang } from "./site-config";
+import { asset, langPath, route, siteOrigin } from "./site-config";
 
 const content = {
   en: {
     title: "Frankonia CyberShield | Electromagnetic Security for Critical Compute",
     description:
       "Modular, verifiable electromagnetic shielding for AI, sovereign cloud, colocation and mission-critical data infrastructure.",
+  },
+  de: {
+    title: "Frankonia CyberShield | Elektromagnetische Sicherheit für kritische Rechenleistung",
+    description:
+      "Modulare, messtechnisch nachgewiesene elektromagnetische Abschirmung für KI, souveräne Cloud, Colocation und geschäftskritische Dateninfrastruktur.",
   },
   ko: {
     title: "Frankonia CyberShield | 핵심 컴퓨팅을 위한 전자기 보안",
@@ -17,7 +22,7 @@ const content = {
 
 export function buildSiteMetadata(lang: Lang): Metadata {
   const { title, description } = content[lang];
-  const canonical = `${siteOrigin}${route(lang === "ko" ? "/ko" : "/")}`;
+  const canonical = `${siteOrigin}${route(langPath(lang))}`;
   // Social platforms cache preview images by URL, so the version bumps when
   // the artwork changes.
   const ogImage = `${siteOrigin}${asset("/og.png")}?v=2`;
@@ -30,6 +35,7 @@ export function buildSiteMetadata(lang: Lang): Metadata {
       canonical,
       languages: {
         en: `${siteOrigin}${route("/")}`,
+        de: `${siteOrigin}${route("/de")}`,
         ko: `${siteOrigin}${route("/ko")}`,
         "x-default": `${siteOrigin}${route("/")}`,
       },
@@ -39,7 +45,7 @@ export function buildSiteMetadata(lang: Lang): Metadata {
       description,
       type: "website",
       url: canonical,
-      locale: lang === "ko" ? "ko_KR" : "en_US",
+      locale: { en: "en_US", de: "de_DE", ko: "ko_KR" }[lang],
       images: [{ url: ogImage, width: 1200, height: 630, alt: "Frankonia CyberShield" }],
     },
     twitter: {

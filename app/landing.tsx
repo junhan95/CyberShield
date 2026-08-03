@@ -1,9 +1,11 @@
 "use client";
 
 import { FormEvent, useEffect, useRef, useState } from "react";
-import { asset, route } from "./site-config";
+import { BrandLockup, WordmarkDefs } from "./brand";
+import { asset, languages, route } from "./site-config";
+import type { Lang } from "./site-config";
 
-export type Lang = "en" | "ko";
+export type { Lang };
 type Inquiry = "consultation" | "quote";
 
 const copy = {
@@ -11,14 +13,20 @@ const copy = {
     nav: {
       threats: "Why CyberShield",
       solution: "Solution",
+      ecosystem: "Ecosystem",
       verification: "Verification",
       applications: "Applications",
       process: "Process",
       contact: "Contact",
     },
-    langLabel: "이 페이지를 한국어로 보기",
+    langLabel: "Select language",
     menuOpenLabel: "Open menu",
     menuCloseLabel: "Close menu",
+    alt: {
+      facility: "Aerial view of a data-centre facility campus",
+      technician: "Technician verifying systems inside the data hall",
+      engineer: "Engineer inspecting racks inside a protected server aisle",
+    },
     consultation: "Book a consultation",
     quote: "Request a quote",
     eyebrow: "PHYSICAL & ELECTROMAGNETIC SECURITY FOR CRITICAL COMPUTE",
@@ -44,7 +52,6 @@ const copy = {
       ["Availability", "A localized electromagnetic event can upset electronics, controls or communications without a conventional cyber intrusion."],
       ["Capital & continuity", "High-density compute, cooling and power infrastructure turn one protected room into a concentrated operational dependency."],
     ],
-    source: "Source",
     threatEyebrow: "THE SECURITY LAYER SOFTWARE CANNOT PROVIDE",
     threatTitle: "Not every threat enters through the network.",
     threatBody:
@@ -62,9 +69,53 @@ const copy = {
       "Prefabricated PAN modules pass through standard building doors, assemble from the inside and can be installed close to existing walls. No glue. No welding. No irreversible commitment.",
     features: [
       ["01", "Precision assembly", "Panels are bolted every 75 mm with predefined torque and conductive mesh gaskets."],
-      ["02", "Architectural integration", "Designed around raised floors, racks, fire systems, lighting, cooling and access control."],
+      ["02", "Architectural integration", "Reversible modules leave flat interior surfaces for finishing walls, ceilings and racks, designed around raised floors, fire systems, lighting, cooling and access control."],
       ["03", "Adaptable by design", "Dismountable without damage for expansion, modification or complete relocation."],
       ["04", "Complete boundary", "Shielding structure, doors, filters, honeycombs and waveguides are treated as one system."],
+    ],
+    compareEyebrow: "ENGINEERED BEYOND THE INDUSTRY BASELINE",
+    compareTitle: "Where standard shielding stops, the engineering starts.",
+    compareBody:
+      "How CyberShield compares with conventional shielding approaches across the criteria that decide long-term performance.",
+    compareHead: ["Performance criterion", "Conventional shielding", "Frankonia CyberShield"],
+    compareRows: [
+      [
+        "RF attenuation spectrum",
+        "60–80 dB across a narrow frequency band",
+        "Peak ≥ 120 dB (100–400 MHz) and ≥ 100 dB from 10 kHz to 40 GHz",
+      ],
+      [
+        "Shielding panel engineering",
+        "Thin sheet metal or welded steel construction",
+        "2.0 mm galvanized steel PAN modules bolted every 75 mm to defined torque",
+      ],
+      [
+        "Joinery & sealing technology",
+        "Conductive adhesive or continuous welding",
+        "High-conductivity mesh gasket — no glue, no welding, 100 % reusable",
+      ],
+      [
+        "Airflow & acoustic efficiency",
+        "Basic cut-outs with thermal loss and RF leakage paths",
+        "Honeycomb waveguide ventilation and ISO 354 sound absorption (α = 0.65)",
+      ],
+      [
+        "Building integration",
+        "High static loads within a permanent structure",
+        "Self-supporting or seismic steel structure, dismountable without damage",
+      ],
+    ],
+    ecosystemEyebrow: "ONE CONTINUOUS BARRIER",
+    ecosystemTitle: "Six product lines. One zero-leak boundary.",
+    ecosystemBody:
+      "Every component is engineered as part of the same shielding envelope, so performance is not lost at the joints, the doors or the penetrations.",
+    ecosystemCards: [
+      ["CyberShield Structure", "Prefabricated 2.0 mm galvanized steel PAN module system for walls, ceilings and floors."],
+      ["CyberShield Access", "Heavy-duty sliding and hinged RF doors, high-attenuation RF windows and integrated access monitoring."],
+      ["CyberShield Connectivity", "High-performance power line filters, fibre-optic waveguide penetrations and RF signal suppressors."],
+      ["CyberShield Air & Waveguides", "Honeycomb ventilation panels, acoustic panels (ISO 354) and shielded waveguides for liquid cooling and utilities."],
+      ["CyberShield Validation", "EN 50147-1 / IEEE 299 shielding measurement, leak detection, SE testing and compliance documentation."],
+      ["CyberShield Lifecycle", "Preventive maintenance, recalibration and periodic re-certification services."],
     ],
     verifyEyebrow: "VERIFIED, NOT ASSUMED",
     verifyTitle: "Performance you don't have to take on faith.",
@@ -74,11 +125,22 @@ const copy = {
     standards: [
       ["EN 50147-1", "Shielding effectiveness measurement"],
       ["IEEE 299", "Available as a project option"],
-      ["TEMPEST", "Project-specific design & approval"],
-      ["HEMP", "Project-specific validation"],
+      ["BSI TL-03305 / 03306", "Eavesdropping-protected rooms & IT enclosures"],
+      ["NATO SDIP-27 Level A", "TEMPEST design & approval, aligned with NSA 94-106"],
+      ["MIL-STD-188-125-1 / -2", "HEMP and IEMI protection, project-specific validation"],
+      ["ISO/IEC 27001", "Supports the physical and environmental security controls"],
     ],
     brochure: "Download performance sheet",
     evidenceTitle: "Evidence base",
+    evidenceNote: "The following publications were consulted in preparing this page:",
+    sourceNote: "Source: IEA, Energy and AI (2026)",
+    attenuationEyebrow: "GUARANTEED ATTENUATION PERFORMANCE",
+    attenuationTitle: "One shielding envelope, verified from 10 kHz to 40 GHz.",
+    attenuationBody:
+      "Standard-setting PAN type module engineering, measured in accordance with EN 50147-1 and IEEE 299. The same attenuation is engineered into every door, filter, honeycomb vent and feed-through in the boundary.",
+    fieldTypes: { magnetic: "Magnetic field", plane: "Plane wave", microwave: "Microwave" },
+    attenuationNote:
+      "Values describe the guaranteed performance envelope of the standard PAN type system. The scope that applies to your project is confirmed in the specification and by on-site acceptance testing.",
     applicationsEyebrow: "BUILT FOR HIGH-VALUE ENVIRONMENTS",
     applicationsTitle: "One platform. Four mission profiles.",
     applications: [
@@ -118,10 +180,27 @@ const copy = {
     processTitle: "From first conversation to verified protection.",
     processSteps: [
       ["01", "Initial consultation", "A specialist reviews your goals, site and constraints. No documentation is required to start."],
-      ["02", "Risk & site assessment", "Assets, threat scenarios and facility conditions are assessed; protection requirements are defined together."],
-      ["03", "Concept & proposal", "You receive a concept design, an integration plan and a transparent quotation."],
-      ["04", "Installation & verification", "Modules are assembled on site without welding; performance is measured and documented at handover."],
-      ["05", "Operation & support", "Preventive maintenance, inspections and revalidation keep the boundary effective over time."],
+      ["02", "Risk & site assessment", "Assets, threat scenarios, ambient RF conditions and facility constraints are assessed; protection requirements are defined together."],
+      ["03", "Concept & 3D engineering", "You receive a concept design, CAD/BIM architectural integration and a transparent quotation."],
+      ["04", "Precision manufacturing", "PAN modules, RF doors, power and data filters and honeycomb vents are produced in Frankonia's own facilities."],
+      ["05", "Installation & verification", "Certified teams assemble the modules without welding; shielding effectiveness and leak detection are measured and documented at handover."],
+      ["06", "Operation & support", "Preventive maintenance, periodic re-testing and security re-certification keep the boundary effective over time."],
+    ],
+    scopeEyebrow: "CLEAR SCOPE FROM DAY ONE",
+    scopeTitle: "What Frankonia delivers, and where partners take over.",
+    scopeBody:
+      "A transparent split of responsibility across the protected room, so nothing inside the boundary is left to assumption.",
+    scopeHead: ["Category", "Importance", "Scope & expertise"],
+    scopeRows: [
+      ["HF shielding performance", "Core", "In-house manufacturing with guaranteed performance"],
+      ["Doors & access solutions", "Core", "Precision RF hinged and sliding doors"],
+      ["Filtered penetrations", "Core", "Power, data and signal RF filters"],
+      ["Ventilation waveguides", "Core", "Precision honeycomb airflow systems"],
+      ["EMC testing & certification", "Core", "On-site validation and leak detection"],
+      ["Maintenance & service", "Service", "Annual audits and lifecycle support"],
+      ["Building security systems", "Partner", "Interface integration with facility security"],
+      ["Intrusion alarm systems", "Partner", "Interface integration with room alarm systems"],
+      ["Organizational procedures", "Customer", "Best-practice advisory provided by Frankonia"],
     ],
     faqEyebrow: "COMMON QUESTIONS",
     faqTitle: "The questions every project starts with.",
@@ -179,18 +258,273 @@ const copy = {
     footer:
       "CyberShield is a high-assurance engineering solution. Performance, standards and certification scope depend on the agreed project configuration and final validation.",
   },
+  de: {
+    nav: {
+      threats: "Warum CyberShield",
+      solution: "Lösung",
+      ecosystem: "Produktwelt",
+      verification: "Nachweis",
+      applications: "Anwendungen",
+      process: "Ablauf",
+      contact: "Kontakt",
+    },
+    langLabel: "Sprache wählen",
+    menuOpenLabel: "Menü öffnen",
+    menuCloseLabel: "Menü schließen",
+    alt: {
+      facility: "Luftaufnahme eines Rechenzentrums-Campus",
+      technician: "Prüfung der Systeme in der Datenhalle",
+      engineer: "Inspektion der Racks in einem geschützten Servergang",
+    },
+    consultation: "Beratung vereinbaren",
+    quote: "Angebot anfordern",
+    eyebrow: "PHYSISCHE UND ELEKTROMAGNETISCHE SICHERHEIT FÜR KRITISCHE RECHENLEISTUNG",
+    heroTitle: "Rechenleistung schützen.",
+    heroAccent: "Signale einschließen.",
+    heroBody:
+      "CyberShield schafft eine messbare elektromagnetische Sicherheitsgrenze um geschäftskritische Dateninfrastruktur – geplant, integriert und nachgewiesen als ein durchgängiges System.",
+    explore: "System kennenlernen",
+    metrics: [
+      ["Vor Ort nachgewiesen", "Die Schirmdämpfung wird nach der Montage gemessen – nicht angenommen"],
+      ["Schweißfreie Montage", "Verschraubte Module, Montage im laufenden Betrieb ohne Heißarbeiten"],
+      ["Für Veränderung gebaut", "Rückbau, Erweiterung oder Umzug des Raums ohne Beschädigung"],
+    ],
+    proof: ["Engineering-Erfahrung seit 1987", "5 Standorte weltweit", "Präsenz in über 80 Ländern", "Schlüsselfertige Umsetzung"],
+    whyEyebrow: "WARUM DAS RISIKO WÄCHST",
+    whyTitle: "Immer mehr Wert konzentriert sich hinter denselben physischen Wänden.",
+    whyBody:
+      "KI- und Souveränitäts-Workloads bündeln außergewöhnliche Rechenleistung, Daten und betriebliche Abhängigkeit in wenigen Rechenzentren. Die IEA erwartet, dass sich der Stromverbrauch KI-orientierter Rechenzentren zwischen 2025 und 2030 verdreifacht – ein deutliches Signal dafür, wie schnell kritische digitale Kapazität wächst.",
+    whyMetric: "3×",
+    whyMetricLabel: "Prognostiziertes Wachstum des Stromverbrauchs KI-orientierter Rechenzentren, 2025–2030",
+    assetCards: [
+      ["Vertraulichkeit", "Modelle, kryptografisches Material, Verschlusssachen und Kundendaten bleiben sensibel – auch bei segmentiertem Netzwerk."],
+      ["Verfügbarkeit", "Ein lokales elektromagnetisches Ereignis kann Elektronik, Steuerungen und Kommunikation stören, ganz ohne klassischen Cyberangriff."],
+      ["Kapital und Kontinuität", "Hochdichte Rechen-, Kühl- und Stromversorgungstechnik macht einen geschützten Raum zur konzentrierten betrieblichen Abhängigkeit."],
+    ],
+    threatEyebrow: "DIE SICHERHEITSEBENE, DIE SOFTWARE NICHT LIEFERN KANN",
+    threatTitle: "Nicht jede Bedrohung kommt über das Netzwerk.",
+    threatBody:
+      "Verschlüsselung und Zero Trust schützen die digitale Ebene. CyberShield adressiert die physische und elektromagnetische Exposition an der Gebäudegrenze.",
+    threats: [
+      ["Kompromittierende Abstrahlung", "Sensible Verarbeitungsvorgänge können über unbeabsichtigte elektromagnetische Signale offengelegt werden – ohne Zugriff auf das Netzwerk.", "Vertraulichkeit gefährdet"],
+      ["Vorsätzliche Störbeeinflussung", "Lokale HF- oder elektromagnetische Energie hoher Leistung kann Elektronik, Steuerungen und Kommunikation stören.", "Betriebsunterbrechung"],
+      ["EMP-/HEMP-Exposition", "Gestrahlte und geleitete Impulseinwirkungen können kritische Systeme und Kontinuitätsarchitekturen beeinträchtigen.", "Risiko für die Betriebskontinuität"],
+      ["Schwachstellen der Schirmgrenze", "Türen, Lüftung sowie Strom-, Daten-, Kühl- und Versorgungsdurchführungen können zum schwächsten Punkt der Abschirmung werden.", "Schutzwirkung reduziert"],
+    ],
+    impactLabel: "Mögliche Auswirkung",
+    systemEyebrow: "MODULARES PAN-SCHIRMSYSTEM",
+    systemTitle: "Ein Sicherheitsraum, geplant für die Realität Ihres Gebäudes.",
+    systemBody:
+      "Vorgefertigte PAN-Module passen durch Standardtüren, werden von innen montiert und lassen sich nah an bestehende Wände setzen. Ohne Kleber. Ohne Schweißen. Ohne unumkehrbare Festlegung.",
+    features: [
+      ["01", "Präzise Montage", "Die Paneele werden alle 75 mm mit definiertem Drehmoment und hochleitfähiger Geflechtdichtung verschraubt."],
+      ["02", "Bauliche Integration", "Wendbare Module ergeben glatte Innenflächen für Ausbauwände, Decken und Racks – abgestimmt auf Doppelboden, Brandschutz, Beleuchtung, Kühlung und Zutrittskontrolle."],
+      ["03", "Anpassungsfähig ausgelegt", "Beschädigungsfrei demontierbar für Erweiterung, Umbau oder den vollständigen Umzug."],
+      ["04", "Durchgängige Schirmgrenze", "Schirmkonstruktion, Türen, Filter, Wabenkamine und Hohlleiter werden als ein System ausgelegt."],
+    ],
+    verifyEyebrow: "NACHGEWIESEN, NICHT ANGENOMMEN",
+    verifyTitle: "Leistung, die Sie nicht glauben müssen.",
+    verifyBody:
+      "Jedes CyberShield-Projekt endet mit einem Messnachweis. Die Schirmdämpfung wird vor Ort nach internationalen Normen geprüft, die dokumentierten Abnahmeergebnisse werden mit dem Raum übergeben. Detaillierte Messdaten stehen Ihrem Engineering-Team zur Verfügung.",
+    standardsIntro: "Gemessen und validiert nach",
+    standards: [
+      ["EN 50147-1", "Messung der Schirmdämpfung"],
+      ["IEEE 299", "Als Projektoption verfügbar"],
+      ["BSI TL-03305 / 03306", "Abhörsichere Räume und IT-Schirmkabinen"],
+      ["NATO SDIP-27 Level A", "TEMPEST-Auslegung und -Zulassung, abgestimmt auf NSA 94-106"],
+      ["MIL-STD-188-125-1 / -2", "HEMP- und IEMI-Schutz, projektspezifische Validierung"],
+      ["ISO/IEC 27001", "Unterstützt die physischen und umgebungsbezogenen Sicherheitsmaßnahmen"],
+    ],
+    brochure: "Leistungsdatenblatt herunterladen",
+    evidenceTitle: "Quellen und Nachweise",
+    evidenceNote: "Für diese Seite wurden die folgenden Veröffentlichungen herangezogen:",
+    sourceNote: "Quelle: IEA, Energy and AI (2026)",
+    attenuationEyebrow: "GARANTIERTE SCHIRMDÄMPFUNG",
+    attenuationTitle: "Eine Schirmhülle, nachgewiesen von 10 kHz bis 40 GHz.",
+    attenuationBody:
+      "Maßstabsetzende PAN-Modultechnik, gemessen nach EN 50147-1 und IEEE 299. Dieselbe Dämpfung ist in jede Tür, jeden Filter, jeden Wabenkamin und jede Durchführung der Schirmgrenze eingeplant.",
+    fieldTypes: { magnetic: "Magnetfeld", plane: "Ebene Welle", microwave: "Mikrowelle" },
+    attenuationNote:
+      "Die Werte beschreiben den garantierten Leistungsbereich des Standard-PAN-Systems. Der für Ihr Projekt geltende Umfang wird in der Spezifikation und durch die Abnahmemessung vor Ort bestätigt.",
+    compareEyebrow: "ENGINEERING JENSEITS DES BRANCHENSTANDARDS",
+    compareTitle: "Wo übliche Abschirmung endet, beginnt das Engineering.",
+    compareBody:
+      "Wie sich CyberShield gegenüber konventionellen Schirmlösungen in genau den Kriterien verhält, die die Langzeitleistung bestimmen.",
+    compareHead: ["Leistungskriterium", "Konventionelle Abschirmung", "Frankonia CyberShield"],
+    compareRows: [
+      [
+        "HF-Dämpfungsspektrum",
+        "60–80 dB in einem schmalen Frequenzbereich",
+        "Spitzenwert ≥ 120 dB (100–400 MHz) und ≥ 100 dB von 10 kHz bis 40 GHz",
+      ],
+      [
+        "Paneelkonstruktion",
+        "Dünnes Blech oder geschweißte Stahlkonstruktion",
+        "PAN-Module aus 2,0 mm verzinktem Stahlblech, alle 75 mm mit definiertem Drehmoment verschraubt",
+      ],
+      [
+        "Fügetechnik und Abdichtung",
+        "Leitfähiger Kleber oder durchgehende Schweißnaht",
+        "Hochleitfähige Geflechtdichtung – ohne Kleber, ohne Schweißen, zu 100 % wiederverwendbar",
+      ],
+      [
+        "Luftführung und Akustik",
+        "Einfache Ausschnitte mit Wärmeverlust und HF-Leckpfaden",
+        "Wabenkamine als Hohlleiter und Schallabsorption nach ISO 354 (α = 0,65)",
+      ],
+      [
+        "Gebäudeintegration",
+        "Hohe statische Lasten in einer dauerhaften Struktur",
+        "Selbsttragende oder erdbebensichere Stahlkonstruktion, beschädigungsfrei rückbaubar",
+      ],
+    ],
+    ecosystemEyebrow: "EINE DURCHGÄNGIGE SCHIRMGRENZE",
+    ecosystemTitle: "Sechs Produktlinien. Eine lückenlose Schirmhülle.",
+    ecosystemBody:
+      "Jede Komponente wird als Teil derselben Schirmhülle ausgelegt – so geht an Fugen, Türen und Durchführungen keine Leistung verloren.",
+    ecosystemCards: [
+      ["CyberShield Structure", "Vorgefertigtes PAN-Modulsystem aus 2,0 mm verzinktem Stahlblech für Wände, Decken und Böden."],
+      ["CyberShield Access", "Schwerlast-Schiebe- und -Drehtüren in HF-Ausführung, hochdämpfende HF-Fenster und integrierte Zutrittsüberwachung."],
+      ["CyberShield Connectivity", "Leistungsstarke Netzfilter, Lichtwellenleiter-Durchführungen als Hohlleiter und HF-Signalsperren."],
+      ["CyberShield Air & Waveguides", "Wabenkamine, Akustikpaneele (ISO 354) und geschirmte Hohlleiter für Flüssigkühlung und Medienversorgung."],
+      ["CyberShield Validation", "Schirmdämpfungsmessung nach EN 50147-1 / IEEE 299, Lecksuche, SE-Prüfung und Konformitätsdokumentation."],
+      ["CyberShield Lifecycle", "Vorbeugende Wartung, Nachkalibrierung und periodische Rezertifizierung."],
+    ],
+    applicationsEyebrow: "FÜR HOCHWERTIGE UMGEBUNGEN ENTWICKELT",
+    applicationsTitle: "Eine Plattform. Vier Einsatzprofile.",
+    applications: [
+      ["Sovereign Compute Vault", "Behörden und souveräne Cloud", "Schafft eine kontrollierte Verarbeitungszone für Verschlusssachen und national sensible Workloads."],
+      ["AI & HPC Shielded Zone", "KI-Labore und Hyperscale-Betreiber", "Schützt hochwertige Modelle, Trainingsdaten und beschleunigte Recheninfrastruktur."],
+      ["Colocation Shielded Vault", "Colocation-Anbieter", "Bietet regulierten Unternehmenskunden eine messbare Premium-Sicherheitsstufe."],
+      ["Mission Continuity Suite", "Verteidigung, Finanzwesen und Kommunikation", "Unterstützt Kontinuitätsarchitekturen mit Risiko elektromagnetischer Störungen."],
+    ],
+    scenarioEyebrow: "SO WIRD CYBERSHIELD EINGESETZT",
+    scenarioTitle: "Drei Situationen, die uns immer wieder begegnen.",
+    scenarioLabels: { challenge: "Ausgangslage", approach: "Vorgehen", outcome: "Ergebnis" },
+    scenarios: [
+      [
+        "Behörden und souveräne Cloud",
+        "Eine Verschlusssachenzone im laufenden Betrieb",
+        "Ein staatliches Cloud-Programm benötigte eine sichere Verarbeitungszone für eingestufte Workloads in einem bestehenden Rechenzentrum.",
+        "Der Schirmraum wurde um den laufenden Betrieb herum geplant, schweißfrei montiert und vor Ort nachgewiesen.",
+        "Eine Hochsicherheitszone, übergeben und abgenommen ohne Unterbrechung des umgebenden Betriebs.",
+      ],
+      [
+        "KI-Labor",
+        "Eine messbare Grenze um die Modell-Assets",
+        "Ein KI-Unternehmen musste Modellgewichte und Trainingscluster gegen Abstrahlung und Störbeeinflussung schützen.",
+        "Eine dedizierte Schirmhalle integrierte Kühlung, Stromversorgung und Monitoring für hochdichte Racks.",
+        "Eine gemessene, dokumentierte Sicherheitsgrenze um das wertvollste geistige Eigentum des Unternehmens.",
+      ],
+      [
+        "Colocation",
+        "Eine Premium-Sicherheitsstufe ohne Neubau",
+        "Ein Colocation-Betreiber wollte eine Premiumstufe für regulierte Kunden – ohne den Standort umzubauen.",
+        "Ein modularer Schirmraum wurde in bestehender Weißfläche ergänzt und als nachgewiesenes Produkt paketiert.",
+        "Eine neue Erlösquelle durch eine Sicherheitsstufe, die Wettbewerber nicht ohne Weiteres nachbilden können.",
+      ],
+    ],
+    scenarioNote: "Repräsentative Szenarien auf Basis typischer Projektprofile.",
+    processEyebrow: "WAS NACH IHRER ANFRAGE PASSIERT",
+    processTitle: "Vom ersten Gespräch zum nachgewiesenen Schutz.",
+    processSteps: [
+      ["01", "Erstberatung", "Ein Spezialist prüft Ihre Ziele, den Standort und die Randbedingungen. Für den Start sind keine Unterlagen erforderlich."],
+      ["02", "Risiko- und Standortanalyse", "Schutzgüter, Bedrohungsszenarien, die HF-Umgebung und die baulichen Randbedingungen werden bewertet; die Schutzanforderungen definieren wir gemeinsam."],
+      ["03", "Konzept und 3D-Engineering", "Sie erhalten ein Konzeptdesign, die bauliche Integration in CAD/BIM und ein transparentes Angebot."],
+      ["04", "Präzisionsfertigung", "PAN-Module, HF-Türen, Netz- und Datenfilter sowie Wabenkamine entstehen in den eigenen Fertigungsstätten von Frankonia."],
+      ["05", "Montage und Nachweis", "Zertifizierte Teams montieren die Module schweißfrei; Schirmdämpfung und Lecksuche werden gemessen und zur Übergabe dokumentiert."],
+      ["06", "Betrieb und Support", "Vorbeugende Wartung, wiederkehrende Messungen und Rezertifizierung erhalten die Schutzwirkung dauerhaft."],
+    ],
+    scopeEyebrow: "KLARER LEISTUNGSUMFANG VON ANFANG AN",
+    scopeTitle: "Was Frankonia liefert – und wo Partner übernehmen.",
+    scopeBody:
+      "Eine transparente Aufteilung der Verantwortung im gesamten Schutzraum, damit innerhalb der Schirmgrenze nichts der Annahme überlassen bleibt.",
+    scopeHead: ["Kategorie", "Bedeutung", "Umfang und Kompetenz"],
+    scopeRows: [
+      ["HF-Schirmdämpfung", "Kern", "Eigenfertigung mit garantierter Leistung"],
+      ["Türen und Zutrittslösungen", "Kern", "Präzise HF-Dreh- und -Schiebetüren"],
+      ["Gefilterte Durchführungen", "Kern", "HF-Filter für Strom, Daten und Signale"],
+      ["Lüftungs-Hohlleiter", "Kern", "Präzise Wabenkamin-Luftführung"],
+      ["EMV-Prüfung und Zertifizierung", "Kern", "Nachweis vor Ort und Lecksuche"],
+      ["Wartung und Service", "Service", "Jährliche Audits und Lifecycle-Support"],
+      ["Gebäudesicherheitstechnik", "Partner", "Schnittstellenintegration zur Gebäudesicherheit"],
+      ["Einbruchmeldeanlagen", "Partner", "Schnittstellenintegration zu Raummeldeanlagen"],
+      ["Organisatorische Verfahren", "Kunde", "Beratung zu Best Practices durch Frankonia"],
+    ],
+    faqEyebrow: "HÄUFIGE FRAGEN",
+    faqTitle: "Die Fragen, mit denen jedes Projekt beginnt.",
+    faqs: [
+      [
+        "Lässt sich CyberShield in einem bestehenden, laufenden Rechenzentrum installieren?",
+        "Ja. Die Module passen durch Standardtüren und werden von innen verschraubt – ohne Schweißen, ohne Heißarbeiten. Die Montage parallel zum laufenden Betrieb ist ein typisches Projektprofil.",
+      ],
+      [
+        "Wie lange dauert ein Projekt?",
+        "Das hängt von Größe und Integrationsumfang ab. Als Orientierung: Die Raummontage selbst dauert Wochen, der gesamte Ablauf von der Analyse bis zur nachgewiesenen Übergabe in der Regel mehrere Monate. Ein konkreter Terminplan ist Teil des Konzeptangebots.",
+      ],
+      [
+        "Wovon hängen die Kosten ab?",
+        "Von Größe, Leistungsanforderung, Anzahl der Durchführungen (Türen, Strom, Daten, Kühlung) und der Integrationskomplexität. Für ein erstes Gespräch und eine Ersteinschätzung genügen die grundlegenden Projektparameter.",
+      ],
+      [
+        "Beeinträchtigt die Abschirmung Kühlung, Brandschutz oder den täglichen Betrieb?",
+        "Nein. Luftführung, Doppelboden, Brandbekämpfung, Beleuchtung und Zutrittskontrolle werden von Beginn an in die Schirmgrenze eingeplant.",
+      ],
+      [
+        "Was passiert, wenn wir später erweitern oder umziehen?",
+        "Das System ist beschädigungsfrei demontierbar. Räume lassen sich erweitern, umkonfigurieren oder an einem neuen Standort wieder aufbauen – die ursprüngliche Investition bleibt geschützt.",
+      ],
+    ],
+    heroVideoLabel: "3D-Rendering einer modularen CyberShield-Schirmhalle während der Montage",
+    contactEyebrow: "BEGINNEN SIE MIT IHREM RISIKOPROFIL",
+    contactTitle: "Definieren wir die passende Schutzgrenze.",
+    contactBody:
+      "Sagen Sie uns, was Sie schützen müssen. Ein Frankonia-Spezialist prüft Ihr Projekt und antwortet per E-Mail.",
+    labels: {
+      type: "Art der Anfrage",
+      name: "Name",
+      company: "Unternehmen",
+      email: "Geschäftliche E-Mail",
+      country: "Land / Region",
+      project: "Projektart",
+      stage: "Projektphase",
+      message: "Projektanforderungen",
+      consent: "Ich bin damit einverstanden, dass Frankonia diese Angaben zur Beantwortung meiner Anfrage verwendet.",
+      submitConsultation: "Beratungs-E-Mail vorbereiten",
+      submitQuote: "Angebots-E-Mail vorbereiten",
+    },
+    options: {
+      newBuild: "Neubau",
+      retrofit: "Nachrüstung / Erweiterung",
+      confidential: "Vertraulich / noch zu besprechen",
+      concept: "Konzept / Machbarkeit",
+      planning: "Planung / Spezifikation",
+      procurement: "Beschaffung / Ausschreibung",
+      urgent: "Laufendes Projekt / dringend",
+    },
+    emailNote:
+      "Beim Absenden öffnet sich Ihr E-Mail-Programm mit den vorausgefüllten Projektangaben. Auf dieser Website werden keine Formulardaten gespeichert.",
+    footer:
+      "CyberShield ist eine Engineering-Lösung mit hohem Sicherheitsanspruch. Leistung, Normenbezug und Zertifizierungsumfang richten sich nach der vereinbarten Projektkonfiguration und der abschließenden Validierung.",
+  },
   ko: {
     nav: {
       threats: "필요성",
       solution: "솔루션",
+      ecosystem: "제품 구성",
       verification: "검증",
       applications: "적용 분야",
       process: "도입 절차",
       contact: "문의",
     },
-    langLabel: "View this page in English",
+    langLabel: "언어 선택",
     menuOpenLabel: "메뉴 열기",
     menuCloseLabel: "메뉴 닫기",
+    alt: {
+      facility: "데이터센터 시설 단지의 항공 전경",
+      technician: "데이터홀 내부에서 시스템을 검증하는 기술자",
+      engineer: "보호 구역 서버 통로에서 랙을 점검하는 엔지니어",
+    },
     consultation: "상담 예약",
     quote: "견적 요청",
     eyebrow: "핵심 컴퓨팅을 위한 물리·전자기 보안",
@@ -216,7 +550,6 @@ const copy = {
       ["가용성", "국소적인 전자기 사건은 일반적인 사이버 침입 없이도 전자장비, 제어 및 통신에 장애를 일으킬 수 있습니다."],
       ["자본과 업무 연속성", "고밀도 컴퓨팅, 냉각 및 전력 인프라는 하나의 보호 공간을 핵심 운영 의존점으로 만듭니다."],
     ],
-    source: "출처",
     threatEyebrow: "소프트웨어만으로 제공할 수 없는 보안 계층",
     threatTitle: "모든 위협이 네트워크를 통해 들어오지는 않습니다.",
     threatBody:
@@ -234,9 +567,53 @@ const copy = {
       "사전 제작된 PAN 모듈은 표준 건물 출입문으로 반입할 수 있고 내부에서 조립되며 기존 벽에 근접 설치할 수 있습니다. 접착제와 용접 없이 확장과 이전이 가능합니다.",
     features: [
       ["01", "정밀 조립", "75 mm 간격의 체결, 사전 정의된 토크 및 전도성 메시 개스킷을 적용합니다."],
-      ["02", "건축 통합", "이중바닥, 랙, 소방, 조명, 냉각 및 출입통제 시스템을 통합 설계합니다."],
+      ["02", "건축 통합", "가역 설계 모듈이 평탄한 내부 마감면을 제공하며, 이중바닥, 랙, 소방, 조명, 냉각 및 출입통제 시스템을 통합 설계합니다."],
       ["03", "확장 가능한 구조", "손상 없이 해체해 확장, 변경 또는 전체 이전에 재사용할 수 있습니다."],
       ["04", "완전한 보호 경계", "차폐 구조, 도어, 필터, 허니콤 및 도파관을 하나의 시스템으로 구성합니다."],
+    ],
+    compareEyebrow: "업계 기준을 넘어서는 엔지니어링",
+    compareTitle: "일반적인 차폐가 멈추는 지점에서 엔지니어링이 시작됩니다.",
+    compareBody:
+      "장기 성능을 좌우하는 기술 항목에서 CyberShield가 일반적인 차폐 방식과 어떻게 다른지 비교했습니다.",
+    compareHead: ["성능 항목", "일반적인 차폐 방식", "Frankonia CyberShield"],
+    compareRows: [
+      [
+        "RF 차폐 스펙트럼",
+        "좁은 주파수 대역에서 60~80 dB",
+        "100~400 MHz 최대 120 dB 이상, 10 kHz~40 GHz 전 대역 100 dB 이상",
+      ],
+      [
+        "차폐 패널 엔지니어링",
+        "얇은 강판 또는 용접 강구조",
+        "2.0 mm 아연도금 강판 PAN 모듈, 75 mm 간격 규정 토크 체결",
+      ],
+      [
+        "접합·실링 기술",
+        "전도성 접착제 또는 연속 용접",
+        "고전도성 메시 개스킷 — 접착제·용접 없이 100 % 재사용",
+      ],
+      [
+        "공조·음향 효율",
+        "단순 개구부로 인한 열손실과 RF 누설 경로",
+        "허니콤 도파관 환기 및 ISO 354 흡음 성능 (α = 0.65)",
+      ],
+      [
+        "건축 통합",
+        "큰 고정하중을 갖는 영구 구조물",
+        "자립형 또는 내진 강구조, 손상 없이 해체 가능",
+      ],
+    ],
+    ecosystemEyebrow: "하나의 연속된 차폐 경계",
+    ecosystemTitle: "여섯 개의 제품군, 하나의 무누설 경계.",
+    ecosystemBody:
+      "모든 구성요소를 동일한 차폐 외피의 일부로 설계합니다. 접합부, 도어, 관통부에서 성능이 손실되지 않습니다.",
+    ecosystemCards: [
+      ["CyberShield Structure", "벽체·천장·바닥을 구성하는 2.0 mm 아연도금 강판 PAN 모듈 시스템."],
+      ["CyberShield Access", "고하중 슬라이딩·힌지 RF 도어, 고차폐 RF 윈도우 및 출입 모니터링 연동."],
+      ["CyberShield Connectivity", "고성능 전원 라인 필터, 광케이블 도파관 관통부 및 RF 신호 억제 장치."],
+      ["CyberShield Air & Waveguides", "허니콤 환기 패널, 흡음 패널(ISO 354), 액체냉각·설비용 차폐 도파관."],
+      ["CyberShield Validation", "EN 50147-1 / IEEE 299 차폐 성능 측정, 누설 탐지, SE 시험 및 규격 문서화."],
+      ["CyberShield Lifecycle", "예방 정비, 재교정 및 주기적 재인증 서비스."],
     ],
     verifyEyebrow: "추정이 아닌 검증",
     verifyTitle: "약속이 아니라 측정으로 증명합니다.",
@@ -246,11 +623,22 @@ const copy = {
     standards: [
       ["EN 50147-1", "차폐효과 측정 표준"],
       ["IEEE 299", "프로젝트 옵션으로 제공"],
-      ["TEMPEST", "프로젝트별 설계·승인"],
-      ["HEMP", "프로젝트별 검증"],
+      ["BSI TL-03305 / 03306", "도청 방지실 및 IT 차폐실 규격"],
+      ["NATO SDIP-27 Level A", "TEMPEST 설계·승인, NSA 94-106 정합"],
+      ["MIL-STD-188-125-1 / -2", "HEMP·IEMI 방호, 프로젝트별 검증"],
+      ["ISO/IEC 27001", "물리적·환경적 보안 통제 항목 지원"],
     ],
     brochure: "성능 자료 다운로드",
     evidenceTitle: "근거 자료",
+    evidenceNote: "이 페이지는 다음 자료를 참조했습니다:",
+    sourceNote: "출처: IEA, Energy and AI (2026)",
+    attenuationEyebrow: "보증 차폐 성능",
+    attenuationTitle: "10 kHz에서 40 GHz까지, 하나의 차폐 외피로 검증합니다.",
+    attenuationBody:
+      "업계 기준을 선도하는 PAN 타입 모듈 엔지니어링을 EN 50147-1 및 IEEE 299에 따라 측정합니다. 경계를 구성하는 모든 도어, 필터, 허니콤 환기구, 관통부에 동일한 차폐 성능을 설계 반영합니다.",
+    fieldTypes: { magnetic: "자계", plane: "평면파", microwave: "마이크로파" },
+    attenuationNote:
+      "표준 PAN 타입 시스템의 보증 성능 범위입니다. 프로젝트에 적용되는 범위는 사양서와 현장 인수 시험을 통해 확정됩니다.",
     applicationsEyebrow: "고가치 환경을 위한 솔루션",
     applicationsTitle: "하나의 플랫폼, 네 가지 미션 프로파일.",
     applications: [
@@ -290,10 +678,27 @@ const copy = {
     processTitle: "첫 상담부터 검증된 보호까지.",
     processSteps: [
       ["01", "초기 상담", "전문가가 목표, 현장 조건, 제약을 함께 검토합니다. 준비 서류 없이 시작할 수 있습니다."],
-      ["02", "위험·현장 진단", "자산, 위협 시나리오, 시설 조건을 평가하고 보호 요구사항을 함께 정의합니다."],
-      ["03", "개념 설계·견적", "개념 설계안, 통합 계획, 투명한 견적을 제공합니다."],
-      ["04", "시공·검증", "무용접 방식으로 현장 조립하고, 인도 시점에 성능을 측정해 문서화합니다."],
-      ["05", "운영·유지보수", "예방 정비, 점검, 재검증으로 보호 성능을 지속 유지합니다."],
+      ["02", "위험·현장 진단", "자산, 위협 시나리오, 주변 RF 환경, 시설 조건을 평가하고 보호 요구사항을 함께 정의합니다."],
+      ["03", "개념 설계·3D 엔지니어링", "개념 설계안, CAD/BIM 기반 건축 통합 계획, 투명한 견적을 제공합니다."],
+      ["04", "정밀 제작", "PAN 모듈, RF 도어, 전원·데이터 필터, 허니콤 환기구를 Frankonia 자체 생산 시설에서 제작합니다."],
+      ["05", "시공·검증", "인증된 시공팀이 무용접 방식으로 조립하고, 인도 시점에 차폐 성능과 누설 여부를 측정해 문서화합니다."],
+      ["06", "운영·유지보수", "예방 정비, 주기적 재시험, 보안 재인증으로 보호 성능을 지속 유지합니다."],
+    ],
+    scopeEyebrow: "처음부터 명확한 업무 범위",
+    scopeTitle: "Frankonia가 직접 수행하는 범위와 파트너 범위.",
+    scopeBody:
+      "보호 구역 전반의 책임 범위를 투명하게 구분합니다. 차폐 경계 안에서 추정에 맡기는 항목은 없습니다.",
+    scopeHead: ["구분", "중요도", "수행 범위와 전문성"],
+    scopeRows: [
+      ["고주파 차폐 성능", "핵심", "자체 생산 및 성능 보증"],
+      ["도어·출입 솔루션", "핵심", "정밀 RF 힌지·슬라이딩 도어"],
+      ["필터 관통부", "핵심", "전원·데이터·신호 RF 필터"],
+      ["환기 도파관", "핵심", "정밀 허니콤 공조 시스템"],
+      ["EMC 시험·인증", "핵심", "현장 검증 및 누설 탐지"],
+      ["유지보수·서비스", "서비스", "연간 점검 및 라이프사이클 지원"],
+      ["건물 보안 시스템", "파트너", "시설 보안 시스템과의 인터페이스 연동"],
+      ["침입 경보 시스템", "파트너", "실내 경보 시스템과의 인터페이스 연동"],
+      ["운영 절차·규정", "고객", "Frankonia가 모범 사례 자문 제공"],
     ],
     faqEyebrow: "자주 묻는 질문",
     faqTitle: "도입 검토가 시작되는 질문들.",
@@ -378,6 +783,37 @@ const threatIcons = [
   </svg>,
 ];
 
+// Guaranteed attenuation per EN 50147-1 / IEEE 299. Frequency labels and the
+// decibel figures are language-independent; only the field type is translated.
+// The bar maps 80–125 dB onto the column height so the curve stays readable.
+const attenuationRows = [
+  ["10 kHz", 90, "magnetic"],
+  ["100 kHz", 100, "magnetic"],
+  ["1 MHz", 110, "magnetic"],
+  ["100 MHz", 120, "plane"],
+  ["400 MHz", 120, "plane"],
+  ["1 GHz", 110, "plane"],
+  ["18 GHz", 100, "microwave"],
+  ["40 GHz", 100, "microwave"],
+] as const;
+
+const barHeight = (db: number) => `${Math.round(((db - 80) / 45) * 100)}%`;
+
+// Publication names, listed as plain text rather than links — the page does not
+// send visitors to external sites.
+const evidenceSources = [
+  "NCSC · TEMPEST and Electromagnetic Security",
+  "NIST · SP 800-53, control PE-19",
+  "CISA · Resilient Power Best Practices for Critical Facilities and Sites",
+  "IEA · Energy and AI (2026)",
+];
+
+// Importance rating and responsibility tone, aligned with the scope rows above.
+const scopeMeta = [
+  [5, "core"], [5, "core"], [5, "core"], [5, "core"], [5, "core"],
+  [4, "service"], [2, "partner"], [2, "partner"], [2, "customer"],
+] as const;
+
 const revealSelector = [
   ".asset-grid article",
   ".threat-grid article",
@@ -385,6 +821,10 @@ const revealSelector = [
   ".step-list article",
   ".application-grid article",
   ".scenario-grid article",
+  ".compare-row",
+  ".ecosystem-grid article",
+  ".attenuation-chart > div",
+  ".scope-list article",
   ".standards-row div",
   ".faq-list details",
   ".why-metric",
@@ -393,20 +833,43 @@ const revealSelector = [
   ".lifecycle-visual",
 ].join(",");
 
-const navSectionIds = ["why", "solution", "verification", "applications", "process"];
+const navSectionIds = ["why", "solution", "ecosystem", "verification", "applications", "process"];
 
 export function Landing({ lang }: { lang: Lang }) {
   const [inquiry, setInquiry] = useState<Inquiry>("consultation");
   const [menuOpen, setMenuOpen] = useState(false);
+  const [langOpen, setLangOpen] = useState(false);
   const heroVideoRef = useRef<HTMLVideoElement>(null);
   const metricRef = useRef<HTMLElement>(null);
+  const langRef = useRef<HTMLDivElement>(null);
   const t = copy[lang];
-  const otherLangHref = route(lang === "en" ? "/ko" : "/");
 
   useEffect(() => {
     document.documentElement.lang = lang;
   }, [lang]);
 
+  // Close the language dropdown on an outside click or Escape.
+  useEffect(() => {
+    if (!langOpen) return;
+    const onPointerDown = (event: MouseEvent) => {
+      if (!langRef.current?.contains(event.target as Node)) setLangOpen(false);
+    };
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setLangOpen(false);
+    };
+    document.addEventListener("mousedown", onPointerDown);
+    document.addEventListener("keydown", onKeyDown);
+    return () => {
+      document.removeEventListener("mousedown", onPointerDown);
+      document.removeEventListener("keydown", onKeyDown);
+    };
+  }, [langOpen]);
+
+  // The hero render ping-pongs: 8 s forward, 2 s hold, 8 s reverse, 2 s hold.
+  // That cycle is baked into hero-render-loop.mp4 and played natively with
+  // `loop` — reversing in the browser means seeking backwards frame by frame,
+  // which decodes far too slowly on a 1080p source to look smooth.
+  // Autoplay stays in script so a reduced-motion preference keeps the poster.
   useEffect(() => {
     const video = heroVideoRef.current;
     if (!video || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
@@ -565,6 +1028,7 @@ export function Landing({ lang }: { lang: Lang }) {
     <>
       <a href="#why" onClick={() => setMenuOpen(false)}>{t.nav.threats}</a>
       <a href="#solution" onClick={() => setMenuOpen(false)}>{t.nav.solution}</a>
+      <a href="#ecosystem" onClick={() => setMenuOpen(false)}>{t.nav.ecosystem}</a>
       <a href="#verification" onClick={() => setMenuOpen(false)}>{t.nav.verification}</a>
       <a href="#applications" onClick={() => setMenuOpen(false)}>{t.nav.applications}</a>
       <a href="#process" onClick={() => setMenuOpen(false)}>{t.nav.process}</a>
@@ -573,18 +1037,48 @@ export function Landing({ lang }: { lang: Lang }) {
 
   return (
     <main>
+      <WordmarkDefs />
+
       <header className="site-header">
-        <a className="brand" href="#top" aria-label="CyberShield home">
-          <img className="brand-logo" src={asset("/frankonia-mark.svg")} width={1116} height={746} alt="" aria-hidden="true" />
-          <span><b>FRANKONIA</b><small>CYBERSHIELD</small></span>
+        <a className="brand" href="#top" aria-label="Frankonia CyberShield home">
+          <BrandLockup decorative />
         </a>
         <nav className="nav-desktop" aria-label="Primary navigation">
           {navLinks}
         </nav>
         <div className="header-actions">
-          <a className="language" href={otherLangHref} aria-label={t.langLabel}>
-            {lang === "en" ? "KO" : "EN"}
-          </a>
+          <div className={langOpen ? "language-select open" : "language-select"} ref={langRef}>
+            <button
+              className="language"
+              aria-label={t.langLabel}
+              aria-haspopup="true"
+              aria-expanded={langOpen}
+              onClick={() => setLangOpen(!langOpen)}
+            >
+              {languages.find(([code]) => code === lang)?.[1]}
+              <svg viewBox="0 0 12 8" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="1.6">
+                <path d="M1 2 L6 6.5 L11 2" />
+              </svg>
+            </button>
+            {langOpen && (
+              <ul className="language-menu" aria-label={t.langLabel}>
+                {languages.map(([code, short, label, path]) => (
+                  <li key={code}>
+                    <a
+                      href={route(path)}
+                      hrefLang={code}
+                      lang={code}
+                      className={code === lang ? "current" : ""}
+                      aria-current={code === lang ? "true" : undefined}
+                    >
+                      <b>{short}</b>
+                      <span>{label}</span>
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
           <button className="button button-small" onClick={() => goContact("quote")}>{t.quote}</button>
           <button
             className={menuOpen ? "menu-toggle open" : "menu-toggle"}
@@ -620,11 +1114,12 @@ export function Landing({ lang }: { lang: Lang }) {
             <div className="visual-ring" />
             <video
               ref={heroVideoRef}
-              src={asset("/hero-render.mp4")}
+              src={asset("/hero-render-loop.mp4")}
               poster={asset("/images/hero-render-poster.jpg")}
               width={1920}
               height={1080}
               muted
+              loop
               playsInline
               preload="auto"
               aria-label={t.heroVideoLabel}
@@ -650,9 +1145,7 @@ export function Landing({ lang }: { lang: Lang }) {
           <aside className="why-metric" aria-label={t.whyMetricLabel}>
             <strong ref={metricRef}>{t.whyMetric}</strong>
             <span>{t.whyMetricLabel}</span>
-            <a href="https://www.iea.org/reports/key-questions-on-energy-and-ai/executive-summary" target="_blank" rel="noreferrer">
-              {t.source}: IEA, 2026 ↗
-            </a>
+            <small>{t.sourceNote}</small>
           </aside>
         </div>
         <div className="asset-grid">
@@ -693,7 +1186,7 @@ export function Landing({ lang }: { lang: Lang }) {
             height={1024}
             loading="lazy"
             decoding="async"
-            alt={lang === "en" ? "Aerial view of a data-centre facility campus" : "데이터센터 시설 단지의 항공 전경"}
+            alt={t.alt.facility}
           />
         </div>
         <div className="system-content">
@@ -708,6 +1201,43 @@ export function Landing({ lang }: { lang: Lang }) {
               </article>
             ))}
           </div>
+        </div>
+      </section>
+
+      <section className="compare-section" aria-labelledby="compare-title">
+        <div className="section-heading light">
+          <p className="eyebrow">{t.compareEyebrow}</p>
+          <h2 id="compare-title">{t.compareTitle}</h2>
+          <p>{t.compareBody}</p>
+        </div>
+        <div className="compare-table">
+          <div className="compare-head" aria-hidden="true">
+            {t.compareHead.map((label) => <span key={label}>{label}</span>)}
+          </div>
+          {t.compareRows.map(([criterion, standard, advantage]) => (
+            <div className="compare-row" key={criterion}>
+              <h3>{criterion}</h3>
+              <p className="standard">{standard}</p>
+              <p className="advantage">{advantage}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section className="ecosystem-section" id="ecosystem">
+        <div className="section-heading light">
+          <p className="eyebrow">{t.ecosystemEyebrow}</p>
+          <h2>{t.ecosystemTitle}</h2>
+          <p>{t.ecosystemBody}</p>
+        </div>
+        <div className="ecosystem-grid">
+          {t.ecosystemCards.map(([title, body], index) => (
+            <article key={title}>
+              <span>0{index + 1}</span>
+              <h3>{title}</h3>
+              <p>{body}</p>
+            </article>
+          ))}
         </div>
       </section>
 
@@ -727,10 +1257,10 @@ export function Landing({ lang }: { lang: Lang }) {
           </a>
           <div className="evidence-row">
             <strong>{t.evidenceTitle}</strong>
-            <a href="https://www.ncsc.gov.uk/information/tempest-and-electromagnetic-security" target="_blank" rel="noreferrer">NCSC · TEMPEST &amp; Electromagnetic Security ↗</a>
-            <a href="https://csrc.nist.gov/CSRC/media/Projects/risk-management/800-53%20Downloads/800-53r5/SP_800-53_v5_1-derived-OSCAL.pdf" target="_blank" rel="noreferrer">NIST · SP 800-53 PE-19 ↗</a>
-            <a href="https://www.cisa.gov/sites/default/files/publications/CISA%20Resilient%20Power%20Best%20Practices%20for%20Critical%20Facilities%20and%20Sites.pdf" target="_blank" rel="noreferrer">CISA · Resilient Power ↗</a>
-            <a href="https://www.iea.org/reports/key-questions-on-energy-and-ai/executive-summary" target="_blank" rel="noreferrer">IEA · Energy &amp; AI ↗</a>
+            <p className="evidence-note">{t.evidenceNote}</p>
+            <ul className="evidence-list">
+              {evidenceSources.map((source) => <li key={source}>{source}</li>)}
+            </ul>
           </div>
         </div>
         <div className="verify-visual">
@@ -740,9 +1270,28 @@ export function Landing({ lang }: { lang: Lang }) {
             height={1376}
             loading="lazy"
             decoding="async"
-            alt={lang === "en" ? "Technician verifying systems inside the data hall" : "데이터홀 내부에서 시스템을 검증하는 기술자"}
+            alt={t.alt.technician}
           />
         </div>
+      </section>
+
+      <section className="attenuation-section section-dark" aria-labelledby="attenuation-title">
+        <div className="section-heading">
+          <p className="eyebrow">{t.attenuationEyebrow}</p>
+          <h2 id="attenuation-title">{t.attenuationTitle}</h2>
+          <p>{t.attenuationBody}</p>
+        </div>
+        <div className="attenuation-chart">
+          {attenuationRows.map(([frequency, db, field]) => (
+            <div key={frequency}>
+              <b>{frequency}</b>
+              <div className="attenuation-bar" aria-hidden="true"><i style={{ height: barHeight(db) }} /></div>
+              <strong>≥ {db} dB</strong>
+              <span>{t.fieldTypes[field]}</span>
+            </div>
+          ))}
+        </div>
+        <p className="attenuation-note">{t.attenuationNote}</p>
       </section>
 
       <section className="applications-section" id="applications">
@@ -790,7 +1339,7 @@ export function Landing({ lang }: { lang: Lang }) {
             height={800}
             loading="lazy"
             decoding="async"
-            alt={lang === "en" ? "Engineer inspecting racks inside a protected server aisle" : "보호 구역 서버 통로에서 랙을 점검하는 엔지니어"}
+            alt={t.alt.engineer}
           />
         </div>
         <div className="lifecycle-content">
@@ -801,6 +1350,31 @@ export function Landing({ lang }: { lang: Lang }) {
               <article key={num}><span>{num}</span><div><h3>{title}</h3><p>{body}</p></div></article>
             ))}
           </div>
+        </div>
+      </section>
+
+      <section className="scope-section" aria-labelledby="scope-title">
+        <div className="section-heading light">
+          <p className="eyebrow">{t.scopeEyebrow}</p>
+          <h2 id="scope-title">{t.scopeTitle}</h2>
+          <p>{t.scopeBody}</p>
+        </div>
+        <div className="scope-list">
+          <div className="scope-head" aria-hidden="true">
+            {t.scopeHead.map((label) => <span key={label}>{label}</span>)}
+          </div>
+          {t.scopeRows.map(([category, tag, detail], index) => {
+            const [rating, tone] = scopeMeta[index];
+            return (
+              <article key={category}>
+                <h3>{category}</h3>
+                <div className="scope-rating" aria-label={`${rating} / 5`}>
+                  {[1, 2, 3, 4, 5].map((dot) => <i key={dot} className={dot <= rating ? "on" : ""} />)}
+                </div>
+                <p><span className={`scope-tag ${tone}`}>{tag}</span>{detail}</p>
+              </article>
+            );
+          })}
         </div>
       </section>
 
@@ -866,9 +1440,13 @@ export function Landing({ lang }: { lang: Lang }) {
       </section>
 
       <footer>
-        <div className="footer-brand"><img className="brand-logo" src={asset("/frankonia-mark.svg")} width={1116} height={746} alt="Frankonia logo" /><span><b>FRANKONIA</b><small>CYBERSHIELD</small></span></div>
+        <div className="footer-brand"><BrandLockup /></div>
         <p>{t.footer}</p>
-        <div><a href="https://frankonia-solutions.com/privacy/" target="_blank" rel="noreferrer">Privacy</a><a href="https://frankonia-solutions.com/imprint/" target="_blank" rel="noreferrer">Imprint</a><span>© 2026 Frankonia Group</span></div>
+        <div>
+          <a href={route("/privacy")}>Privacy</a>
+          <a href={route("/imprint")}>Imprint</a>
+          <a href="https://frankonia-solutions.com/" target="_blank" rel="noreferrer">© 1987 Frankonia Group</a>
+        </div>
       </footer>
     </main>
   );

@@ -43,3 +43,5 @@ next-env.d.ts
 /.wrangler/
 /outputs/
 /work/
+/dev.local.log
+/tsconfig.tsbuildinfo

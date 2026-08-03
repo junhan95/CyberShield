@@ -3,6 +3,18 @@
 // basePath rewriting, so they go through the helpers below.
 export const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 
+export type Lang = "en" | "de" | "ko";
+
+/** Language switcher order: English, German, Korean. Lives here so both the
+ *  client landing page and the server-side metadata can read it. */
+export const languages = [
+  ["en", "EN", "English", "/"],
+  ["de", "DE", "Deutsch", "/de"],
+  ["ko", "KO", "한국어", "/ko"],
+] as const satisfies readonly (readonly [Lang, string, string, string])[];
+
+export const langPath = (lang: Lang) => languages.find(([code]) => code === lang)![3];
+
 export const siteOrigin =
   process.env.NEXT_PUBLIC_SITE_ORIGIN ?? "http://localhost:3000";
 
