@@ -19,6 +19,14 @@ ErrorDocument 404 /404.html
 <IfModule mod_headers.c>
   Header always set X-Content-Type-Options "nosniff"
   Header always set Referrer-Policy "strict-origin-when-cross-origin"
+  # Two years, preload-eligible. Only safe because the whole site is HTTPS and
+  # there is no plain-HTTP subdomain left to serve.
+  Header always set Strict-Transport-Security "max-age=63072000; includeSubDomains"
+  Header always set X-Frame-Options "SAMEORIGIN"
+  Header always set Permissions-Policy "geolocation=(), microphone=(), camera=(), payment=(), interest-cohort=()"
+  # The site is static: scripts and styles are first-party, fonts come from
+  # Google. frame-ancestors repeats X-Frame-Options for modern browsers.
+  Header always set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; media-src 'self'; connect-src 'self'; form-action 'self' mailto:; frame-ancestors 'self'; base-uri 'self'; object-src 'none'"
 </IfModule>
 
 <IfModule mod_deflate.c>

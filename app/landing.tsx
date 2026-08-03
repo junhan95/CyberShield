@@ -288,13 +288,13 @@ const copy = {
     metrics: [
       ["Vor Ort nachgewiesen", "Die Schirmdämpfung wird nach der Montage gemessen – nicht angenommen"],
       ["Schweißfreie Montage", "Verschraubte Module, Montage im laufenden Betrieb ohne Heißarbeiten"],
-      ["Für Veränderung gebaut", "Rückbau, Erweiterung oder Umzug des Raums ohne Beschädigung"],
+      ["Auf Veränderung ausgelegt", "Rückbau, Erweiterung oder Umzug des Raums ohne Beschädigung"],
     ],
     proof: ["Engineering-Erfahrung seit 1987", "5 Standorte weltweit", "Präsenz in über 80 Ländern", "Schlüsselfertige Umsetzung"],
     whyEyebrow: "WARUM DAS RISIKO WÄCHST",
     whyTitle: "Immer mehr Wert konzentriert sich hinter denselben physischen Wänden.",
     whyBody:
-      "KI- und Souveränitäts-Workloads bündeln außergewöhnliche Rechenleistung, Daten und betriebliche Abhängigkeit in wenigen Rechenzentren. Die IEA erwartet, dass sich der Stromverbrauch KI-orientierter Rechenzentren zwischen 2025 und 2030 verdreifacht – ein deutliches Signal dafür, wie schnell kritische digitale Kapazität wächst.",
+      "KI- und Sovereign-Cloud-Workloads konzentrieren enorme Rechenleistung und Datenbestände – und damit die betriebliche Abhängigkeit – auf wenige Rechenzentren. Die IEA erwartet, dass sich der Stromverbrauch KI-orientierter Rechenzentren zwischen 2025 und 2030 verdreifacht – ein deutliches Signal dafür, wie schnell kritische digitale Kapazität wächst.",
     whyMetric: "3×",
     whyMetricLabel: "Prognostiziertes Wachstum des Stromverbrauchs KI-orientierter Rechenzentren, 2025–2030",
     assetCards: [
@@ -305,7 +305,7 @@ const copy = {
     threatEyebrow: "DIE SICHERHEITSEBENE, DIE SOFTWARE NICHT LIEFERN KANN",
     threatTitle: "Nicht jede Bedrohung kommt über das Netzwerk.",
     threatBody:
-      "Verschlüsselung und Zero Trust schützen die digitale Ebene. CyberShield adressiert die physische und elektromagnetische Exposition an der Gebäudegrenze.",
+      "Verschlüsselung und Zero Trust schützen die digitale Ebene. CyberShield adressiert die physische und elektromagnetische Exposition an der Gebäudehülle.",
     threats: [
       ["Kompromittierende Abstrahlung", "Sensible Verarbeitungsvorgänge können über unbeabsichtigte elektromagnetische Signale offengelegt werden – ohne Zugriff auf das Netzwerk.", "Vertraulichkeit gefährdet"],
       ["Vorsätzliche Störbeeinflussung", "Lokale HF- oder elektromagnetische Energie hoher Leistung kann Elektronik, Steuerungen und Kommunikation stören.", "Betriebsunterbrechung"],
@@ -314,7 +314,7 @@ const copy = {
     ],
     impactLabel: "Mögliche Auswirkung",
     systemEyebrow: "MODULARES PAN-SCHIRMSYSTEM",
-    systemTitle: "Ein Sicherheitsraum, geplant für die Realität Ihres Gebäudes.",
+    systemTitle: "Ein Sicherheitsraum, geplant für die Gegebenheiten Ihres Gebäudes.",
     systemBody:
       "Vorgefertigte PAN-Module passen durch Standardtüren, werden von innen montiert und lassen sich nah an bestehende Wände setzen. Ohne Kleber. Ohne Schweißen. Ohne unumkehrbare Festlegung.",
     features: [
@@ -324,7 +324,7 @@ const copy = {
       ["04", "Durchgängige Schirmgrenze", "Schirmkonstruktion, Türen, Filter, Wabenkamine und Hohlleiter werden als ein System ausgelegt."],
     ],
     verifyEyebrow: "NACHGEWIESEN, NICHT ANGENOMMEN",
-    verifyTitle: "Leistung, die Sie nicht glauben müssen.",
+    verifyTitle: "Nachgewiesen statt behauptet.",
     verifyBody:
       "Jedes CyberShield-Projekt endet mit einem Messnachweis. Die Schirmdämpfung wird vor Ort nach internationalen Normen geprüft, die dokumentierten Abnahmeergebnisse werden mit dem Raum übergeben. Detaillierte Messdaten stehen Ihrem Engineering-Team zur Verfügung.",
     standardsIntro: "Gemessen und validiert nach",
@@ -343,14 +343,14 @@ const copy = {
     attenuationEyebrow: "GARANTIERTE SCHIRMDÄMPFUNG",
     attenuationTitle: "Eine Schirmhülle, nachgewiesen von 10 kHz bis 40 GHz.",
     attenuationBody:
-      "Maßstabsetzende PAN-Modultechnik, gemessen nach EN 50147-1 und IEEE 299. Dieselbe Dämpfung ist in jede Tür, jeden Filter, jeden Wabenkamin und jede Durchführung der Schirmgrenze eingeplant.",
+      "PAN-Modultechnik, die den Maßstab setzt – gemessen nach EN 50147-1 und IEEE 299. Dieselbe Dämpfung ist in jede Tür, jeden Filter, jeden Wabenkamin und jede Durchführung der Schirmgrenze eingeplant.",
     fieldTypes: { magnetic: "Magnetfeld", plane: "Ebene Welle", microwave: "Mikrowelle" },
     attenuationNote:
       "Die Werte beschreiben den garantierten Leistungsbereich des Standard-PAN-Systems. Der für Ihr Projekt geltende Umfang wird in der Spezifikation und durch die Abnahmemessung vor Ort bestätigt.",
     compareEyebrow: "ENGINEERING JENSEITS DES BRANCHENSTANDARDS",
     compareTitle: "Wo übliche Abschirmung endet, beginnt das Engineering.",
     compareBody:
-      "Wie sich CyberShield gegenüber konventionellen Schirmlösungen in genau den Kriterien verhält, die die Langzeitleistung bestimmen.",
+      "Wie CyberShield gegenüber konventionellen Schirmlösungen in genau den Kriterien abschneidet, die die Langzeitleistung bestimmen.",
     compareHead: ["Leistungskriterium", "Konventionelle Abschirmung", "Frankonia CyberShield"],
     compareRows: [
       [
@@ -439,7 +439,7 @@ const copy = {
     scopeEyebrow: "KLARER LEISTUNGSUMFANG VON ANFANG AN",
     scopeTitle: "Was Frankonia liefert – und wo Partner übernehmen.",
     scopeBody:
-      "Eine transparente Aufteilung der Verantwortung im gesamten Schutzraum, damit innerhalb der Schirmgrenze nichts der Annahme überlassen bleibt.",
+      "Eine transparente Aufteilung der Verantwortung im gesamten Schutzraum, damit innerhalb der Schirmgrenze nichts dem Zufall überlassen bleibt.",
     scopeHead: ["Kategorie", "Bedeutung", "Umfang und Kompetenz"],
     scopeRows: [
       ["HF-Schirmdämpfung", "Kern", "Eigenfertigung mit garantierter Leistung"],
@@ -543,7 +543,7 @@ const copy = {
     whyEyebrow: "증가하는 위험",
     whyTitle: "같은 물리적 공간에 더 많은 가치와 운영 의존성이 집중되고 있습니다.",
     whyBody:
-      "AI와 소버린 워크로드는 막대한 컴퓨팅 자원, 데이터 및 업무 연속성을 소수 시설에 집중시킵니다. IEA는 2025~2030년 AI 중심 데이터센터의 전력 사용량이 약 3배 증가할 것으로 전망합니다. 이는 보호해야 할 핵심 디지털 역량이 얼마나 빠르게 확대되는지를 보여줍니다.",
+      "AI와 소버린 클라우드 워크로드는 막대한 컴퓨팅 자원과 데이터, 그리고 그에 따르는 운영 의존성을 소수 시설에 집중시킵니다. IEA는 2025~2030년 AI 중심 데이터센터의 전력 사용량이 약 3배 증가할 것으로 전망합니다. 이는 보호해야 할 핵심 디지털 역량이 얼마나 빠르게 확대되는지를 보여줍니다.",
     whyMetric: "3배",
     whyMetricLabel: "2025~2030년 AI 중심 데이터센터 전력 사용량 전망",
     assetCards: [
@@ -558,17 +558,17 @@ const copy = {
     threats: [
       ["전자기 정보 방사", "네트워크에 접촉하지 않고도 비의도적 전자기 신호를 통해 민감한 처리 활동이 노출될 수 있습니다.", "기밀성 노출"],
       ["의도적 전자기 간섭", "국소 고출력 RF 또는 전자기 에너지는 전자장비, 제어 및 통신을 교란할 수 있습니다.", "서비스 중단"],
-      ["EMP / HEMP 노출", "방사 및 전도성 펄스 영향은 중요 시스템과 업무 연속성 아키텍처를 위협할 수 있습니다.", "업무 연속성 위험"],
+      ["EMP / HEMP 노출", "방사 및 전도성 펄스 영향은 중요 시스템과 업무 연속성 체계를 위협할 수 있습니다.", "업무 연속성 위험"],
       ["경계 구성요소 취약점", "도어, 환기, 전원, 데이터, 냉각 및 설비 관통부가 차폐 경계의 가장 약한 경로가 될 수 있습니다.", "보호 성능 저하"],
     ],
     impactLabel: "잠재 영향",
     systemEyebrow: "모듈형 PAN 차폐 시스템",
-    systemTitle: "시설의 현실을 반영해 설계하는 보안 공간.",
+    systemTitle: "시설의 실제 조건에 맞춰 설계하는 보안 공간.",
     systemBody:
       "사전 제작된 PAN 모듈은 표준 건물 출입문으로 반입할 수 있고 내부에서 조립되며 기존 벽에 근접 설치할 수 있습니다. 접착제와 용접 없이 확장과 이전이 가능합니다.",
     features: [
-      ["01", "정밀 조립", "75 mm 간격의 체결, 사전 정의된 토크 및 전도성 메시 개스킷을 적용합니다."],
-      ["02", "건축 통합", "가역 설계 모듈이 평탄한 내부 마감면을 제공하며, 이중바닥, 랙, 소방, 조명, 냉각 및 출입통제 시스템을 통합 설계합니다."],
+      ["01", "정밀 조립", "패널을 75 mm 간격으로 규정 토크로 체결하고, 전도성 메시 개스킷으로 접합부를 밀봉합니다."],
+      ["02", "건축 통합", "양면 사용이 가능한 모듈로 평탄한 내부 마감면을 확보하고, 이중바닥·랙·소방·조명·냉각·출입통제를 함께 설계에 반영합니다."],
       ["03", "확장 가능한 구조", "손상 없이 해체해 확장, 변경 또는 전체 이전에 재사용할 수 있습니다."],
       ["04", "완전한 보호 경계", "차폐 구조, 도어, 필터, 허니콤 및 도파관을 하나의 시스템으로 구성합니다."],
     ],
@@ -605,7 +605,7 @@ const copy = {
       ],
     ],
     ecosystemEyebrow: "하나의 연속된 차폐 경계",
-    ecosystemTitle: "여섯 개의 제품군, 하나의 무누설 경계.",
+    ecosystemTitle: "여섯 개의 제품군, 누설 없는 하나의 차폐 경계.",
     ecosystemBody:
       "모든 구성요소를 동일한 차폐 외피의 일부로 설계합니다. 접합부, 도어, 관통부에서 성능이 손실되지 않습니다.",
     ecosystemCards: [
@@ -619,7 +619,7 @@ const copy = {
     verifyEyebrow: "추정이 아닌 검증",
     verifyTitle: "약속이 아니라 측정으로 증명합니다.",
     verifyBody:
-      "모든 CyberShield 프로젝트는 측정된 증거로 완료됩니다. 차폐 성능은 국제 표준에 따라 설치 후 현장에서 시험하고, 문서화된 인수 결과를 공간과 함께 인도합니다. 상세 성능 데이터는 엔지니어링 팀을 위해 제공됩니다.",
+      "모든 CyberShield 프로젝트는 측정된 증거로 완료됩니다. 차폐 성능은 국제 표준에 따라 설치 후 현장에서 시험하고, 문서화된 인수 결과를 공간과 함께 인도합니다. 상세 성능 데이터는 고객사 엔지니어링 팀에 제공합니다.",
     standardsIntro: "적용 표준",
     standards: [
       ["EN 50147-1", "차폐효과 측정 표준"],
@@ -634,9 +634,9 @@ const copy = {
     evidenceNote: "이 페이지는 다음 자료를 참조했습니다:",
     sourceNote: "출처: IEA, Energy and AI (2026)",
     attenuationEyebrow: "보증 차폐 성능",
-    attenuationTitle: "10 kHz에서 40 GHz까지, 하나의 차폐 외피로 검증합니다.",
+    attenuationTitle: "하나의 차폐 외피, 10 kHz에서 40 GHz까지 검증합니다.",
     attenuationBody:
-      "업계 기준을 선도하는 PAN 타입 모듈 엔지니어링을 EN 50147-1 및 IEEE 299에 따라 측정합니다. 경계를 구성하는 모든 도어, 필터, 허니콤 환기구, 관통부에 동일한 차폐 성능을 설계 반영합니다.",
+      "업계 기준을 선도하는 PAN 타입 모듈 시스템의 차폐 성능을 EN 50147-1 및 IEEE 299에 따라 측정합니다. 경계를 구성하는 모든 도어, 필터, 허니콤 환기구, 관통부에 동일한 차폐 성능을 설계 반영합니다.",
     fieldTypes: { magnetic: "자계", plane: "평면파", microwave: "마이크로파" },
     attenuationNote:
       "표준 PAN 타입 시스템의 보증 성능 범위입니다. 프로젝트에 적용되는 범위는 사양서와 현장 인수 시험을 통해 확정됩니다.",
@@ -688,7 +688,7 @@ const copy = {
     scopeEyebrow: "처음부터 명확한 업무 범위",
     scopeTitle: "Frankonia가 직접 수행하는 범위와 파트너 범위.",
     scopeBody:
-      "보호 구역 전반의 책임 범위를 투명하게 구분합니다. 차폐 경계 안에서 추정에 맡기는 항목은 없습니다.",
+      "보호 구역 전반의 책임 범위를 투명하게 구분합니다. 차폐 경계 안에서 불확실하게 남겨두는 항목은 없습니다.",
     scopeHead: ["구분", "중요도", "수행 범위와 전문성"],
     scopeRows: [
       ["고주파 차폐 성능", "핵심", "자체 생산 및 성능 보증"],
@@ -755,7 +755,7 @@ const copy = {
     emailNote:
       "제출하면 입력한 프로젝트 정보가 포함된 이메일 작성 화면이 열립니다. 이 웹사이트에는 양식 데이터가 저장되지 않습니다.",
     footer:
-      "CyberShield는 고보증 엔지니어링 솔루션입니다. 성능, 적용 규격 및 인증 범위는 합의된 프로젝트 구성과 최종 검증 결과에 따라 결정됩니다.",
+      "CyberShield는 높은 수준의 보증이 요구되는 엔지니어링 솔루션입니다. 성능, 적용 규격 및 인증 범위는 합의된 프로젝트 구성과 최종 검증 결과에 따라 결정됩니다.",
   },
 } as const;
 
