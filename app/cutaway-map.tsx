@@ -12,19 +12,28 @@ import { asset } from "./site-config";
  * The render holds the left column and stays pinned while the part list scrolls
  * beside it on the right, so the highlighted marker and the words describing it
  * are on screen together. The caption pins to the top of that column for the
- * same reason. Pointing at a marker or at its entry works the same, as does a
- * tap or the keyboard. Below 1240px the two columns stack back up.
+ * same reason. Below 1240px the two columns stack back up.
+ *
+ * Pointing at a part previews it; clicking locks it, and it stays until the
+ * next click, so a description can be read without the pointer having to sit
+ * still on the row. Hovering elsewhere while locked leaves the text alone.
+ * Clicking the same part again, or pressing Escape, releases the lock.
  */
 export function CutawayMap({ lang, alt, hint }: { lang: Lang; alt: string; hint: string }) {
-  const [active, setActive] = useState<string | null>(null);
+  const [pinned, setPinned] = useState<string | null>(null);
+  const [hovered, setHovered] = useState<string | null>(null);
   const [group, setGroup] = useState<GroupId | null>(null);
 
+  // A lock wins over the pointer; without one, hovering previews.
+  const active = pinned ?? hovered;
   const current = hotspots.find((spot) => spot.id === active) ?? null;
 
   const bindSpot = (id: string) => ({
-    onMouseEnter: () => setActive(id),
-    onFocus: () => setActive(id),
-    onClick: () => setActive((previous) => (previous === id ? null : id)),
+    onMouseEnter: () => setHovered(id),
+    onMouseLeave: () => setHovered((previous) => (previous === id ? null : previous)),
+    onFocus: () => setHovered(id),
+    onBlur: () => setHovered((previous) => (previous === id ? null : previous)),
+    onClick: () => setPinned((previous) => (previous === id ? null : id)),
   });
 
   const bindGroup = (id: GroupId) => ({
@@ -38,9 +47,16 @@ export function CutawayMap({ lang, alt, hint }: { lang: Lang; alt: string; hint:
     (active !== null && spot.id !== active) || (group !== null && spot.group !== group);
 
   return (
-    <div className={active || group ? "cutaway is-active" : "cutaway"}>
+    <div
+      className={active || group ? "cutaway is-active" : "cutaway"}
+      onKeyDown={(event) => {
+        if (event.key === "Escape" && pinned) {
+          setPinned(null);
+        }
+      }}
+    >
       <div className="cutaway-view">
-        <figure className="cutaway-stage" onMouseLeave={() => setActive(null)}>
+        <figure className="cutaway-stage" onMouseLeave={() => setHovered(null)}>
           <img src={asset("/images/cutaway.webp")} width={1800} height={1009} alt={alt} />
 
           {/* Dims everything but a circle around the selected part. */}
@@ -61,10 +77,10 @@ export function CutawayMap({ lang, alt, hint }: { lang: Lang; alt: string; hint:
             <button
               key={spot.id}
               type="button"
-              className={`cutaway-pin${spot.id === active ? " is-on" : ""}${dimmed(spot) ? " is-off" : ""}`}
+              className={`cutaway-pin${spot.id === active ? " is-on" : ""}${spot.id === pinned ? " is-pinned" : ""}${dimmed(spot) ? " is-off" : ""}`}
               style={{ left: `${spot.x}%`, top: `${spot.y}%` }}
               aria-label={spot.title[lang]}
-              aria-pressed={spot.id === active}
+              aria-pressed={spot.id === pinned}
               {...bindSpot(spot.id)}
             >
               {index + 1}
@@ -104,8 +120,8 @@ export function CutawayMap({ lang, alt, hint }: { lang: Lang; alt: string; hint:
                   <li key={spot.id}>
                     <button
                       type="button"
-                      className={spot.id === active ? "is-on" : undefined}
-                      aria-pressed={spot.id === active}
+                      className={`${spot.id === active ? "is-on" : ""}${spot.id === pinned ? " is-pinned" : ""}`.trim() || undefined}
+                      aria-pressed={spot.id === pinned}
                       {...bindSpot(spot.id)}
                     >
                       <b>{String(hotspots.indexOf(spot) + 1).padStart(2, "0")}</b>

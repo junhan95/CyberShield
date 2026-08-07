@@ -29,6 +29,14 @@ const copy = {
       technician: "Technician verifying systems inside the data hall",
       engineer: "Engineer inspecting racks inside a protected server aisle",
     },
+    ecosystemAlt: [
+      "Modular PAN shielding panels forming the wall of a shielded room, carried on a self-supporting steel structure",
+      "Double-leaf RF shielded doors set into the facade of a shielded room",
+      "Filter cabinets beside an opened power line filter bank at the shielding boundary",
+      "Honeycomb ventilation waveguide panel mounted into a shielded wall",
+      "Measurement instruments on a control desk used for shielding effectiveness testing",
+      "A hall of installed shielded rooms with access platform and stairs",
+    ],
     consultation: "Book a consultation",
     quote: "Request a quote",
     eyebrow: "PHYSICAL & ELECTROMAGNETIC SECURITY FOR AI DATA CENTRE BUILDS",
@@ -43,6 +51,22 @@ const copy = {
       ["Built to change", "Dismount, expand or relocate the room without damage"],
     ],
     proof: ["Engineering heritage since 1987", "5 global locations", "Presence in 80+ countries", "Turnkey delivery"],
+    audienceEyebrow: "WHO CYBERSHIELD IS BUILT FOR",
+    audienceTitle: "Three environments where the boundary has to hold.",
+    audience: [
+      [
+        "Hyperscale cloud & AI centres",
+        "Core AI compute clusters, quantum hardware and critical availability zones, shielded against RF tampering and high-power electromagnetic threats.",
+      ],
+      [
+        "Colocation & enterprise data centres",
+        "A certified shielded vault offered as a premium, measurable security tier for enterprise customers under strict governance requirements.",
+      ],
+      [
+        "Defence, government & financial institutions",
+        "Sovereign cloud deployments, command centres and high-frequency trading platforms where confidentiality cannot be left to assumption.",
+      ],
+    ],
     whyEyebrow: "SECURITY BEYOND SOFTWARE",
     whyTitle: "AI data centre security no longer ends at the software layer.",
     whyBody:
@@ -122,13 +146,38 @@ const copy = {
     ecosystemBody:
       "Every component is engineered as part of the same shielding envelope, so performance is not lost at the joints, the doors or the penetrations.",
     ecosystemCards: [
-      ["CyberShield Structure", "Prefabricated 2.0 mm galvanized steel PAN module system for walls, ceilings and floors."],
-      ["CyberShield Access", "Heavy-duty sliding and hinged RF doors, high-attenuation RF windows and integrated access monitoring."],
-      ["CyberShield Connectivity", "High-performance power line filters, fibre-optic waveguide penetrations and RF signal suppressors."],
-      ["CyberShield Air & Waveguides", "Honeycomb ventilation panels, acoustic panels (ISO 354) and shielded waveguides for liquid cooling and utilities."],
-      ["CyberShield Validation", "EN 50147-1 / IEEE 299 shielding measurement, leak detection, SE testing and compliance documentation."],
-      ["CyberShield Lifecycle", "Preventive maintenance, recalibration and periodic re-certification services."],
+      [
+        "CyberShield Structure",
+        "Prefabricated 2.0 mm galvanized steel PAN module system for walls, ceilings and floors.",
+        "Sheet steel to DIN 17162 / EN 10142 DX 52 D+Z, 275 g/m² galvanising, bolted every 75 mm onto a self-supporting steel structure.",
+      ],
+      [
+        "CyberShield Access",
+        "Heavy-duty sliding and hinged RF doors, high-attenuation RF windows and integrated access monitoring.",
+        "Circumferential triple contact system with conductive springs, 20,000 opening cycles MTBF, 150 mm standard threshold.",
+      ],
+      [
+        "CyberShield Connectivity",
+        "High-performance power line filters, fibre-optic waveguide penetrations and RF signal suppressors.",
+        "Power, data and signal feed-throughs filtered to the same attenuation as the wall they cross — up to DN200 media penetrations.",
+      ],
+      [
+        "CyberShield Air & Waveguides",
+        "Honeycomb ventilation panels, acoustic panels (ISO 354) and shielded waveguides for liquid cooling and utilities.",
+        "Below-cut-off honeycomb waveguides pass air without passing RF; acoustic inlay panels absorb to ISO 354, αw = 0.65 (MH).",
+      ],
+      [
+        "CyberShield Validation",
+        "EN 50147-1 / IEEE 299 shielding measurement, leak detection, SE testing and compliance documentation.",
+        "Guaranteed shielding effectiveness of ≥ 90 dB at 10 kHz rising to ≥ 120 dB at 100–400 MHz and holding ≥ 100 dB to 40 GHz.",
+      ],
+      [
+        "CyberShield Lifecycle",
+        "Preventive maintenance, recalibration and periodic re-certification services.",
+        "Nothing glued or welded, so the room can be dismounted without damage — modified, extended or relocated, then re-measured.",
+      ],
     ],
+    ecosystemNote: "The same shielding effectiveness applies across every product line — see the measured envelope",
     verifyEyebrow: "VERIFIED, NOT ASSUMED",
     verifyTitle: "Performance you don't have to take on faith.",
     verifyBody:
@@ -142,10 +191,17 @@ const copy = {
       ["MIL-STD-188-125-1 / -2", "HEMP and IEMI protection, project-specific validation"],
       ["ISO/IEC 27001", "Supports the physical and environmental security controls"],
     ],
-    brochure: "Download performance sheet",
-    certificates: "Test certificates & technical downloads",
     evidenceTitle: "Evidence base",
-    evidenceNote: "The following publications were consulted in preparing this page:",
+    evidenceNote:
+      "Figures, terminology and threat definitions on this page are read from the publications below. Each entry names the issuing body, the document and the clause the statement comes from.",
+    evidenceUsedFor: [
+      "Cited for: the E1 HEMP waveform and the 2.5 ns rise time quoted on this page",
+      "Cited for: intentional electromagnetic interference treated as its own test discipline",
+      "Cited for: the definition and scope of compromising emanations",
+      "Cited for: information leakage as a physical and environmental protection control",
+      "Cited for: power resilience practice in critical facilities",
+      "Cited for: data centre facility and infrastructure terminology",
+    ],
     sourceNote: "Source: IEC 61000-2-9, HEMP waveform definition",
     attenuationEyebrow: "GUARANTEED ATTENUATION PERFORMANCE",
     attenuationTitle: "One shielding envelope, verified from 10 kHz to 40 GHz.",
@@ -154,7 +210,7 @@ const copy = {
     fieldTypes: { magnetic: "Magnetic field", plane: "Plane wave", microwave: "Microwave" },
     attenuationNote:
       "Values describe the guaranteed performance envelope of the standard PAN type system. The scope that applies to your project is confirmed in the specification and by on-site acceptance testing.",
-    applicationsEyebrow: "BUILT FOR HIGH-VALUE ENVIRONMENTS",
+    applicationsEyebrow: "HOW THE ROOM IS CONFIGURED",
     applicationsTitle: "One platform. Four mission profiles.",
     applications: [
       ["Sovereign Compute Vault", "Government & sovereign cloud", "Create a controlled processing zone for classified or nationally sensitive workloads."],
@@ -215,6 +271,47 @@ const copy = {
       ["Building security systems", "Partner", "Interface integration with facility security"],
       ["Intrusion alarm systems", "Partner", "Interface integration with room alarm systems"],
       ["Organizational procedures", "Customer", "Best-practice advisory provided by Frankonia"],
+    ],
+    companyEyebrow: "FRANKONIA AT A GLANCE",
+    companyTitle: "The shielding is not new. The application is.",
+    companyBody:
+      "The Frankonia Group was founded in 1987 as a solution provider for EMC and antenna test laboratories, and is today a specialised technology corporation for anechoic chambers and test systems in the automotive, military and industrial sectors. CyberShield applies that same shielding engineering to data infrastructure. In-house project management, engineering and production — with Frankonia's own installation and service teams — mean the boundary, the doors, the filters and the acceptance measurement all come from one source.",
+    companyImageAlt: "Aerial view of the Frankonia Group headquarters and production site in Germany",
+    companyGlanceTitle: "Frankonia stands for",
+    companyGlance: [
+      ["Global presence", "A well-structured network of production, representation and service units, active worldwide."],
+      ["Complete solution provider", "Fundamental knowledge across every discipline a shielded facility touches."],
+      ["Innovation as method", "Technologies adopted to raise efficiency, outcome and quality alongside customer needs."],
+      ["Preferred partner", "Customised, state-of-the-art solutions rather than catalogue products."],
+    ],
+    companyColumns: [
+      [
+        "Product advantages",
+        [
+          ["Modular and self-supporting", "The shielding carries itself, so the parent building takes no additional structural load."],
+          ["Identical performance throughout", "The same shielding effectiveness across panels, doors, filters and waveguides — no weak link at the joints."],
+          ["Bolted, never glued or welded", "Every joint is a screwed connection with a conductive mesh gasket, so the room stays serviceable for decades."],
+          ["Produced in-house", "Prefabricated standard components manufactured by Frankonia rather than sourced and assembled."],
+        ],
+      ],
+      [
+        "Customer benefits",
+        [
+          ["Proven for more than 35 years", "Technologies in service in EMC test laboratories worldwide since 1987."],
+          ["Few demands on the building", "The design adapts to existing electricity, statics and building conditions rather than the other way round."],
+          ["Relocate, modify, re-sell", "The modular setup can be dismounted and rebuilt elsewhere without damage."],
+          ["Simple building interfaces", "Electricity, ventilation, exhaust, data and gas detection cross the boundary through defined, filtered interfaces."],
+        ],
+      ],
+      [
+        "Why customers select Frankonia",
+        [
+          ["One partner, start to finish", "Consultation, manufacturing, installation, acceptance testing and recertification under a single responsibility."],
+          ["Building design support", "Frankonia works with architects and contractors early, while shielding decisions are still inexpensive to make."],
+          ["No compromise on safety", "Non-combustible, recyclable materials — no carbon, no polyethylene, no glue."],
+          ["Project management that finishes", "Experienced teams carry both the detail and the schedule through to handover."],
+        ],
+      ],
     ],
     faqEyebrow: "COMMON QUESTIONS",
     faqTitle: "The questions every project starts with.",
@@ -292,6 +389,14 @@ const copy = {
       technician: "Prüfung der Systeme in der Datenhalle",
       engineer: "Inspektion der Racks in einem geschützten Servergang",
     },
+    ecosystemAlt: [
+      "Modulare PAN-Schirmpaneele als Wand eines Schirmraums, getragen von einer selbsttragenden Stahlkonstruktion",
+      "Zweiflügelige HF-Schirmtüren in der Fassade eines Schirmraums",
+      "Filterschränke neben einer geöffneten Netzfilterbank an der Schirmgrenze",
+      "In eine Schirmwand eingebauter Wabenkamin als Hohlleiter für die Lüftung",
+      "Messgeräte auf einem Steuerpult für die Schirmdämpfungsmessung",
+      "Halle mit installierten Schirmräumen, Zugangspodest und Treppe",
+    ],
     consultation: "Beratung vereinbaren",
     quote: "Angebot anfordern",
     eyebrow: "PHYSISCHE UND ELEKTROMAGNETISCHE SICHERHEIT BEIM BAU VON KI-RECHENZENTREN",
@@ -306,6 +411,22 @@ const copy = {
       ["Auf Veränderung ausgelegt", "Rückbau, Erweiterung oder Umzug des Raums ohne Beschädigung"],
     ],
     proof: ["Engineering-Erfahrung seit 1987", "5 Standorte weltweit", "Präsenz in über 80 Ländern", "Schlüsselfertige Umsetzung"],
+    audienceEyebrow: "FÜR WEN CYBERSHIELD GEBAUT WIRD",
+    audienceTitle: "Drei Umgebungen, in denen die Schirmgrenze halten muss.",
+    audience: [
+      [
+        "Hyperscale-Cloud- und KI-Rechenzentren",
+        "KI-Rechencluster, Quantenhardware und kritische Availability Zones — geschirmt gegen HF-Manipulation und hochenergetische elektromagnetische Bedrohungen.",
+      ],
+      [
+        "Colocation- und Enterprise-Rechenzentren",
+        "Ein zertifizierter Schirmtresor als messbare Premium-Sicherheitsstufe für Enterprise-Kunden mit strengen Governance-Anforderungen.",
+      ],
+      [
+        "Verteidigung, Behörden und Finanzinstitute",
+        "Souveräne Cloud-Umgebungen, Führungszentralen und Hochfrequenzhandelsplattformen, deren Vertraulichkeit nicht auf Annahmen beruhen darf.",
+      ],
+    ],
     whyEyebrow: "SICHERHEIT ÜBER SOFTWARE HINAUS",
     whyTitle: "Die Sicherheit eines KI-Rechenzentrums endet nicht mehr auf der Softwareebene.",
     whyBody:
@@ -355,10 +476,17 @@ const copy = {
       ["MIL-STD-188-125-1 / -2", "HEMP- und IEMI-Schutz, projektspezifische Validierung"],
       ["ISO/IEC 27001", "Unterstützt die physischen und umgebungsbezogenen Sicherheitsmaßnahmen"],
     ],
-    brochure: "Leistungsdatenblatt herunterladen",
-    certificates: "Prüfzeugnisse & technische Downloads",
     evidenceTitle: "Quellen und Nachweise",
-    evidenceNote: "Für diese Seite wurden die folgenden Veröffentlichungen herangezogen:",
+    evidenceNote:
+      "Kennwerte, Begriffe und Bedrohungsdefinitionen dieser Seite stammen aus den unten genannten Veröffentlichungen. Jeder Eintrag nennt die herausgebende Stelle, das Dokument und die Stelle, auf die sich die Aussage stützt.",
+    evidenceUsedFor: [
+      "Belegt: die E1-NEMP-Wellenform und die auf dieser Seite genannte Anstiegszeit von 2,5 ns",
+      "Belegt: absichtliche elektromagnetische Störungen als eigene Prüfdisziplin",
+      "Belegt: Definition und Umfang kompromittierender Abstrahlung",
+      "Belegt: Informationsabfluss als Maßnahme des physischen und umgebungsbezogenen Schutzes",
+      "Belegt: Praxis der Stromversorgungsresilienz in kritischen Anlagen",
+      "Belegt: Begriffe zu Rechenzentrumsgebäuden und -infrastruktur",
+    ],
     sourceNote: "Quelle: IEC 61000-2-9, Definition der NEMP-Wellenform",
     attenuationEyebrow: "GARANTIERTE SCHIRMDÄMPFUNG",
     attenuationTitle: "Eine Schirmhülle, nachgewiesen von 10 kHz bis 40 GHz.",
@@ -410,14 +538,39 @@ const copy = {
     ecosystemBody:
       "Jede Komponente wird als Teil derselben Schirmhülle ausgelegt – so geht an Fugen, Türen und Durchführungen keine Leistung verloren.",
     ecosystemCards: [
-      ["CyberShield Structure", "Vorgefertigtes PAN-Modulsystem aus 2,0 mm verzinktem Stahlblech für Wände, Decken und Böden."],
-      ["CyberShield Access", "Schwerlast-Schiebe- und -Drehtüren in HF-Ausführung, hochdämpfende HF-Fenster und integrierte Zutrittsüberwachung."],
-      ["CyberShield Connectivity", "Leistungsstarke Netzfilter, Lichtwellenleiter-Durchführungen als Hohlleiter und HF-Signalsperren."],
-      ["CyberShield Air & Waveguides", "Wabenkamine, Akustikpaneele (ISO 354) und geschirmte Hohlleiter für Flüssigkühlung und Medienversorgung."],
-      ["CyberShield Validation", "Schirmdämpfungsmessung nach EN 50147-1 / IEEE 299, Lecksuche, SE-Prüfung und Konformitätsdokumentation."],
-      ["CyberShield Lifecycle", "Vorbeugende Wartung, Nachkalibrierung und periodische Rezertifizierung."],
+      [
+        "CyberShield Structure",
+        "Vorgefertigtes PAN-Modulsystem aus 2,0 mm verzinktem Stahlblech für Wände, Decken und Böden.",
+        "Stahlblech nach DIN 17162 / EN 10142 DX 52 D+Z, Verzinkung 275 g/m², alle 75 mm verschraubt auf selbsttragender Stahlkonstruktion.",
+      ],
+      [
+        "CyberShield Access",
+        "Schwerlast-Schiebe- und -Drehtüren in HF-Ausführung, hochdämpfende HF-Fenster und integrierte Zutrittsüberwachung.",
+        "Umlaufendes Dreifach-Kontaktsystem mit leitfähigen Kontaktfedern, MTBF 20.000 Öffnungen, Schwelle 150 mm im Standard.",
+      ],
+      [
+        "CyberShield Connectivity",
+        "Leistungsstarke Netzfilter, Lichtwellenleiter-Durchführungen als Hohlleiter und HF-Signalsperren.",
+        "Strom-, Daten- und Signaldurchführungen werden auf dieselbe Dämpfung gefiltert wie die Wand, die sie queren — Medien bis DN200.",
+      ],
+      [
+        "CyberShield Air & Waveguides",
+        "Wabenkamine, Akustikpaneele (ISO 354) und geschirmte Hohlleiter für Flüssigkühlung und Medienversorgung.",
+        "Wabenkamine unterhalb der Grenzfrequenz lassen Luft durch, aber keine HF; Akustikeinlagen dämpfen nach ISO 354, αw = 0,65 (MH).",
+      ],
+      [
+        "CyberShield Validation",
+        "Schirmdämpfungsmessung nach EN 50147-1 / IEEE 299, Lecksuche, SE-Prüfung und Konformitätsdokumentation.",
+        "Garantierte Schirmdämpfung von ≥ 90 dB bei 10 kHz über ≥ 120 dB bei 100–400 MHz bis ≥ 100 dB bei 40 GHz.",
+      ],
+      [
+        "CyberShield Lifecycle",
+        "Vorbeugende Wartung, Nachkalibrierung und periodische Rezertifizierung.",
+        "Nichts ist geklebt oder geschweißt: Der Raum lässt sich beschädigungsfrei demontieren, ändern, erweitern oder versetzen — und neu vermessen.",
+      ],
     ],
-    applicationsEyebrow: "FÜR HOCHWERTIGE UMGEBUNGEN ENTWICKELT",
+    ecosystemNote: "Dieselbe Schirmdämpfung gilt für jede Produktlinie — zur gemessenen Kurve",
+    applicationsEyebrow: "WIE DER RAUM KONFIGURIERT WIRD",
     applicationsTitle: "Eine Plattform. Vier Einsatzprofile.",
     applications: [
       ["Sovereign Compute Vault", "Behörden und souveräne Cloud", "Schafft eine kontrollierte Verarbeitungszone für Verschlusssachen und national sensible Workloads."],
@@ -478,6 +631,47 @@ const copy = {
       ["Gebäudesicherheitstechnik", "Partner", "Schnittstellenintegration zur Gebäudesicherheit"],
       ["Einbruchmeldeanlagen", "Partner", "Schnittstellenintegration zu Raummeldeanlagen"],
       ["Organisatorische Verfahren", "Kunde", "Beratung zu Best Practices durch Frankonia"],
+    ],
+    companyEyebrow: "FRANKONIA AUF EINEN BLICK",
+    companyTitle: "Die Abschirmung ist nicht neu. Die Anwendung schon.",
+    companyBody:
+      "Die Frankonia Group wurde 1987 als Lösungsanbieter für EMV- und Antennenmesslabore gegründet und ist heute ein spezialisiertes Technologieunternehmen für Absorberhallen und Prüfsysteme in der Automobil-, Wehr- und Industrietechnik. CyberShield überträgt dieselbe Schirmtechnik auf Dateninfrastruktur. Projektmanagement, Engineering und Fertigung im eigenen Haus — dazu eigene Montage- und Serviceteams — sorgen dafür, dass Schirmgrenze, Türen, Filter und Abnahmemessung aus einer Hand kommen.",
+    companyImageAlt: "Luftaufnahme des Stammsitzes und Produktionsstandorts der Frankonia Group in Deutschland",
+    companyGlanceTitle: "Wofür Frankonia steht",
+    companyGlance: [
+      ["Weltweite Präsenz", "Ein gut strukturiertes Netz aus Produktions-, Vertriebs- und Serviceeinheiten, weltweit tätig."],
+      ["Kompletter Lösungsanbieter", "Grundlagenwissen in jeder Disziplin, die eine geschirmte Anlage berührt."],
+      ["Innovation als Methode", "Technologien, die Effizienz, Ergebnis und Qualität entlang der Kundenanforderungen steigern."],
+      ["Bevorzugter Partner", "Maßgeschneiderte Lösungen auf dem Stand der Technik statt Katalogware."],
+    ],
+    companyColumns: [
+      [
+        "Produktvorteile",
+        [
+          ["Modular und selbsttragend", "Die Abschirmung trägt sich selbst, das Bestandsgebäude nimmt keine zusätzlichen Lasten auf."],
+          ["Durchgängig gleiche Leistung", "Dieselbe Schirmdämpfung über Paneele, Türen, Filter und Hohlleiter hinweg — keine Schwachstelle an den Übergängen."],
+          ["Geschraubt, nie geklebt oder geschweißt", "Jede Fuge ist eine Schraubverbindung mit leitfähiger Netzdichtung, der Raum bleibt jahrzehntelang wartbar."],
+          ["Fertigung im eigenen Haus", "Vorgefertigte Standardkomponenten aus Frankonia-Produktion statt zugekaufter und montierter Teile."],
+        ],
+      ],
+      [
+        "Kundennutzen",
+        [
+          ["Seit mehr als 35 Jahren bewährt", "Technologien, die seit 1987 in EMV-Prüflaboren weltweit im Einsatz sind."],
+          ["Geringe Anforderungen an das Gebäude", "Die Planung richtet sich nach vorhandener Elektrik, Statik und Bausituation — nicht umgekehrt."],
+          ["Versetzen, ändern, weiterverkaufen", "Der modulare Aufbau lässt sich beschädigungsfrei demontieren und andernorts wieder aufbauen."],
+          ["Einfache Gebäudeschnittstellen", "Strom, Lüftung, Abluft, Daten und Gaswarnung queren die Grenze über definierte, gefilterte Schnittstellen."],
+        ],
+      ],
+      [
+        "Warum Kunden Frankonia wählen",
+        [
+          ["Ein Partner von Anfang bis Ende", "Beratung, Fertigung, Montage, Abnahmemessung und Rezertifizierung in einer Verantwortung."],
+          ["Unterstützung bei der Gebäudeplanung", "Frankonia arbeitet früh mit Architekten und Fachplanern, solange Schirmentscheidungen noch günstig sind."],
+          ["Keine Kompromisse bei der Sicherheit", "Nicht brennbare, recycelbare Materialien — kein Kohlenstoff, kein Polyethylen, kein Kleber."],
+          ["Projektmanagement, das zu Ende führt", "Erfahrene Teams tragen Detail und Termin bis zur Übergabe."],
+        ],
+      ],
     ],
     faqEyebrow: "HÄUFIGE FRAGEN",
     faqTitle: "Die Fragen, mit denen jedes Projekt beginnt.",
@@ -555,6 +749,14 @@ const copy = {
       technician: "데이터홀 내부에서 시스템을 검증하는 기술자",
       engineer: "보호 구역 서버 통로에서 랙을 점검하는 엔지니어",
     },
+    ecosystemAlt: [
+      "자립형 강구조에 지지된 차폐실 벽체의 모듈형 PAN 차폐 패널",
+      "차폐실 외벽에 설치된 양문형 RF 차폐 도어",
+      "차폐 경계에 설치된 필터 캐비닛과 개방된 전원 라인 필터 뱅크",
+      "차폐 벽체에 설치된 허니콤 환기 도파관 패널",
+      "차폐 성능 측정에 사용되는 제어 데스크의 계측 장비",
+      "출입 플랫폼과 계단을 갖춘 차폐실 설치 현장 전경",
+    ],
     consultation: "상담 예약",
     quote: "견적 요청",
     eyebrow: "AI 데이터센터 구축을 위한 물리·전자기 보안",
@@ -569,6 +771,22 @@ const copy = {
       ["확장·이전 가능", "손상 없이 해체해 확장·변경·이전에 재사용"],
     ],
     proof: ["1987년부터 축적한 엔지니어링", "글로벌 5개 거점", "80개국 이상 공급 네트워크", "턴키 제공"],
+    audienceEyebrow: "CYBERSHIELD가 지키는 현장",
+    audienceTitle: "차폐 경계가 반드시 유지되어야 하는 세 가지 환경.",
+    audience: [
+      [
+        "하이퍼스케일 클라우드 · AI 데이터센터",
+        "AI 연산 클러스터, 양자 하드웨어, 핵심 가용 영역을 RF 조작과 고출력 전자기 위협으로부터 차폐합니다.",
+      ],
+      [
+        "코로케이션 · 엔터프라이즈 데이터센터",
+        "엄격한 거버넌스 요건을 가진 기업 고객에게 인증된 차폐 구역을 측정 가능한 프리미엄 보안 등급으로 제공합니다.",
+      ],
+      [
+        "국방 · 정부 · 금융기관",
+        "소버린 클라우드, 지휘통제 센터, 고빈도 거래 플랫폼처럼 기밀성을 가정에 맡길 수 없는 환경을 지원합니다.",
+      ],
+    ],
     whyEyebrow: "소프트웨어를 넘어선 보안",
     whyTitle: "AI 데이터센터의 보안은 이제 소프트웨어에서 끝나지 않습니다.",
     whyBody:
@@ -648,13 +866,38 @@ const copy = {
     ecosystemBody:
       "모든 구성요소를 동일한 차폐 외피의 일부로 설계합니다. 접합부, 도어, 관통부에서 성능이 손실되지 않습니다.",
     ecosystemCards: [
-      ["CyberShield Structure", "벽체·천장·바닥을 구성하는 2.0 mm 아연도금 강판 PAN 모듈 시스템."],
-      ["CyberShield Access", "고하중 슬라이딩·힌지 RF 도어, 고차폐 RF 윈도우 및 출입 모니터링 연동."],
-      ["CyberShield Connectivity", "고성능 전원 라인 필터, 광케이블 도파관 관통부 및 RF 신호 억제 장치."],
-      ["CyberShield Air & Waveguides", "허니콤 환기 패널, 흡음 패널(ISO 354), 액체냉각·설비용 차폐 도파관."],
-      ["CyberShield Validation", "EN 50147-1 / IEEE 299 차폐 성능 측정, 누설 탐지, SE 시험 및 규격 문서화."],
-      ["CyberShield Lifecycle", "예방 정비, 재교정 및 주기적 재인증 서비스."],
+      [
+        "CyberShield Structure",
+        "벽체·천장·바닥을 구성하는 2.0 mm 아연도금 강판 PAN 모듈 시스템.",
+        "DIN 17162 / EN 10142 DX 52 D+Z 강판에 275 g/m² 아연도금, 자립형 강구조에 75 mm 간격 볼팅 체결.",
+      ],
+      [
+        "CyberShield Access",
+        "고하중 슬라이딩·힌지 RF 도어, 고차폐 RF 윈도우 및 출입 모니터링 연동.",
+        "전주형 3중 접점 구조에 전도성 스프링 적용, MTBF 20,000회 개폐, 표준 문턱 높이 150 mm.",
+      ],
+      [
+        "CyberShield Connectivity",
+        "고성능 전원 라인 필터, 광케이블 도파관 관통부 및 RF 신호 억제 장치.",
+        "전원·데이터·신호 관통부를 통과하는 벽체와 동일한 차폐 수준으로 필터링하며, 매체 관통부는 DN200까지 지원합니다.",
+      ],
+      [
+        "CyberShield Air & Waveguides",
+        "허니콤 환기 패널, 흡음 패널(ISO 354), 액체냉각·설비용 차폐 도파관.",
+        "차단 주파수 이하 허니콤 도파관이 공기는 통과시키고 RF는 차단하며, 흡음 인레이는 ISO 354 기준 αw = 0.65 (MH)입니다.",
+      ],
+      [
+        "CyberShield Validation",
+        "EN 50147-1 / IEEE 299 차폐 성능 측정, 누설 탐지, SE 시험 및 규격 문서화.",
+        "10 kHz에서 90 dB 이상, 100–400 MHz에서 120 dB 이상, 40 GHz까지 100 dB 이상의 차폐 성능을 보장합니다.",
+      ],
+      [
+        "CyberShield Lifecycle",
+        "예방 정비, 재교정 및 주기적 재인증 서비스.",
+        "접착도 용접도 없어 손상 없이 해체할 수 있습니다. 변경·확장·이전 후 다시 측정해 성능을 확인합니다.",
+      ],
     ],
+    ecosystemNote: "모든 제품군에 동일한 차폐 성능이 적용됩니다 — 측정된 성능 곡선 보기",
     verifyEyebrow: "추정이 아닌 검증",
     verifyTitle: "약속이 아니라 측정으로 증명합니다.",
     verifyBody:
@@ -668,10 +911,17 @@ const copy = {
       ["MIL-STD-188-125-1 / -2", "HEMP·IEMI 방호, 프로젝트별 검증"],
       ["ISO/IEC 27001", "물리적·환경적 보안 통제 항목 지원"],
     ],
-    brochure: "성능 자료 다운로드",
-    certificates: "시험성적서 · 기술 자료실",
     evidenceTitle: "근거 자료",
-    evidenceNote: "이 페이지는 다음 자료를 참조했습니다:",
+    evidenceNote:
+      "이 페이지의 수치, 용어, 위협 정의는 아래 자료에서 인용했습니다. 각 항목에 발행 기관, 문서, 해당 내용을 인용한 조항을 표기했습니다.",
+    evidenceUsedFor: [
+      "인용 근거: 이 페이지에 표기된 E1 HEMP 파형과 2.5 ns 상승 시간",
+      "인용 근거: 의도적 전자기 방해(IEMI)를 독립된 시험 분야로 규정",
+      "인용 근거: 정보 누설 방사(compromising emanations)의 정의와 범위",
+      "인용 근거: 물리적·환경적 보호 통제 항목으로서의 정보 누설",
+      "인용 근거: 중요 시설의 전력 복원력 확보 방안",
+      "인용 근거: 데이터센터 시설 및 인프라 관련 용어",
+    ],
     sourceNote: "출처: IEC 61000-2-9, HEMP 파형 정의",
     attenuationEyebrow: "보증 차폐 성능",
     attenuationTitle: "하나의 차폐 외피, 10 kHz에서 40 GHz까지 검증합니다.",
@@ -680,7 +930,7 @@ const copy = {
     fieldTypes: { magnetic: "자계", plane: "평면파", microwave: "마이크로파" },
     attenuationNote:
       "표준 PAN 타입 시스템의 보증 성능 범위입니다. 프로젝트에 적용되는 범위는 사양서와 현장 인수 시험을 통해 확정됩니다.",
-    applicationsEyebrow: "고가치 환경을 위한 솔루션",
+    applicationsEyebrow: "차폐실 구성 방식",
     applicationsTitle: "하나의 플랫폼, 네 가지 미션 프로파일.",
     applications: [
       ["Sovereign Compute Vault", "정부·소버린 클라우드", "기밀 또는 국가 중요 워크로드를 위한 통제된 처리 구역을 구축합니다."],
@@ -741,6 +991,47 @@ const copy = {
       ["건물 보안 시스템", "파트너", "시설 보안 시스템과의 인터페이스 연동"],
       ["침입 경보 시스템", "파트너", "실내 경보 시스템과의 인터페이스 연동"],
       ["운영 절차·규정", "고객", "Frankonia가 모범 사례 자문 제공"],
+    ],
+    companyEyebrow: "FRANKONIA 한눈에 보기",
+    companyTitle: "차폐 기술은 새롭지 않습니다. 적용 대상이 새로울 뿐입니다.",
+    companyBody:
+      "Frankonia Group은 1987년 EMC·안테나 시험 실험실을 위한 솔루션 제공사로 설립되어, 현재는 자동차·방산·산업 분야의 무반사실과 시험 시스템을 다루는 전문 기술 기업입니다. CyberShield는 그 차폐 기술을 데이터 인프라에 적용한 것입니다. 프로젝트 관리, 엔지니어링, 생산을 자체 수행하고 설치·서비스 팀까지 직접 운영하기 때문에 차폐 경계와 도어, 필터, 인수 측정 성적서가 모두 한 곳에서 나옵니다.",
+    companyImageAlt: "독일에 위치한 Frankonia Group 본사 및 생산 시설 항공 전경",
+    companyGlanceTitle: "Frankonia가 지향하는 것",
+    companyGlance: [
+      ["글로벌 네트워크", "생산·영업·서비스 거점이 체계적으로 연결되어 전 세계에서 활동합니다."],
+      ["완결형 솔루션 제공사", "차폐 시설이 맞닿는 모든 분야에 대한 기본 역량을 보유합니다."],
+      ["방법으로서의 혁신", "고객 요구에 맞춰 효율과 결과, 품질을 함께 끌어올리는 기술을 도입합니다."],
+      ["우선 선택되는 파트너", "규격품이 아니라 최신 기술 기반의 맞춤 솔루션을 제공합니다."],
+    ],
+    companyColumns: [
+      [
+        "제품 강점",
+        [
+          ["모듈형 자립 구조", "차폐 구조가 하중을 스스로 지지하므로 기존 건물에 추가 구조 부담이 없습니다."],
+          ["전 구간 동일한 성능", "패널, 도어, 필터, 도파관까지 동일한 차폐 성능을 유지해 접합부에 취약점이 생기지 않습니다."],
+          ["접착·용접 없는 볼팅 체결", "모든 접합부를 전도성 메시 개스킷과 함께 체결해 수십 년간 유지보수가 가능합니다."],
+          ["자체 생산", "외부에서 조달해 조립하는 방식이 아니라 Frankonia가 직접 제조한 사전 제작 표준 부품을 사용합니다."],
+        ],
+      ],
+      [
+        "고객 혜택",
+        [
+          ["35년 이상 검증", "1987년부터 전 세계 EMC 시험 실험실에서 운용되어 온 기술입니다."],
+          ["건물 조건 부담 최소화", "기존 전기, 구조, 건축 조건에 설계를 맞춥니다. 그 반대가 아닙니다."],
+          ["이전 · 변경 · 재매각 가능", "모듈 구조라 손상 없이 해체해 다른 장소에 다시 설치할 수 있습니다."],
+          ["단순한 건물 인터페이스", "전원, 급배기, 데이터, 가스 감지가 정의된 필터 인터페이스를 통해 경계를 통과합니다."],
+        ],
+      ],
+      [
+        "Frankonia를 선택하는 이유",
+        [
+          ["처음부터 끝까지 한 파트너", "상담, 제조, 시공, 인수 측정, 재인증을 단일 책임으로 수행합니다."],
+          ["건축 설계 단계 지원", "차폐 관련 의사결정 비용이 아직 낮은 초기 단계부터 건축사·시공사와 협업합니다."],
+          ["안전에 대한 무타협", "불연·재활용 가능 소재만 사용하며 카본, 폴리에틸렌, 접착제를 쓰지 않습니다."],
+          ["끝까지 책임지는 프로젝트 관리", "숙련된 팀이 세부 사항과 일정을 인계 시점까지 함께 관리합니다."],
+        ],
+      ],
     ],
     faqEyebrow: "자주 묻는 질문",
     faqTitle: "도입 검토가 시작되는 질문들.",
@@ -843,16 +1134,19 @@ const attenuationRows = [
 
 const barHeight = (db: number) => `${Math.round(((db - 80) / 45) * 100)}%`;
 
-// Publication names, listed as plain text rather than links — the page does not
-// send visitors to external sites.
+// Citations, never links — the page does not send visitors to external sites.
+// Each entry carries the issuing body, the document reference and the clause it
+// was read from, so a reader can find the source without being handed a URL.
+// Document titles are proper nouns and stay in English; what each one supports
+// on this page is translated per locale as `evidenceUsedFor`.
 const evidenceSources = [
-  "IEC 61000-2-9 · HEMP radiated environment and waveform",
-  "IEC 61000-4-36 · IEMI immunity test methods",
-  "NCSC · TEMPEST and Electromagnetic Security",
-  "NIST · SP 800-53, control PE-19",
-  "CISA · Resilient Power Best Practices for Critical Facilities and Sites",
-  "EN 50600 · Data centre facilities and infrastructures",
-];
+  ["IEC 61000-2-9", "Electromagnetic compatibility — Part 2-9: Description of HEMP environment, radiated disturbance"],
+  ["IEC 61000-4-36", "Electromagnetic compatibility — Part 4-36: IEMI immunity test methods for equipment and systems"],
+  ["NCSC", "TEMPEST and electromagnetic security guidance"],
+  ["NIST SP 800-53", "Security and Privacy Controls for Information Systems and Organizations — control PE-19, Information Leakage"],
+  ["CISA", "Resilient Power Best Practices for Critical Facilities and Sites"],
+  ["EN 50600", "Information technology — Data centre facilities and infrastructures"],
+] as const;
 
 // Importance rating and responsibility tone, aligned with the scope rows above.
 const scopeMeta = [
@@ -862,6 +1156,9 @@ const scopeMeta = [
 
 const revealSelector = [
   ".asset-grid article",
+  ".audience-grid article",
+  ".company-glance li",
+  ".company-column",
   ".threat-grid article",
   ".feature-list article",
   ".step-list article",
@@ -877,6 +1174,9 @@ const revealSelector = [
   ".verify-visual",
   ".lifecycle-visual",
 ].join(",");
+
+// Photography for the six product lines, in the order the cards are listed.
+const ecosystemImages = ["structure", "access", "connectivity", "air", "validation", "lifecycle"];
 
 const navSectionIds = ["why", "solution", "ecosystem", "verification", "applications", "process"];
 
@@ -1220,6 +1520,23 @@ export function Landing({ lang }: { lang: Lang }) {
         {t.proof.map((item, index) => <span key={item}><b>0{index + 1}</b>{item}</span>)}
       </div>
 
+      {/* Who the room is for, answered before the argument for building one. */}
+      <section className="audience-section" id="audience" aria-labelledby="audience-title">
+        <div className="section-heading light">
+          <p className="eyebrow">{t.audienceEyebrow}</p>
+          <h2 id="audience-title">{t.audienceTitle}</h2>
+        </div>
+        <div className="audience-grid">
+          {t.audience.map(([title, body], index) => (
+            <article key={title}>
+              <span>0{index + 1}</span>
+              <h3>{title}</h3>
+              <p>{body}</p>
+            </article>
+          ))}
+        </div>
+      </section>
+
       <section className="why-section" id="why">
         <div className="why-intro">
           <div>
@@ -1337,14 +1654,28 @@ export function Landing({ lang }: { lang: Lang }) {
           <p>{t.ecosystemBody}</p>
         </div>
         <div className="ecosystem-grid">
-          {t.ecosystemCards.map(([title, body], index) => (
+          {t.ecosystemCards.map(([title, body, spec], index) => (
             <article key={title}>
-              <span>0{index + 1}</span>
-              <h3>{title}</h3>
-              <p>{body}</p>
+              <img
+                src={asset(`/images/ecosystem/${ecosystemImages[index]}.webp`)}
+                width={1000}
+                height={667}
+                loading="lazy"
+                decoding="async"
+                alt={t.ecosystemAlt[index]}
+              />
+              <div className="ecosystem-body">
+                <span>0{index + 1}</span>
+                <h3>{title}</h3>
+                <p>{body}</p>
+                <p className="ecosystem-spec">{spec}</p>
+              </div>
             </article>
           ))}
         </div>
+        <p className="ecosystem-note">
+          <a href="#attenuation">{t.ecosystemNote}<b>↓</b></a>
+        </p>
       </section>
 
       <section className="verify-section" id="verification">
@@ -1358,24 +1689,17 @@ export function Landing({ lang }: { lang: Lang }) {
               <div key={name}><strong>{name}</strong><span>{note}</span></div>
             ))}
           </div>
-          <div className="download-row">
-            <a className="download-link" href={asset("/CyberShield-Performance-2026.pdf")} download>
-              <span>PDF</span>{t.brochure}<b>↓</b>
-            </a>
-            <a
-              className="download-link"
-              href="https://frankonia-solutions.com/anechoic-chambers/download-area_anechoic-chambers/"
-              target="_blank"
-              rel="noreferrer"
-            >
-              <span>DOC</span>{t.certificates}<b>↗</b>
-            </a>
-          </div>
           <div className="evidence-row">
             <strong>{t.evidenceTitle}</strong>
             <p className="evidence-note">{t.evidenceNote}</p>
             <ul className="evidence-list">
-              {evidenceSources.map((source) => <li key={source}>{source}</li>)}
+              {evidenceSources.map(([reference, title], index) => (
+                <li key={reference}>
+                  <strong>{reference}</strong>
+                  <span>{title}</span>
+                  <em>{t.evidenceUsedFor[index]}</em>
+                </li>
+              ))}
             </ul>
           </div>
         </div>
@@ -1391,7 +1715,7 @@ export function Landing({ lang }: { lang: Lang }) {
         </div>
       </section>
 
-      <section className="attenuation-section section-dark" aria-labelledby="attenuation-title">
+      <section className="attenuation-section section-dark" id="attenuation" aria-labelledby="attenuation-title">
         <div className="section-heading">
           <p className="eyebrow">{t.attenuationEyebrow}</p>
           <h2 id="attenuation-title">{t.attenuationTitle}</h2>
@@ -1523,6 +1847,47 @@ export function Landing({ lang }: { lang: Lang }) {
               })}
             </tbody>
           </table>
+        </div>
+      </section>
+
+      {/* Who is behind the room, placed where the reader is deciding whether to
+          trust the supplier rather than the specification. */}
+      <section className="company-section" id="company" aria-labelledby="company-title">
+        <div className="company-intro">
+          <div className="section-heading light">
+            <p className="eyebrow">{t.companyEyebrow}</p>
+            <h2 id="company-title">{t.companyTitle}</h2>
+            <p>{t.companyBody}</p>
+          </div>
+          <img
+            className="company-banner"
+            src={asset("/images/frankonia-campus.webp")}
+            width={983}
+            height={553}
+            loading="lazy"
+            decoding="async"
+            alt={t.companyImageAlt}
+          />
+        </div>
+        <div className="company-glance">
+          <h3>{t.companyGlanceTitle}</h3>
+          <ul>
+            {t.companyGlance.map(([label, note]) => (
+              <li key={label}><strong>{label}</strong><span>{note}</span></li>
+            ))}
+          </ul>
+        </div>
+        <div className="company-grid">
+          {t.companyColumns.map(([heading, items]) => (
+            <section key={heading} className="company-column">
+              <h3>{heading}</h3>
+              <ul>
+                {items.map(([label, note]) => (
+                  <li key={label}><strong>{label}</strong><span>{note}</span></li>
+                ))}
+              </ul>
+            </section>
+          ))}
         </div>
       </section>
 

@@ -20,7 +20,8 @@ export function StructuredData({
 }: {
   lang: Lang;
   faqs: readonly (readonly [string, string])[];
-  productLines: readonly (readonly [string, string])[];
+  // [name, description, spec] — the spec line is presentational only.
+  productLines: readonly (readonly [string, string, string])[];
   description: string;
 }) {
   const organisation = {

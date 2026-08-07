@@ -7,6 +7,8 @@
   --red: #e60000;
   --ink: #25282b;
   --body-text: #7e7e7e;
+  /* Readable on --canvas-soft, where --body-text only reaches 3.6:1. */
+  --body-dark: #4a4d50;
   --muted: #7e7e7e;
   --mute: #bebebe;
   --line: #d9d9d9;
@@ -176,6 +178,15 @@ h1 span { color: var(--primary); }
 .proof-strip span:last-child { border-right: 0; }
 .proof-strip b { color: rgba(255, 255, 255, .7); font-size: 12px; font-weight: 800; }
 
+/* ── Audience band: who the room is built for ─────────── */
+.audience-section { padding: 110px max(4vw, calc((100% - 1400px) / 2)) 0; background: var(--canvas); }
+.audience-grid { display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1px solid var(--line); }
+.audience-grid article { padding: 26px 30px 0 0; border-right: 1px solid var(--line); margin-right: 30px; }
+.audience-grid article:last-child { border-right: 0; margin-right: 0; padding-right: 0; }
+.audience-grid span { display: block; margin-bottom: 12px; color: var(--primary); font-size: 13px; font-weight: 800; }
+.audience-grid h3 { margin-bottom: 10px; font-size: 20px; font-weight: 700; line-height: 1.3; }
+.audience-grid p { margin: 0; color: var(--body-text); font-size: 15px; line-height: 1.6; }
+
 /* ── Section headline voice: weight 300 calm displays ─── */
 .why-section { padding: 120px max(4vw, calc((100% - 1400px) / 2)); background: var(--canvas); }
 .why-intro { display: grid; grid-template-columns: 1.35fr .65fr; gap: 6vw; align-items: end; }
@@ -225,9 +236,12 @@ h1 span { color: var(--primary); }
 .evidence-row { margin: 30px 0 0; padding-top: 18px; border-top: 1px solid var(--line); color: var(--body-text); font-size: 13px; }
 .evidence-row strong { display: block; color: var(--ink); text-transform: uppercase; letter-spacing: .5px; font-size: 12px; font-weight: 600; }
 .evidence-note { margin: 12px 0 10px; color: var(--body-text); font-size: 13px; line-height: 1.6; }
-.evidence-list { margin: 0; padding: 0; list-style: none; display: flex; gap: 8px 26px; flex-wrap: wrap; }
-.evidence-list li { position: relative; padding-left: 13px; font-size: 13px; line-height: 1.6; }
-.evidence-list li::before { content: ""; position: absolute; top: 9px; left: 0; width: 5px; height: 1px; background: var(--mute); }
+/* Citations, not links: reference, full title, then the claim it supports. */
+.evidence-list { margin: 0; padding: 0; list-style: none; display: grid; gap: 14px; }
+.evidence-list li { padding-left: 14px; border-left: 2px solid var(--line); font-size: 13px; line-height: 1.6; }
+.evidence-list strong { display: block; color: var(--ink); font-size: 13px; font-weight: 700; letter-spacing: 0; text-transform: none; }
+.evidence-list span { display: block; color: var(--body-text); }
+.evidence-list em { display: block; margin-top: 2px; color: var(--ink); font-size: 12px; font-style: normal; font-weight: 600; }
 
 /* ── System band: light content ───────────────────────── */
 .system-section { display: grid; grid-template-columns: 1.05fr .95fr; background: var(--canvas); }
@@ -268,6 +282,12 @@ h1 span { color: var(--primary); }
 .cutaway-pin:hover, .cutaway-pin.is-on {
   transform: translate(-50%, -50%) scale(1.3); box-shadow: 0 0 0 6px rgba(230, 0, 0, .35);
   background: var(--primary); border-color: #fff; opacity: 1;
+}
+/* A locked part reads differently from one the pointer is merely passing over,
+   because it stays put after the pointer moves on. */
+.cutaway-pin.is-pinned {
+  transform: translate(-50%, -50%) scale(1.35);
+  box-shadow: 0 0 0 5px rgba(230, 0, 0, .45), 0 0 0 8px rgba(255, 255, 255, .5);
 }
 .cutaway-pin.is-off { background: rgba(255, 255, 255, .28); border-color: rgba(255, 255, 255, .45); opacity: .75; }
 
@@ -310,7 +330,10 @@ h1 span { color: var(--primary); }
   transition: background .2s ease, box-shadow .2s ease, color .2s ease;
 }
 .cutaway-group button b { color: rgba(255, 255, 255, .38); font-size: 11px; font-weight: 800; line-height: 1.5; }
-.cutaway-group button:hover, .cutaway-group button.is-on { background: rgba(255, 255, 255, .08); color: #fff; box-shadow: inset 2px 0 0 var(--primary); }
+/* Pointing at a row previews it; the red rail is reserved for the locked one,
+   so it stays obvious which part the caption is actually showing. */
+.cutaway-group button:hover, .cutaway-group button.is-on { background: rgba(255, 255, 255, .08); color: #fff; box-shadow: inset 2px 0 0 rgba(255, 255, 255, .4); }
+.cutaway-group button.is-pinned { background: rgba(255, 255, 255, .13); color: #fff; box-shadow: inset 2px 0 0 var(--primary); }
 .cutaway-group button.is-on b { color: var(--primary); }
 
 /* ── Comparison table: soft canvas, red advantage rail ── */
@@ -333,10 +356,31 @@ h1 span { color: var(--primary); }
 /* ── Product ecosystem: soft tier cards ───────────────── */
 .ecosystem-section { padding: 120px max(4vw, calc((100% - 1400px) / 2)); background: var(--canvas); }
 .ecosystem-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
-.ecosystem-grid article { padding: 26px 26px 30px; background: var(--canvas-soft); border: 1px solid var(--mute); border-radius: var(--radius); }
-.ecosystem-grid article > span { color: var(--primary); font-size: 13px; font-weight: 800; }
-.ecosystem-grid h3 { margin: 36px 0 12px; font-size: 20px; line-height: 1.25; font-weight: 700; }
+/* Photo on top, copy below; the card is a flex column so the spec line can be
+   pushed to the bottom and the three cards in a row stay aligned. */
+.ecosystem-grid article {
+  display: flex; flex-direction: column; overflow: hidden;
+  background: var(--canvas-soft); border: 1px solid var(--mute); border-radius: var(--radius);
+}
+.ecosystem-grid img { display: block; width: 100%; aspect-ratio: 3 / 2; object-fit: cover; }
+.ecosystem-body { display: flex; flex-direction: column; flex: 1; padding: 22px 26px 26px; }
+.ecosystem-grid article > .ecosystem-body > span { color: var(--primary); font-size: 13px; font-weight: 800; }
+.ecosystem-grid h3 { margin: 14px 0 12px; font-size: 20px; line-height: 1.25; font-weight: 700; }
 .ecosystem-grid p { margin: 0; color: var(--body-text); font-size: 15px; line-height: 1.6; }
+/* Needs to outrank `.ecosystem-grid p`, which zeroes the margin. */
+.ecosystem-grid .ecosystem-spec {
+  margin: auto 0 0; padding-top: 16px;
+  color: var(--ink); font-size: 13px; line-height: 1.6;
+}
+.ecosystem-spec::before {
+  content: ""; display: block; width: 28px; margin-bottom: 14px;
+  border-top: 2px solid var(--primary);
+}
+.ecosystem-note { margin: 30px 0 0; font-size: 14px; font-weight: 700; }
+.ecosystem-note a { display: inline-flex; align-items: baseline; gap: 9px; border-bottom: 1px solid var(--mute); padding-bottom: 3px; }
+.ecosystem-note a:hover { border-bottom-color: var(--primary); color: var(--primary); }
+.ecosystem-note b { font-size: 15px; transition: transform .25s ease; }
+.ecosystem-note a:hover b { transform: translateY(3px); }
 
 /* ── Verification band ────────────────────────────────── */
 .verify-section { padding: 120px max(4vw, calc((100% - 1400px) / 2)); display: grid; grid-template-columns: 1.05fr .95fr; gap: 6vw; background: var(--canvas); }
@@ -345,18 +389,6 @@ h1 span { color: var(--primary); }
 .standards-row div { padding: 16px 18px; border: 1px solid var(--mute); background: var(--canvas-soft); border-radius: var(--radius); }
 .standards-row strong { display: block; font-size: 16px; font-weight: 700; }
 .standards-row span { display: block; margin-top: 5px; color: var(--body-text); font-size: 13px; line-height: 1.5; }
-.download-row { display: flex; gap: 14px; flex-wrap: wrap; margin-top: 38px; max-width: 650px; }
-.download-row .download-link { margin-top: 0; flex: 1 1 300px; }
-.download-link {
-  margin-top: 38px; display: flex; align-items: center; gap: 16px;
-  border: 1px solid var(--ink); border-radius: var(--pill);
-  padding: 13px 24px;
-  font-size: 16px; font-weight: 700; max-width: 650px;
-  transition: background .2s, color .2s;
-}
-.download-link:hover { background: var(--ink); color: #fff; }
-.download-link span { background: var(--primary); color: white; padding: 4px 10px; font-size: 11px; font-weight: 700; border-radius: var(--pill-md); }
-.download-link b { margin-left: auto; font-size: 18px; }
 .verify-visual { position: relative; min-height: 560px; overflow: hidden; border-radius: var(--radius); }
 .verify-visual img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center 25%; }
 
@@ -444,6 +476,36 @@ h1 span { color: var(--primary); }
 }
 .scope-tag.core { background: var(--primary); }
 .scope-tag.partner, .scope-tag.customer { background: transparent; border: 1px solid var(--mute); color: var(--body-text); }
+
+/* ── Company band: who stands behind the room ─────────── */
+.company-section { padding: 120px max(4vw, calc((100% - 1400px) / 2)); background: var(--canvas-soft); }
+/* --body-text on the soft canvas only reaches 3.6:1. This band carries the most
+   prose of any section, so its running text is darkened to 7.6:1. */
+.company-section .section-heading > p:last-child { color: var(--body-dark); }
+/* Heading left, campus photo right; the photo centres against the copy so the
+   two columns read as one block whatever the locale does to the text length. */
+.company-intro { display: grid; grid-template-columns: 1fr 1fr; gap: 4vw; align-items: center; }
+.company-intro .section-heading { max-width: none; margin-bottom: 0; }
+.company-banner { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; border-radius: var(--radius); }
+.company-glance { margin: 64px 0 58px; padding-top: 26px; border-top: 1px solid var(--mute); }
+.company-glance > h3 {
+  margin: 0 0 22px;
+  font-size: 12px; font-weight: 800; letter-spacing: .09em; text-transform: uppercase; color: var(--primary);
+}
+.company-glance ul { display: grid; grid-template-columns: repeat(4, 1fr); gap: 26px; margin: 0; padding: 0; list-style: none; }
+.company-glance li { padding-left: 16px; border-left: 2px solid var(--primary); }
+.company-glance strong { display: block; margin-bottom: 6px; font-size: 16px; font-weight: 700; }
+.company-glance span { display: block; color: var(--body-dark); font-size: 14px; line-height: 1.55; }
+.company-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; }
+.company-column h3 {
+  margin: 0 0 4px; padding-bottom: 14px; border-bottom: 1px solid var(--ink);
+  font-size: 12px; font-weight: 800; letter-spacing: .09em; text-transform: uppercase; color: var(--primary);
+}
+.company-column ul { margin: 0; padding: 0; list-style: none; }
+.company-column li { padding: 18px 0; border-bottom: 1px solid var(--line); }
+.company-column li:last-child { border-bottom: 0; }
+.company-column strong { display: block; margin-bottom: 6px; font-size: 16px; font-weight: 700; }
+.company-column span { display: block; color: var(--body-dark); font-size: 14px; line-height: 1.6; }
 
 /* ── FAQ ──────────────────────────────────────────────── */
 .faq-section { padding: 120px max(4vw, calc((100% - 1400px) / 2)); background: var(--canvas); }
@@ -550,9 +612,8 @@ footer a:hover { color: #fff; }
 .nav-desktop a:hover::after, .nav-desktop a.active::after { transform: scaleX(1); }
 .nav-desktop a.active { color: #fff; }
 
-.button span, .text-link span, .download-link b { transition: transform .25s ease; }
+.button span, .text-link span { transition: transform .25s ease; }
 .button:hover span, .text-link:hover span { transform: translate(3px, -3px); }
-.download-link:hover b { transform: translateY(3px); }
 .language, .menu-toggle, .button, .text-link { transition: background .2s, color .2s, border-color .2s, transform .2s; }
 .language:hover { background: rgba(255, 255, 255, .12); }
 .button:hover, .application-grid button:hover { transform: translateY(-2px); }
@@ -684,6 +745,12 @@ input:focus-visible, select:focus-visible, textarea:focus-visible {
   .why-value { grid-template-columns: 1fr; padding: 34px 30px; }
   .threat-grid, .application-grid { grid-template-columns: repeat(2, 1fr); }
   .threat-grid article:nth-child(2), .application-grid article:nth-child(2) { border-right: 0; }
+  .audience-grid, .company-grid { grid-template-columns: 1fr; }
+  .company-intro { grid-template-columns: 1fr; gap: 40px; }
+  .company-glance ul { grid-template-columns: repeat(2, 1fr); }
+  .audience-grid article { border-right: 0; margin-right: 0; padding: 26px 0 0; border-bottom: 1px solid var(--line); padding-bottom: 26px; }
+  .audience-grid article:last-child { border-bottom: 0; }
+  .company-grid { gap: 44px; }
   .system-section, .lifecycle-section { grid-template-columns: 1fr; }
   .system-image, .lifecycle-visual { min-height: 580px; }
   .verify-section { grid-template-columns: 1fr; gap: 55px; }
@@ -719,7 +786,10 @@ input:focus-visible, select:focus-visible, textarea:focus-visible {
   .proof-strip { grid-template-columns: 1fr 1fr; padding: 0 18px; }
   .proof-strip span { padding: 17px 7px; font-size: 13px; }
   .why-section, .threat-section, .applications-section, .verify-section, .scenario-section, .faq-section, .contact-section,
-  .compare-section, .ecosystem-section, .attenuation-section, .scope-section, .cutaway-section { padding: 85px 18px; }
+  .compare-section, .ecosystem-section, .attenuation-section, .scope-section, .cutaway-section, .company-section { padding: 85px 18px; }
+  .audience-section { padding: 75px 18px 0; }
+  .company-glance ul { grid-template-columns: 1fr; gap: 20px; }
+  .company-glance { margin: 34px 0 42px; }
   .cutaway-pin { width: 21px; height: 21px; font-size: 10px; border-width: 1.5px; }
   .cutaway-groups { grid-template-columns: 1fr; }
   .cutaway-caption { padding: 14px 16px; }
@@ -732,13 +802,11 @@ input:focus-visible, select:focus-visible, textarea:focus-visible {
   .asset-grid article { min-height: auto; margin: 0; padding-right: 0; border-right: 0; border-bottom: 1px solid var(--line); }
   .asset-grid h3 { margin-top: 30px; }
   .why-metric { padding-left: 20px; }
-  .evidence-list { flex-direction: column; gap: 7px; }
+  .evidence-list { gap: 12px; }
   .system-image, .lifecycle-visual { min-height: 360px; }
   .system-content, .lifecycle-content { padding: 85px 18px; }
   .verify-visual { min-height: 340px; }
   .standards-row { grid-template-columns: 1fr; }
-  .download-row { flex-direction: column; }
-  .download-row .download-link { flex: none; }
   .scenario-grid article { padding: 24px 20px 26px; }
   .ecosystem-grid { grid-template-columns: 1fr; }
   .ecosystem-grid article { padding: 24px 20px 26px; }
