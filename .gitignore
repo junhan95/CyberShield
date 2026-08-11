@@ -49,5 +49,6 @@ next-env.d.ts
 /outputs/
 /work/
 /dev.local.log
+/dev.preview.log
 /tsconfig.tsbuildinfo
 /tsconfig.export.tsbuildinfo

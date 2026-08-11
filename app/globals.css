@@ -178,6 +178,22 @@ h1 span { color: var(--primary); }
 .proof-strip span:last-child { border-right: 0; }
 .proof-strip b { color: rgba(255, 255, 255, .7); font-size: 12px; font-weight: 800; }
 
+/* ── Belief: the practice we reject, beside the one we hold.
+   Two columns, deliberately unequal in weight — the status quo
+   is set back in muted grey, the belief carries the red rule. ── */
+.belief-section { padding: 110px max(4vw, calc((100% - 1400px) / 2)); background: var(--canvas-soft); }
+.belief-section .section-heading { margin-bottom: 52px; }
+.belief-grid { display: grid; grid-template-columns: 1fr 1fr; border-top: 1px solid var(--line); }
+.belief-grid article { padding: 34px 52px 0 0; }
+.belief-grid article + article { padding: 34px 0 0 52px; border-left: 1px solid var(--line); }
+.belief-grid p { margin: 0; font-size: 17px; line-height: 1.7; }
+.belief-grid .belief-label { display: flex; gap: 12px; align-items: center; margin: 0 0 18px; color: var(--body-dark); font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: .5px; }
+.belief-label::before { content: ""; width: 24px; height: 2px; background: var(--mute); }
+.belief-now p { color: var(--body-dark); }
+.belief-next .belief-label { color: var(--primary); }
+.belief-next .belief-label::before { background: var(--primary); }
+.belief-next p { color: var(--ink); }
+
 /* ── Audience band: who the room is built for ─────────── */
 .audience-section { padding: 110px max(4vw, calc((100% - 1400px) / 2)) 0; background: var(--canvas); }
 .audience-grid { display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1px solid var(--line); }
@@ -194,8 +210,7 @@ h1 span { color: var(--primary); }
 .why-intro .lead { max-width: 760px; margin-bottom: 0; color: var(--body-text); font-size: 18px; line-height: 1.6; }
 .why-metric { padding: 5px 0 4px 30px; border-left: 3px solid var(--primary); }
 .why-metric strong { display: block; color: var(--primary); font-size: clamp(70px, 8vw, 126px); line-height: .9; letter-spacing: -1px; font-weight: 800; }
-.why-metric > span { display: block; max-width: 320px; margin-top: 24px; font-size: 16px; line-height: 1.45; font-weight: 700; }
-.why-metric small { display: block; margin-top: 20px; color: var(--body-text); font-size: 13px; font-weight: 600; }
+.why-metric > span { display: block; max-width: 360px; margin-top: 24px; font-size: 16px; line-height: 1.5; font-weight: 700; }
 .asset-grid { margin: 72px 0 0; display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1px solid var(--ink); }
 .asset-grid article { min-height: 235px; padding: 24px 30px 25px 0; margin-right: 30px; border-right: 1px solid var(--line); }
 .asset-grid article:last-child { border-right: 0; margin-right: 0; }
@@ -212,6 +227,12 @@ h1 span { color: var(--primary); }
 .why-value .eyebrow { margin-bottom: 14px; font-size: 12px; letter-spacing: .5px; }
 .why-value h3 { margin: 0; font-size: clamp(22px, 2.1vw, 28px); line-height: 1.25; font-weight: 300; }
 .why-value > p { margin: 0; color: var(--body-text); font-size: 15.5px; line-height: 1.7; }
+
+/* ── Answer: the whole proposition in one card, sitting where the
+   audit question leaves the reader waiting for it. Everything below
+   elaborates this — nothing below reveals it. ─────────────── */
+.answer-section { padding: 0 max(4vw, calc((100% - 1400px) / 2)) 120px; background: var(--canvas); }
+.answer-section .why-value { margin-top: 0; }
 
 /* ── Threat band: ink polarity flip ───────────────────── */
 .section-dark { background: var(--ink); color: white; }
@@ -232,6 +253,19 @@ h1 span { color: var(--primary); }
 .impact-tag { margin-top: 27px; padding-top: 14px; border-top: 1px solid rgba(255, 255, 255, .15); }
 .impact-tag span { display: block; margin-bottom: 6px; color: rgba(255, 255, 255, .45); font-size: 12px; text-transform: uppercase; letter-spacing: .5px; font-weight: 600; }
 .impact-tag strong { color: white; font-size: 14px; font-weight: 700; }
+
+/* ── Audit: the one question the reader answers themselves.
+   Stark white after the dark threat band — the pause is the point,
+   so nothing else is allowed on screen with it. ────────── */
+.audit-section { padding: 130px max(4vw, calc((100% - 1400px) / 2)) 64px; background: var(--canvas); text-align: center; }
+.audit-inner { max-width: 940px; margin: 0 auto; }
+.audit-rule { display: block; width: 44px; height: 3px; margin: 0 auto 38px; background: var(--primary); }
+.audit-section h2 { margin: 0 0 26px; font-size: clamp(32px, 4vw, 54px); line-height: 1.12; font-weight: 300; letter-spacing: 0; }
+.audit-section p { max-width: 720px; margin: 0 auto 34px; color: var(--body-text); font-size: 18px; line-height: 1.65; }
+.audit-link { display: inline-flex; gap: 10px; align-items: center; padding-bottom: 4px; border-bottom: 1px solid var(--mute); color: var(--ink); font-size: 15px; font-weight: 700; }
+.audit-link:hover { border-bottom-color: var(--primary); color: var(--primary); }
+.audit-link span { transition: transform .25s ease; }
+.audit-link:hover span { transform: translateY(3px); }
 
 .evidence-row { margin: 30px 0 0; padding-top: 18px; border-top: 1px solid var(--line); color: var(--body-text); font-size: 13px; }
 .evidence-row strong { display: block; color: var(--ink); text-transform: uppercase; letter-spacing: .5px; font-size: 12px; font-weight: 600; }
@@ -526,6 +560,19 @@ h1 span { color: var(--primary); }
 .contact-intro > a { display: inline-block; margin-top: 25px; padding-bottom: 6px; border-bottom: 1px solid rgba(255, 255, 255, .6); font-size: 16px; font-weight: 700; }
 .contact-phone { display: block; font-size: 22px; letter-spacing: -.01em; }
 .contact-phone small { display: block; margin-bottom: 6px; color: rgba(255, 255, 255, .75); font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: .5px; }
+
+/* Brochure download, under the e-mail address. Outlined rather than solid:
+   on the red panel the filled submit button is the primary action, and this
+   should read as the quieter of the two. */
+.brochure { margin-top: 36px; }
+.brochure-link {
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 13px 26px; border: 1px solid rgba(255, 255, 255, .6); border-radius: var(--pill);
+  font-size: 16px; font-weight: 700; line-height: 24px;
+}
+.brochure-link svg { width: 19px; height: 19px; flex: none; }
+.brochure-link:hover { background: #fff; color: var(--primary); border-color: #fff; }
+.brochure-meta { margin-top: 12px; color: rgba(255, 255, 255, .75); font-size: 13px; letter-spacing: .3px; }
 form { padding: 40px; background: white; color: var(--ink); border-radius: var(--radius); }
 fieldset { border: 0; padding: 0; margin: 0 0 32px; }
 legend { margin-bottom: 12px; color: var(--body-text); font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: .5px; }
@@ -697,6 +744,7 @@ input:focus-visible, select:focus-visible, textarea:focus-visible {
 
 .contact-intro > a { transition: border-color .25s ease, color .25s ease; }
 .contact-intro > a:hover { border-color: #fff; }
+.brochure-link { transition: background .25s ease, border-color .25s ease, color .25s ease; }
 
 .system-image img, .lifecycle-visual img, .verify-visual img { transition: transform .7s cubic-bezier(.22, .61, .36, 1); }
 .system-image:hover img, .lifecycle-visual:hover img, .verify-visual:hover img { transform: scale(1.04); }
@@ -786,8 +834,16 @@ input:focus-visible, select:focus-visible, textarea:focus-visible {
   .proof-strip { grid-template-columns: 1fr 1fr; padding: 0 18px; }
   .proof-strip span { padding: 17px 7px; font-size: 13px; }
   .why-section, .threat-section, .applications-section, .verify-section, .scenario-section, .faq-section, .contact-section,
-  .compare-section, .ecosystem-section, .attenuation-section, .scope-section, .cutaway-section, .company-section { padding: 85px 18px; }
+  .compare-section, .ecosystem-section, .attenuation-section, .scope-section, .cutaway-section, .company-section,
+  .belief-section, .audit-section { padding: 85px 18px; }
   .audience-section { padding: 75px 18px 0; }
+  .belief-grid { grid-template-columns: 1fr; }
+  .belief-grid article, .belief-grid article + article { padding: 28px 0 0; border-left: 0; }
+  .belief-grid article + article { border-top: 1px solid var(--line); }
+  .belief-grid p { font-size: 16px; }
+  .audit-section { padding-bottom: 44px; }
+  .audit-section p { font-size: 16px; }
+  .answer-section { padding: 0 18px 85px; }
   .company-glance ul { grid-template-columns: 1fr; gap: 20px; }
   .company-glance { margin: 34px 0 42px; }
   .cutaway-pin { width: 21px; height: 21px; font-size: 10px; border-width: 1.5px; }
@@ -822,6 +878,10 @@ input:focus-visible, select:focus-visible, textarea:focus-visible {
   .form-grid, .request-toggle { grid-template-columns: 1fr; }
   .request-toggle legend, .form-grid .full { grid-column: auto; }
   form { padding: 25px 20px; }
+  /* The English label is a few pixels too long for a 375 px pill and wraps to
+     two lines; trimming the padding and type keeps it on one. */
+  .brochure { margin-top: 28px; }
+  .brochure-link { padding: 13px 20px; font-size: 15px; }
   footer { grid-template-columns: 1fr; padding: 45px 18px; row-gap: 26px; }
   footer > .footer-brand, footer > p, footer > div:last-child { grid-column: auto; grid-row: auto; }
   footer > div:last-child { justify-content: flex-start; }
