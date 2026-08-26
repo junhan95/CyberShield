@@ -2,10 +2,10 @@
   "version": "0.0.1",
   "configurations": [
     {
-      "name": "landing-dev",
+      "name": "cybershield-dev",
       "runtimeExecutable": "npx",
-      "runtimeArgs": ["vinext", "dev"],
-      "port": 3000
+      "runtimeArgs": ["vinext", "dev", "--port", "3200"],
+      "port": 3200
     }
   ]
 }
