@@ -1,9 +1,17 @@
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=Jost:wght@400;500&family=Noto+Sans+KR:wght@300;400;700;800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=Jost:wght@400;500;700&family=Noto+Sans+KR:wght@300;400;700;800&display=swap");
 @import "tailwindcss";
 
 :root {
   --primary: #e60000;
   --primary-dark: #bd0000;
+  /* The Dark Red plate, from the head office's own artwork: "Frankonia Logo -
+     Dark Red.pdf" sets the knot in CMYK 0/100/100/10 where the Red file sets
+     it in 0/100/100/0. It is not a hover shade — --primary-dark is that. This
+     is the CI red for the two places that carry brand red over something other
+     than flat paper: the light-header lockup (public/frankonia-logo-dark.svg,
+     filled #c3171d) and the hero headline's emphasis line, where a photograph
+     runs behind the type. 6.07:1 on paper, against --primary's 4.35. */
+  --primary-deep: #c3171d;
   --red: #e60000;
   --ink: #25282b;
   --body-text: #7e7e7e;
@@ -35,7 +43,20 @@ button, a { -webkit-tap-highlight-color: transparent; }
 a { color: inherit; text-decoration: none; }
 img { display: block; max-width: 100%; }
 
-/* ── Nav bar: dark ink band ───────────────────────────── */
+/* ── Nav bar: paper band ────────────────────────── */
+/* The bar was `--ink` from the first release. It is `--canvas` now, for the
+   same reason frankonia-korea.com's is: "align it more with the existing
+   Frankonia homepage and the light colours. No red on black please."
+   frankonia-solutions.com's own bar is #fff with grey links and one red pill,
+   and the group site this one sits beside made the same move — a CyberShield
+   page opening under a black bar read as a different company's site.
+
+   Solid paper, not a translucent blur: the bar is an opaque band, and depth on
+   this site comes from surface contrast rather than from a layer over the
+   content. The knock-on is the lockup — white artwork on white is nothing, so
+   the header takes the group's `-dark` file, and the product name beside it is
+   type that inherits `color` rather than the cut-metal artwork it used to be
+   (see brand.tsx). */
 .site-header {
   position: sticky;
   top: 0;
@@ -46,63 +67,94 @@ img { display: block; max-width: 100%; }
   justify-content: space-between;
   gap: 32px;
   padding: 0 4vw;
-  background: var(--ink);
-  color: #fff;
-  border-bottom: 1px solid rgba(255, 255, 255, .15);
+  background: var(--canvas);
+  color: var(--ink);
+  border-bottom: 1px solid var(--line);
 }
-/* The mark and the FRANKONIA wordmark are one lockup (frankonia-logo.svg,
-   vector outlines taken from the brand artwork). Only the product name sits
-   beside it, divided by a hairline. */
+/* The mark and the FRANKONIA wordmark are one lockup: frankonia-logo-dark.svg
+   in the header, frankonia-logo.svg in the ink footer — the same artwork with
+   the wordmark in --ink instead of white and the knot on the Dark Red plate.
+   Only the product name sits beside it, divided by a hairline. */
 /* Never let the lockup squash — it would overlap the navigation instead. */
 .brand, .footer-brand { display: inline-flex; align-items: center; gap: 15px; flex: none; }
 .brand-logo { display: block; width: auto; height: 44px; }
+/* The product name, as type rather than as artwork — see brand.tsx for why
+   the cut-metal SVG did not survive the move to a paper bar. Jost is the
+   lockup's own face; 18px/700 with 1.13px of tracking is the size and spacing
+   the SVG was cutting its mask from, so the name is the same width it has
+   always been. It inherits `color`, which is what lets one element serve the
+   ink footer and the paper header. */
 .brand-product {
   display: flex; align-items: center; align-self: stretch;
   padding-left: 15px;
   border-left: 1px solid rgba(255, 255, 255, .25);
+  font-family: Jost, "Century Gothic", Futura, Inter, sans-serif;
+  font-size: 18px; font-weight: 700; letter-spacing: 1.13px;
+  text-transform: uppercase; line-height: 1; white-space: nowrap;
 }
-.wordmark-defs { position: absolute; width: 0; height: 0; overflow: hidden; }
-.brand-wordmark { display: block; height: 26px; width: auto; }
+.site-header .brand-product { border-left-color: var(--line); color: var(--ink); }
 .nav-desktop { display: flex; align-items: center; gap: 30px; margin-left: auto; }
-.nav-desktop a { color: #fff; font-size: 15px; font-weight: 400; }
-.nav-desktop a:hover { color: var(--mute); }
+/* `--body-dark`, not `--body-text`: the site's running grey is 4.06:1 on paper
+   and a 15px regular label may not use it. This is 7.6:1, and near enough the
+   #666 the head office sets its own nav links in. The underline is the group
+   site's signature — a primary rule that wipes in from the left rather than a
+   border that appears all at once. On ink the same red would have been 3.08:1;
+   on paper it is 5.11:1, so the accent moves from failing AA to clearing it. */
+.nav-desktop a { position: relative; color: var(--body-dark); font-size: 15px; font-weight: 400; padding: 6px 2px 8px; }
+.nav-desktop a::after {
+  content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 2px;
+  background: var(--primary); transform: scaleX(0); transform-origin: 0 50%;
+  transition: transform .25s ease;
+}
+/* `.active` is the scroll-spy state — landing.tsx toggles it from an
+   IntersectionObserver as each section takes the middle of the viewport, so
+   the bar always marks where the reader is. It was `#fff`, which was the right
+   answer for exactly as long as the band behind it was ink: on paper the label
+   disappeared and the marked item read as a red rule with nothing above it.
+   Ink, the same colour hover resolves to — the underline is what distinguishes
+   the two, and it is the section marker either way. */
+.nav-desktop a:hover, .nav-desktop a.active { color: var(--ink); }
+.nav-desktop a:hover::after, .nav-desktop a.active::after { transform: scaleX(1); }
 .header-actions { display: flex; align-items: center; gap: 10px; }
 .language-select { position: relative; }
 .language {
   display: inline-flex; align-items: center; justify-content: center; gap: 7px;
   height: 44px; padding: 0 13px;
-  border: 1px solid rgba(255, 255, 255, .45); background: transparent;
-  color: #fff;
+  border: 1px solid var(--mute); background: transparent;
+  color: var(--body-dark);
   font-size: 13px; font-weight: 700; cursor: pointer;
   border-radius: 10px;
 }
-.language:hover { border-color: #fff; }
+.language:hover { border-color: var(--ink); color: var(--ink); }
 .language svg { width: 11px; height: 8px; opacity: .8; transition: transform .2s ease; }
-.language-select.open .language { border-color: #fff; background: rgba(255, 255, 255, .12); }
+.language-select.open .language { border-color: var(--ink); background: var(--canvas-soft); color: var(--ink); }
 .language-select.open .language svg { transform: rotate(180deg); }
+/* No drop shadow — the panel separates itself with a hairline and the soft
+   canvas on hover, the way every other overlay on this site does. */
 .language-menu {
   position: absolute; top: calc(100% + 8px); right: 0; z-index: 60;
   min-width: 172px; margin: 0; padding: 6px; list-style: none;
-  background: var(--ink); border: 1px solid rgba(255, 255, 255, .3);
+  background: var(--canvas); border: 1px solid var(--line);
   border-radius: 10px;
 }
 .language-menu a {
   display: flex; align-items: center; gap: 12px;
   padding: 10px 12px; border-radius: 7px;
-  color: rgba(255, 255, 255, .75); font-size: 14px;
+  color: var(--body-dark); font-size: 14px;
 }
 .language-menu b { min-width: 24px; font-size: 12px; font-weight: 800; letter-spacing: .08em; }
-.language-menu a:hover { background: rgba(255, 255, 255, .12); color: #fff; }
-.language-menu a.current { color: #fff; }
+.language-menu a:hover { background: var(--canvas-soft); color: var(--ink); }
+.language-menu a.current { color: var(--ink); }
 .language-menu a.current b { color: var(--primary); }
 .menu-toggle {
   display: none;
   flex-direction: column; align-items: center; justify-content: center; gap: 5px;
   width: 44px; height: 44px; padding: 0;
-  border: 1px solid rgba(255, 255, 255, .45); background: transparent; cursor: pointer;
+  border: 1px solid var(--mute); background: transparent; cursor: pointer;
   border-radius: 10px;
 }
-.menu-toggle i { display: block; width: 18px; height: 2px; background: #fff; transition: transform .2s, opacity .2s; }
+.menu-toggle:hover { border-color: var(--ink); }
+.menu-toggle i { display: block; width: 18px; height: 2px; background: var(--ink); transition: transform .2s, opacity .2s; }
 .menu-toggle.open i:nth-child(1) { transform: translateY(7px) rotate(45deg); }
 .menu-toggle.open i:nth-child(2) { opacity: 0; }
 .menu-toggle.open i:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
@@ -110,11 +162,11 @@ img { display: block; max-width: 100%; }
   position: fixed; top: 76px; left: 0; right: 0; z-index: 40;
   display: none; flex-direction: column;
   padding: 10px 4vw 28px;
-  background: var(--ink);
-  border-bottom: 1px solid rgba(255, 255, 255, .15);
+  background: var(--canvas);
+  border-bottom: 1px solid var(--line);
 }
-.mobile-menu a { padding: 16px 0; border-bottom: 1px solid rgba(255, 255, 255, .15); color: #fff; font-size: 17px; font-weight: 400; }
-.mobile-menu a:hover { color: var(--mute); }
+.mobile-menu a { padding: 16px 0; border-bottom: 1px solid var(--line); color: var(--ink); font-size: 17px; font-weight: 400; }
+.mobile-menu a:hover { color: var(--primary); }
 .mobile-menu .button { margin-top: 20px; }
 
 /* ── Buttons: signature 60px pills ────────────────────── */
@@ -130,11 +182,195 @@ img { display: block; max-width: 100%; }
 .button:hover { background: var(--primary-dark); border-color: var(--primary-dark); }
 .button-small { padding: 9px 20px; font-size: 16px; line-height: 24px; }
 
-/* ── Hero: dark ink band, colossal 800 uppercase ──────── */
-.hero { padding: 70px 4vw 0; overflow: hidden; background: var(--ink); color: #fff; }
-.hero-grid { min-height: 560px; display: grid; grid-template-columns: minmax(390px, .85fr) minmax(540px, 1.15fr); align-items: center; gap: 4vw; max-width: 1400px; margin: auto; }
-.hero-copy { position: relative; z-index: 2; padding: 10px 0 50px; }
+/* ── Hero: paper band, colossal 800 uppercase ────── */
+/* The cover was `--ink` with the photographs laid over it. It is `--canvas`
+   now — the same move frankonia-korea.com made, off the same note: "have the
+   cover of the landing page more aligned with the Frankonia homepage".
+   frankonia-solutions.com opens on white, and a black cover under a black bar
+   was the single largest way this page did not look like the group's. Red on
+   black is a warning colour; red on white is an accent.
+
+   The paper stays underneath the photographs rather than being replaced by
+   them, so the band still reads as itself if an image is slow or missing.
+   `padding-inline` stays on the section — an absolutely positioned child
+   resolves against the padding box, so the media layer and the scrim still
+   reach the viewport edges while the copy stays inset. */
+.hero { position: relative; padding: 0 4vw; overflow: hidden; background: var(--canvas); color: var(--ink); }
+.hero-media { position: absolute; inset: 0; z-index: 0; }
+/* `object-position` sits above centre on every frame: what is worth seeing is
+   the shielded envelope and the ceiling services, and centring would put bare
+   floor behind the headline. */
+.hero-shot {
+  position: absolute; inset: 0; width: 100%; height: 100%; max-width: none;
+  object-fit: cover; object-position: 50% 42%;
+  animation-name: hero-cycle, var(--hero-pan, hero-pan-a);
+  animation-duration: 36s;
+  animation-timing-function: ease-in-out, linear;
+  animation-iteration-count: infinite;
+  animation-delay: var(--hero-in, 0s);
+}
+/* The round is 36s and there are four slides, so each holds the band for 9s.
+   The delays are negative — every slide starts mid-animation — and they are
+   set so the first frame is the one on screen at t=0, five percent in, having
+   just finished its own fade. That keeps the LCP image the image a visitor
+   actually sees, and the band is never blank while the round starts.
+
+   Read the delays as positions on the 36s clock: 1.8s, 28.8s, 19.8s and 10.8s
+   put the four slides at 5%, 80%, 55% and 30%, and they take the band in DOM
+   order from there. */
+.hero-media .hero-shot:nth-child(1) { --hero-pan: hero-pan-a; --hero-in: -1.8s; object-position: 50% 46%; }
+.hero-media .hero-shot:nth-child(2) { --hero-pan: hero-pan-b; --hero-in: -28.8s; object-position: 50% 50%; }
+.hero-media .hero-shot:nth-child(3) { --hero-pan: hero-pan-c; --hero-in: -19.8s; object-position: 50% 44%; }
+.hero-media .hero-shot:nth-child(4) { --hero-pan: hero-pan-d; --hero-in: -10.8s; object-position: 50% 50%; }
+/* One slide's turn.
+   0–5%    fading in, on top      (1.8s)
+   5–25%   held, on top           (7.2s)
+   25–100% waiting underneath, still fully opaque
+
+   The z-index steps are what make the hand-over a dissolve rather than a dip
+   through the ink. The outgoing slide does not fade at all — it drops a level
+   and the incoming one fades in above it, so an opaque photograph covers the
+   band at every instant. Cross-fading the pair instead would let the ink show
+   through at 25% in the middle of every transition, which on a dark band
+   reads as a flicker. */
+@keyframes hero-cycle {
+  0%     { opacity: 0; z-index: 4; }
+  5%     { opacity: 1; }
+  25%    { opacity: 1; z-index: 4; }
+  25.01% { z-index: 3; }
+  50%    { z-index: 3; }
+  50.01% { z-index: 2; }
+  75%    { z-index: 2; }
+  75.01% { z-index: 1; }
+  100%   { opacity: 1; z-index: 1; }
+}
+/* The camera move. Each slide pushes in over the 30% of the round covering its
+   fade-in, its hold and its hand-over, then holds the framing it ended on for
+   the rest of the round — the reset to the wide framing happens at 100%,
+   underneath an opaque slide, where nobody can see it snap.
+
+   The push is ~14% over 10.8s, about a pixel of growth every three frames at
+   1920 wide: enough that the band is never still, slow enough that it never
+   reads as a zoom. The four differ in direction so consecutive slides do not
+   drift the same way. `overflow: hidden` on `.hero` and a starting scale above
+   1 keep the edges covered throughout. */
+@keyframes hero-pan-a {
+  0%   { transform: scale(1.03) translate3d(0, 0, 0); }
+  30%  { transform: scale(1.17) translate3d(-1.6%, -1.4%, 0); }
+  100% { transform: scale(1.17) translate3d(-1.6%, -1.4%, 0); }
+}
+@keyframes hero-pan-b {
+  0%   { transform: scale(1.04) translate3d(1.5%, -0.6%, 0); }
+  30%  { transform: scale(1.18) translate3d(-1.2%, 1.2%, 0); }
+  100% { transform: scale(1.18) translate3d(-1.2%, 1.2%, 0); }
+}
+@keyframes hero-pan-c {
+  0%   { transform: scale(1.02) translate3d(-1.5%, 1%, 0); }
+  30%  { transform: scale(1.16) translate3d(1.4%, -1.2%, 0); }
+  100% { transform: scale(1.16) translate3d(1.4%, -1.2%, 0); }
+}
+@keyframes hero-pan-d {
+  0%   { transform: scale(1.05) translate3d(0, -1.2%, 0); }
+  30%  { transform: scale(1.19) translate3d(1.6%, 1%, 0); }
+  100% { transform: scale(1.19) translate3d(1.6%, 1%, 0); }
+}
+/* The scrim, and the reason it no longer opens an opaque column.
+
+   Two shapes have stood here. The ink cover ran true ink to 42% of the band
+   and gave the photograph the half with nothing written on it: the accent line
+   is --primary and that pair measured 3.08:1 on ink, no headroom at all, so
+   anything behind it failed. The copy column got flat ink and the plant got
+   the rest.
+
+   On paper that constraint is gone, and with it the reason for the panel. One
+   hall fills the band edge to edge and the wash over it only thins or
+   thickens, so the shielded envelope is visible behind the headline as well as
+   beside it. What the cover shows is the room, and half a room framed by a
+   white panel was the product photographed next to itself.
+
+   What that costs is the guarantee a flat panel gave for free: type on paper
+   has one contrast ratio, type on a photograph has a different one every nine
+   seconds. So the stops are set by the worst pixel a line can land on rather
+   than by the frame on screen at t=0 — 94% at the left edge, holding above 86%
+   across the whole copy column, thinning only past it. Measured against a
+   black pixel under the thinnest wash the copy column reaches (76% at 1100,
+   where the band is narrowest relative to the 760px column): eyebrow 8.3,
+   headline emphasis 3.4, body copy 4.8 — floors of 4.5, 3.0 and 4.5.
+
+   Red is what the stops could not save. The eyebrow is 15px ExtraBold, so its
+   floor is 4.5 and brand red needs a background of 240 or lighter to reach it
+   — which is the opaque panel this cover exists to not have. It is ink now
+   (`.hero .eyebrow`), and the one piece of red type left above the fold is the
+   headline's emphasis line, which is large enough for the 3:1 floor and set in
+   --primary-deep to clear it. */
+/* Two layers, because the band carries type in two directions. `--hero-scrim`
+   is the diagonal wash; the layer in front of it is a floor that closes over
+   the bottom fifth of the band no matter which wash is in play.
+
+   The floor is what the metric strip needs. The wash is down to 20% at the
+   right-hand edge by design, and the strip runs the full width of the band
+   under it — its captions are --body-dark, which over a lit ceiling at that
+   opacity measures 1.9:1. At 94% the pair returns 7.4:1 and roughly a
+   fifteenth of the photograph still reads through, so the strip is legible and
+   the band does not end in a hard edge. The floor is full-bleed for the same
+   reason it was on ink: `.metrics` is capped at 1400px and inset by 4vw, so an
+   opaque background on the strip itself would leave two ribbons of bare
+   photograph down the outside of it. */
+.hero::after {
+  content: ""; position: absolute; inset: 0;
+  background:
+    linear-gradient(0deg,
+      rgba(255, 255, 255, .94) 0%,
+      rgba(255, 255, 255, .94) 20%,
+      rgba(255, 255, 255, 0) 42%),
+    var(--hero-scrim);
+}
+/* 100deg rather than 90: the band is wide and short on a desktop, and tilting
+   the gradient line ten degrees off the horizontal lets the wash thin toward
+   the bottom-right corner — the one part of the frame that carries no type at
+   any width — instead of thinning evenly up a column the headline still ends
+   in. The stops are percentages here, where the ink cover's were lengths: an
+   opaque run had to clear the copy column exactly, and a wash only has to be
+   heavier where the words are than where they are not. */
+.hero {
+  --hero-scrim: linear-gradient(100deg,
+    rgba(255, 255, 255, .94) 0%,
+    rgba(255, 255, 255, .91) 34%,
+    rgba(255, 255, 255, .86) 62%,
+    rgba(255, 255, 255, .62) 82%,
+    rgba(255, 255, 255, .20) 100%);
+}
+/* Under about 900px the copy runs the full width of the band, so the wash has
+   to turn with it: at 120deg the gradient line runs down and to the right, and
+   what is left clear is the flank beside the copy rather than a column the
+   headline crosses. The ink cover cut a photographic strip across the top of
+   the band here and started the copy 208px down — that was the opaque panel's
+   doing, not the phone's, and it goes with the panel. */
+@media (max-width: 900px) {
+  .hero {
+    --hero-scrim: linear-gradient(120deg,
+      rgba(255, 255, 255, .94) 0%,
+      rgba(255, 255, 255, .92) 55%,
+      rgba(255, 255, 255, .55) 85%,
+      rgba(255, 255, 255, .22) 100%);
+  }
+}
+/* Both bands sit above the image and the scrim. */
+.hero-grid, .hero .metrics { position: relative; z-index: 1; }
+.hero-grid { min-height: 520px; display: flex; align-items: center; max-width: 1400px; margin: auto; }
+/* The copy is capped at the half of the band the scrim keeps as true ink. The
+   padding is the reference band's 110/120 less 20 each: the metric strip is
+   part of the hero's argument and on a 900px laptop the larger figure pushed
+   it below the fold. */
+.hero-copy { position: relative; z-index: 2; max-width: 760px; padding: 90px 0 100px; }
 .eyebrow { margin: 0 0 22px; color: var(--primary); font-size: 15px; line-height: 1.5; letter-spacing: .01em; font-weight: 800; text-transform: uppercase; }
+/* Ink, where every other eyebrow on the site is red. 15px ExtraBold is not
+   large text, so its floor is 4.5 — brand red is 4.35:1 on flat paper before
+   a single pixel of hall shows through the wash, and there is no wash short of
+   opaque that rescues it. Ink reads at 8.3 over the darkest wash the column
+   reaches. Red is still in the first screen twice: the headline's emphasis
+   line and the primary CTA, which carries its own fill. */
+.hero .eyebrow { color: var(--ink); }
 h1, h2, h3, p { margin-top: 0; }
 h1 {
   margin-bottom: 26px;
@@ -144,33 +380,42 @@ h1 {
   font-weight: 800;
   text-transform: uppercase;
 }
-h1 span { color: var(--primary); }
-.hero-body { max-width: 600px; color: rgba(255, 255, 255, .78); font-size: 20px; line-height: 1.5; }
+/* --primary-deep, not --primary: the line is large text so the floor is 3:1,
+   and over the thinnest wash in the copy column brand red measures 2.8 while
+   the Dark Red plate measures 3.4. It is also the red the lockup a few
+   centimetres above it is now set in — they were two reds, and are one. */
+h1 span { color: var(--primary-deep); }
+/* --body-dark, not --body-text: at 20px regular the lighter grey is 4.06:1 on
+   paper, and 20px is not large text. */
+.hero-body { max-width: 600px; color: var(--body-dark); font-size: 20px; line-height: 1.5; }
 .hero-actions { display: flex; align-items: center; gap: 14px; margin-top: 38px; flex-wrap: wrap; }
+/* The outline half of the pill pair. It was white-on-ink, and both places that
+   render it — the hero actions and the legal pages' Back link, which sits in
+   the header — are paper now; a white border on white is nothing. Same
+   geometry, drawn on a light surface: a --mute hairline that takes the brand
+   colour on hover rather than a fill that inverts.
+
+   The fill is not decoration. In the hero this pill sits where the wash has
+   thinned to about 72%, and a --mute hairline over a lit ceiling at that
+   opacity measures 1.08:1 — the outline vanishes and the control stops
+   reading as a control. Its own paper puts the border back at 1.9:1 and makes
+   the pill independent of whichever of the four frames is on the band. */
 .text-link {
   display: inline-flex; align-items: center; gap: 16px;
-  border: 1px solid #fff; border-radius: var(--pill);
+  border: 1px solid var(--mute); border-radius: var(--pill);
   padding: 12px 26px;
-  color: #fff; font-size: 18px; line-height: 28px; font-weight: 400;
+  background: var(--canvas);
+  color: var(--ink); font-size: 18px; line-height: 28px; font-weight: 400;
   transition: background .2s, color .2s;
 }
-.text-link:hover { background: #fff; color: var(--ink); }
-.hero-visual { position: relative; min-height: 520px; display: flex; align-items: center; justify-content: center; }
-.hero-visual img, .hero-visual video {
-  position: relative; z-index: 2;
-  width: 100%; max-width: none; height: auto;
-  background: #fff;
-  border-radius: var(--radius);
-}
-.hero-visual video { height: min(540px, 36vw); object-fit: contain; }
-.visual-ring { position: absolute; width: 520px; aspect-ratio: 1; border: 1px solid rgba(230, 0, 0, .35); border-radius: 50%; }
-.visual-ring::before, .visual-ring::after { content: ""; position: absolute; inset: 12%; border: inherit; border-radius: inherit; }
-.visual-ring::after { inset: 26%; background: rgba(230, 0, 0, .06); }
-.metrics { max-width: 1400px; margin: auto; display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1px solid rgba(255, 255, 255, .2); }
-.metrics div { padding: 26px 28px 32px; border-right: 1px solid rgba(255, 255, 255, .2); }
+.text-link:hover { border-color: var(--primary); color: var(--primary); }
+/* Hairlines in `--line`, the rule every other divider on a light surface uses,
+   where the ink cover drew them at 20% white. */
+.metrics { max-width: 1400px; margin: auto; display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1px solid var(--line); }
+.metrics div { padding: 26px 28px 32px; border-right: 1px solid var(--line); }
 .metrics div:last-child { border-right: 0; }
-.metrics strong { display: block; font-size: 24px; font-weight: 800; letter-spacing: -.02em; }
-.metrics span { display: block; margin-top: 8px; color: rgba(255, 255, 255, .6); font-size: 14px; line-height: 1.45; }
+.metrics strong { display: block; font-size: 24px; font-weight: 800; letter-spacing: -.02em; color: var(--ink); }
+.metrics span { display: block; margin-top: 8px; color: var(--body-dark); font-size: 14px; line-height: 1.45; }
 
 /* ── Proof strip: red brand band ──────────────────────── */
 .proof-strip { display: grid; grid-template-columns: repeat(4, 1fr); background: var(--primary); color: white; padding: 0 4vw; }
@@ -552,28 +797,53 @@ h1 span { color: var(--primary); }
 .faq-list details[open] summary span { transform: rotate(45deg); border-color: var(--primary); }
 .faq-list details > p { margin: 0; max-width: 840px; padding: 0 60px 26px 0; color: var(--body-text); font-size: 16px; line-height: 1.7; }
 
-/* ── Contact: red campaign band ───────────────────────── */
-.contact-section { padding: 120px max(4vw, calc((100% - 1400px) / 2)); display: grid; grid-template-columns: .8fr 1.2fr; gap: 6vw; background: var(--primary); color: white; }
-.contact-intro { position: sticky; top: 120px; align-self: start; }
-.contact-intro .eyebrow { color: white; opacity: .8; }
-.contact-intro > p:nth-of-type(2) { max-width: 520px; color: rgba(255, 255, 255, .8); font-size: 18px; line-height: 1.6; }
-.contact-intro > a { display: inline-block; margin-top: 25px; padding-bottom: 6px; border-bottom: 1px solid rgba(255, 255, 255, .6); font-size: 16px; font-weight: 700; }
-.contact-phone { display: block; font-size: 22px; letter-spacing: -.01em; }
-.contact-phone small { display: block; margin-bottom: 6px; color: rgba(255, 255, 255, .75); font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: .5px; }
+/* ── Contact: the closing band, on soft paper ─────────── */
+/* This was the page's one full-bleed red surface. It is `--canvas-soft` now,
+   the same move the group site made off the same note — red is allowed to be
+   an accent and a control, not a surface. The polarity ladder then runs
+   canvas → soft → ink from the FAQ to the bottom of the page instead of
+   jumping to a saturated field and back, and the band stops being the loudest
+   object on a page whose argument is made above it.
 
-/* Brochure download, under the e-mail address. Outlined rather than solid:
-   on the red panel the filled submit button is the primary action, and this
-   should read as the quieter of the two. */
+   The hairline is what makes this read as a band at all: against the white
+   section it closes, a 5% step in value is a seam rather than an edge.
+
+   The form card is untouched — it was white on the red field and it is white
+   on this one, which is also why the submit button needed no rescuing: it has
+   always sat on its own paper rather than on the band. What changes for it is
+   only that the red pill is now the single saturated thing in the fold rather
+   than a shape competing with the surface behind it. */
+.contact-section { padding: 120px max(4vw, calc((100% - 1400px) / 2)); display: grid; grid-template-columns: .8fr 1.2fr; gap: 6vw; background: var(--canvas-soft); color: var(--ink); border-top: 1px solid var(--line); }
+.contact-intro { position: sticky; top: 120px; align-self: start; }
+/* --primary-deep, not --primary. Brand red on `--canvas-soft` is 4.30:1 and
+   this eyebrow is 15px ExtraBold — not large text, so the floor is 4.5 and it
+   misses by 0.2. The Dark Red plate returns 5.42 on the same field. */
+.contact-intro .eyebrow { color: var(--primary-deep); }
+/* --body-dark, not --body-text: the running grey is only 3.6:1 on the soft
+   band. This is 7.6. */
+.contact-intro > p:nth-of-type(2) { max-width: 520px; color: var(--body-dark); font-size: 18px; line-height: 1.6; }
+.contact-intro > a { display: inline-block; margin-top: 25px; padding-bottom: 6px; border-bottom: 1px solid var(--mute); font-size: 16px; font-weight: 700; }
+.contact-phone { display: block; font-size: 22px; letter-spacing: -.01em; }
+.contact-phone small { display: block; margin-bottom: 6px; color: var(--body-dark); font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: .5px; }
+
+/* Brochure download, under the e-mail address. Outlined rather than solid: the
+   filled submit button is the primary action here and this should read as the
+   quieter of the two — which is the same reason it was outlined on the red
+   field, drawn now on a light surface. */
 .brochure { margin-top: 36px; }
 .brochure-link {
   display: inline-flex; align-items: center; gap: 10px;
-  padding: 13px 26px; border: 1px solid rgba(255, 255, 255, .6); border-radius: var(--pill);
+  padding: 13px 26px; border: 1px solid var(--mute); border-radius: var(--pill);
+  background: var(--canvas); color: var(--ink);
   font-size: 16px; font-weight: 700; line-height: 24px;
 }
 .brochure-link svg { width: 19px; height: 19px; flex: none; }
-.brochure-link:hover { background: #fff; color: var(--primary); border-color: #fff; }
-.brochure-meta { margin-top: 12px; color: rgba(255, 255, 255, .75); font-size: 13px; letter-spacing: .3px; }
-form { padding: 40px; background: white; color: var(--ink); border-radius: var(--radius); }
+.brochure-link:hover { border-color: var(--primary); color: var(--primary); background: var(--canvas); }
+.brochure-meta { margin-top: 12px; color: var(--body-dark); font-size: 13px; letter-spacing: .3px; }
+/* The card kept its white fill, and on the soft band that is a 1.07:1 step —
+   the form's edge disappeared with the red around it. The hairline is what
+   puts it back. */
+form { padding: 40px; background: var(--canvas); color: var(--ink); border: 1px solid var(--line); border-radius: var(--radius); }
 fieldset { border: 0; padding: 0; margin: 0 0 32px; }
 legend { margin-bottom: 12px; color: var(--body-text); font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: .5px; }
 .request-toggle { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
@@ -625,9 +895,9 @@ legend { margin-bottom: 12px; color: var(--body-text); font-size: 12px; font-wei
 .notfound-links a:hover { border-color: var(--primary); color: var(--primary); }
 
 /* ── Footer: ink band ─────────────────────────────────── */
-/* The lockup track is sized to its content: the logo and wordmark are replaced
-   elements with width:auto, so they contribute nothing to a fr track's minimum
-   and the mark would spill over the disclaimer. */
+/* The lockup track is sized to its content: the logo is a replaced element with
+   width:auto, so it contributes nothing to a fr track's minimum and the mark
+   would spill over the disclaimer. */
 footer { padding: 55px 4vw; display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 5vw; align-items: start; background: var(--ink); color: white; }
 footer > p { margin: 0; color: rgba(255, 255, 255, .55); font-size: 14px; line-height: 1.6; }
 footer > div:last-child { display: flex; justify-content: flex-end; align-items: center; gap: 20px; flex-wrap: wrap; color: rgba(255, 255, 255, .55); font-size: 14px; }
@@ -651,14 +921,6 @@ footer a:hover { color: #fff; }
   transition-delay: var(--reveal-delay, 0ms);
 }
 
-.nav-desktop a { position: relative; padding-bottom: 4px; }
-.nav-desktop a::after {
-  content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 2px;
-  background: var(--primary); transform: scaleX(0); transform-origin: 0 50%; transition: transform .25s ease;
-}
-.nav-desktop a:hover::after, .nav-desktop a.active::after { transform: scaleX(1); }
-.nav-desktop a.active { color: #fff; }
-
 .button span, .text-link span { transition: transform .25s ease; }
 .button:hover span, .text-link:hover span { transform: translate(3px, -3px); }
 .language, .menu-toggle, .button, .text-link { transition: background .2s, color .2s, border-color .2s, transform .2s; }
@@ -669,18 +931,14 @@ a:focus-visible, button:focus-visible, summary:focus-visible, details:focus-visi
 input:focus-visible, select:focus-visible, textarea:focus-visible {
   outline: 2px solid var(--primary); outline-offset: 3px;
 }
-.section-dark a:focus-visible, .section-dark button:focus-visible,
-.site-header a:focus-visible, .site-header button:focus-visible,
-.contact-section a:focus-visible { outline-color: #fff; }
+/* Only the ink threat band still needs the inverted ring — the header and the
+   closing band are both paper now, where the --primary outline is correct. */
+.section-dark a:focus-visible, .section-dark button:focus-visible { outline-color: #fff; }
 
 .metrics div, .proof-strip span { transition: background .25s ease; }
-.metrics div:hover { background: rgba(255, 255, 255, .06); }
+.metrics div:hover { background: rgba(37, 40, 43, .05); }
 .proof-strip span:hover { background: var(--primary-dark); }
 
-.hero-visual video { transition: transform .4s cubic-bezier(.22, .61, .36, 1); }
-.hero-visual:hover video { transform: scale(1.015); }
-.visual-ring { transition: transform .6s ease; }
-.hero-visual:hover .visual-ring { transform: scale(1.04); }
 
 /* Cards: a red rule grows across the top edge on hover */
 .asset-grid article, .threat-grid article, .application-grid article {
@@ -743,7 +1001,7 @@ input:focus-visible, select:focus-visible, textarea:focus-visible {
 .standards-row div:hover { border-color: var(--primary); background: var(--canvas); transform: translateY(-2px); }
 
 .contact-intro > a { transition: border-color .25s ease, color .25s ease; }
-.contact-intro > a:hover { border-color: #fff; }
+.contact-intro > a:hover { color: var(--primary); border-color: var(--primary); }
 .brochure-link { transition: background .25s ease, border-color .25s ease, color .25s ease; }
 
 .system-image img, .lifecycle-visual img, .verify-visual img { transition: transform .7s cubic-bezier(.22, .61, .36, 1); }
@@ -784,10 +1042,7 @@ input:focus-visible, select:focus-visible, textarea:focus-visible {
   footer > .footer-brand { grid-column: 1; grid-row: 1; }
   footer > div:last-child { grid-column: 2; grid-row: 1; }
   footer > p { grid-column: 1 / -1; grid-row: 2; max-width: 680px; }
-  .hero-grid { grid-template-columns: 1fr; }
-  .hero-copy { max-width: 760px; }
-  .hero-visual { min-height: 440px; }
-  .hero-visual img, .hero-visual video { width: 100%; }
+  .hero-grid { min-height: 480px; }
   .why-intro { grid-template-columns: 1fr; gap: 50px; }
   .why-metric { max-width: 520px; }
   .why-value { grid-template-columns: 1fr; padding: 34px 30px; }
@@ -811,25 +1066,34 @@ input:focus-visible, select:focus-visible, textarea:focus-visible {
   .contact-intro { position: static; }
 }
 
+/* The band gets shorter with the viewport, and 90/100 of padding on a phone
+   reads as two empty strips of hall above and below the copy. The asymmetry
+   stays — the foot carries a little more than the head, so the copy sits above
+   the optical centre rather than in it — it is just smaller. This lives out
+   here rather than beside the `--hero-scrim` override so it lands after the
+   base `.hero-copy` padding and the 1100px block, both of which would
+   otherwise win on source order. */
+@media (max-width: 900px) {
+  .hero-copy { padding: 64px 0 72px; }
+}
+
 @media (max-width: 700px) {
   .site-header { height: 66px; padding: 0 18px; }
   .brand { gap: 11px; }
   .brand .brand-logo { height: 34px; }
   .brand .brand-product { padding-left: 11px; }
-  .brand .brand-wordmark { height: 20px; }
+  .brand .brand-product { font-size: 14px; letter-spacing: .88px; }
   .button-small { display: none; }
   .mobile-menu { top: 66px; padding: 6px 18px 22px; }
-  .hero { padding: 50px 18px 0; }
+  .hero { padding: 0 18px; }
   .hero-grid { min-height: auto; }
+  .hero-copy { padding: 52px 0 60px; }
   h1 { font-size: clamp(32px, 10vw, 48px); }
   .hero-body { font-size: 17px; }
   .hero-actions { align-items: stretch; flex-direction: column; gap: 12px; }
   .text-link { justify-content: space-between; }
-  .hero-visual { min-height: 300px; margin: 20px 0 0; }
-  .hero-visual video { height: auto; }
-  .visual-ring { width: 300px; }
   .metrics { grid-template-columns: 1fr; }
-  .metrics div { border-right: 0; border-bottom: 1px solid rgba(255, 255, 255, .2); padding: 18px 0; }
+  .metrics div { border-right: 0; border-bottom: 1px solid var(--line); padding: 18px 0; }
   .metrics div:last-child { border-bottom: 0; }
   .proof-strip { grid-template-columns: 1fr 1fr; padding: 0 18px; }
   .proof-strip span { padding: 17px 7px; font-size: 13px; }
@@ -891,4 +1155,10 @@ input:focus-visible, select:focus-visible, textarea:focus-visible {
   html { scroll-behavior: auto; }
   * { transition: none !important; animation: none !important; }
   .scroll-progress { display: none; }
+  /* Without the cycle every slide sits at opacity 1 and the last in DOM order
+     wins the stack. Hiding the other three leaves the band on the frame that
+     was already downloaded at high priority — a still photograph, not a
+     rotation, which is the whole point of honouring the preference. */
+  .hero-shot { transform: none; }
+  .hero-media .hero-shot:not(:first-child) { opacity: 0; }
 }

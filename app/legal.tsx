@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { BrandLockup, WordmarkDefs } from "./brand";
+import { BrandLockup } from "./brand";
 import { route } from "./site-config";
 
 /**
@@ -42,11 +42,9 @@ export function LegalPage({
 }) {
   return (
     <main className="legal-page">
-      <WordmarkDefs />
-
       <header className="site-header">
         <a className="brand" href={route("/")} aria-label="Frankonia CyberShield home">
-          <BrandLockup decorative />
+          <BrandLockup decorative onLight />
         </a>
         <a className="text-link legal-back" href={route("/")}>
           Back to CyberShield<span>↗</span>

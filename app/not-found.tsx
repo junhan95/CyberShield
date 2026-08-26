@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { BrandLockup, WordmarkDefs } from "./brand";
+import { BrandLockup } from "./brand";
 import { languages, route } from "./site-config";
 import { siteViewport } from "./site-metadata";
 
@@ -13,11 +13,9 @@ export const metadata: Metadata = {
 export default function NotFound() {
   return (
     <main className="legal-page">
-      <WordmarkDefs />
-
       <header className="site-header">
         <a className="brand" href={route("/")} aria-label="Frankonia CyberShield home">
-          <BrandLockup decorative />
+          <BrandLockup decorative onLight />
         </a>
         <a className="text-link legal-back" href={route("/")}>
           Back to CyberShield<span>↗</span>

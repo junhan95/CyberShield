@@ -106,7 +106,7 @@ app/
   privacy/ imprint/  # standalone legal pages
 public/
   frankonia-logo.svg     # brand lockup, vector outlines from the brand PDF
-  hero-render-loop.mp4   # 20 s ping-pong cycle
+  images/hero/           # the four photographs the hero band cross-dissolves
   images/                # facility photography
 ```
 

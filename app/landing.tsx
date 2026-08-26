@@ -1,7 +1,7 @@
 "use client";
 
 import { FormEvent, useEffect, useRef, useState } from "react";
-import { BrandLockup, WordmarkDefs } from "./brand";
+import { BrandLockup } from "./brand";
 import { CutawayMap } from "./cutaway-map";
 import { StructuredData } from "./structured-data";
 import { asset, languages, route } from "./site-config";
@@ -347,7 +347,6 @@ const copy = {
         "The system is dismountable without damage. Rooms can be extended, reconfigured or reassembled at a new site—protecting the original investment.",
       ],
     ],
-    heroVideoLabel: "3D render of a CyberShield modular shielded data hall being assembled",
     contactEyebrow: "START WITH YOUR RISK PROFILE",
     contactTitle: "Let’s define the right protection boundary.",
     contactBody:
@@ -719,7 +718,6 @@ const copy = {
         "Das System ist beschädigungsfrei demontierbar. Räume lassen sich erweitern, umkonfigurieren oder an einem neuen Standort wieder aufbauen – die ursprüngliche Investition bleibt geschützt.",
       ],
     ],
-    heroVideoLabel: "3D-Rendering einer modularen CyberShield-Schirmhalle während der Montage",
     contactEyebrow: "BEGINNEN SIE MIT IHREM RISIKOPROFIL",
     contactTitle: "Definieren wir die passende Schutzgrenze.",
     contactBody:
@@ -1091,7 +1089,6 @@ const copy = {
         "손상 없이 해체할 수 있는 시스템입니다. 확장·재구성하거나 새로운 부지에 재조립할 수 있어 초기 투자가 보호됩니다.",
       ],
     ],
-    heroVideoLabel: "CyberShield 모듈형 차폐 데이터홀이 조립되는 3D 렌더링",
     contactEyebrow: "위험 프로파일에서 시작하십시오",
     contactTitle: "필요한 보호 경계를 함께 정의하겠습니다.",
     contactBody:
@@ -1216,13 +1213,35 @@ const revealSelector = [
 // Photography for the six product lines, in the order the cards are listed.
 const ecosystemImages = ["structure", "access", "connectivity", "air", "validation", "lifecycle"];
 
+/** The hero backdrop, in the order it plays.
+ *
+ *  Built plant, not a render: the band used to hold a 3D turntable of a hall
+ *  being assembled, and a rotating model of a thing is a weaker claim than a
+ *  photograph of the same thing standing in a building. All four are Frankonia
+ *  reference installations.
+ *
+ *  The four were picked so each is a different room at a different exposure —
+ *  a modular volume inside a plant hall, a working bay under a red service
+ *  gantry, the shielded envelope seen from outside, the filtered power entry —
+ *  so the cut between them reads as a change of scene, not a change of crop.
+ *
+ *  Subject placement decided the shortlist as much as subject did: the scrim
+ *  is opaque ink to 44% of the band and only clears past 78%, so a frame only
+ *  earns a place if what it shows sits right of centre. The first frame is the
+ *  LCP image — it loads at high priority and is what a visitor sees at t=0. */
+const heroSlides = [
+  { src: "/images/hero/hero-shielded-hall.webp" },
+  { src: "/images/hero/hero-shielded-bay.webp" },
+  { src: "/images/hero/hero-modular-volume.webp" },
+  { src: "/images/hero/hero-power-filters.webp" },
+];
+
 const navSectionIds = ["why", "solution", "verification", "ecosystem", "applications", "process"];
 
 export function Landing({ lang }: { lang: Lang }) {
   const [inquiry, setInquiry] = useState<Inquiry>("consultation");
   const [menuOpen, setMenuOpen] = useState(false);
   const [langOpen, setLangOpen] = useState(false);
-  const heroVideoRef = useRef<HTMLVideoElement>(null);
   const metricRef = useRef<HTMLElement>(null);
   const langRef = useRef<HTMLDivElement>(null);
   const t = copy[lang];
@@ -1247,39 +1266,6 @@ export function Landing({ lang }: { lang: Lang }) {
       document.removeEventListener("keydown", onKeyDown);
     };
   }, [langOpen]);
-
-  // The hero render ping-pongs: 8 s forward, 2 s hold, 8 s reverse, 2 s hold.
-  // That cycle is baked into hero-render-loop.mp4 and played natively with
-  // `loop` — reversing in the browser means seeking backwards frame by frame,
-  // which decodes far too slowly on a 1080p source to look smooth.
-  // Autoplay stays in script so a reduced-motion preference keeps the poster.
-  useEffect(() => {
-    const video = heroVideoRef.current;
-    if (!video || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-
-    // The clip is 3.5 MB, so it is only fetched once it is actually on screen —
-    // eager preloading competed with the hero for bandwidth on first paint.
-    const start = () => {
-      video.preload = "auto";
-      video.play().catch(() => {});
-    };
-
-    if (!("IntersectionObserver" in window)) {
-      start();
-      return;
-    }
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (!entry.isIntersecting) return;
-        observer.disconnect();
-        start();
-      },
-      { rootMargin: "200px" },
-    );
-    observer.observe(video);
-    return () => observer.disconnect();
-  }, []);
 
   // Reveal cards as they scroll into view; anything already on screen stays visible.
   // Cards start hidden, so every path here must end with them shown.
@@ -1460,11 +1446,10 @@ export function Landing({ lang }: { lang: Lang }) {
         productLines={t.ecosystemCards}
         description={t.heroBody}
       />
-      <WordmarkDefs />
 
       <header className="site-header">
         <a className="brand" href="#top" aria-label="Frankonia CyberShield home">
-          <BrandLockup decorative />
+          <BrandLockup decorative onLight />
         </a>
         <nav className="nav-desktop" aria-label="Primary navigation">
           {navLinks}
@@ -1523,6 +1508,34 @@ export function Landing({ lang }: { lang: Lang }) {
       )}
 
       <section className="hero" id="top">
+        {/* The plant behind the headline. Decorative: the h1 states what
+            CyberShield does and these state what it looks like built — naming
+            them in alt would put a caption in front of the sentence they
+            illustrate. Plain <img> rather than a CSS background so the first
+            frame is in the HTML the parser reaches first; it is the largest
+            thing on the page and should start downloading before the
+            stylesheet resolves. The other three are `low` so they queue behind
+            it instead of competing for the same connection.
+
+            The wrapper is what keeps the scrim on top: the slides carry
+            z-index to order the cross-dissolve, and without a stacking context
+            of their own they would climb over `.hero::after` and take the
+            headline's contrast with them. */}
+        <div className="hero-media" aria-hidden="true">
+          {heroSlides.map((slide, i) => (
+            /* eslint-disable-next-line @next/next/no-img-element */
+            <img
+              key={slide.src}
+              className="hero-shot"
+              src={asset(slide.src)}
+              alt=""
+              width={2000}
+              height={1333}
+              fetchPriority={i === 0 ? "high" : "low"}
+              decoding="async"
+            />
+          ))}
+        </div>
         <div className="hero-grid">
           <div className="hero-copy">
             <p className="eyebrow">{t.eyebrow}</p>
@@ -1532,21 +1545,6 @@ export function Landing({ lang }: { lang: Lang }) {
               <button className="button" onClick={() => goContact("consultation")}>{t.consultation}<span>↗</span></button>
               <a className="text-link" href="#solution">{t.explore}<span>↓</span></a>
             </div>
-          </div>
-          <div className="hero-visual">
-            <div className="visual-ring" />
-            <video
-              ref={heroVideoRef}
-              src={asset("/hero-render-loop.mp4")}
-              poster={asset("/images/hero-render-poster.webp")}
-              width={1920}
-              height={1080}
-              muted
-              loop
-              playsInline
-              preload="none"
-              aria-label={t.heroVideoLabel}
-            />
           </div>
         </div>
         <div className="metrics">
