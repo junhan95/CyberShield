@@ -9,6 +9,7 @@ import type { Lang } from "./site-config";
 
 export type { Lang };
 type Inquiry = "consultation" | "quote";
+type SendState = "idle" | "sending" | "sent" | "error";
 
 const copy = {
   en: {
@@ -19,13 +20,14 @@ const copy = {
       verification: "Verification",
       applications: "Applications",
       process: "Process",
+      company: "Frankonia",
       contact: "Contact",
     },
     langLabel: "Select language",
     menuOpenLabel: "Open menu",
     menuCloseLabel: "Close menu",
     alt: {
-      facility: "Aerial view of a data-centre facility campus",
+      facility: "Aerial view of a data-center facility campus",
       technician: "Technician verifying systems inside the data hall",
       engineer: "Engineer inspecting racks inside a protected server aisle",
     },
@@ -39,11 +41,11 @@ const copy = {
     ],
     consultation: "Book a consultation",
     quote: "Request a quote",
-    eyebrow: "PHYSICAL & ELECTROMAGNETIC SECURITY FOR AI DATA CENTRE BUILDS",
-    heroTitle: "Protect the AI data centre.",
-    heroAccent: "Contain the signal.",
+    eyebrow: "NEXT-GENERATION ELECTROMAGNETIC SHIELDING & HIGH-SECURITY DATA CENTER ENCLOSURES",
+    heroTitle: "Zero leakage. Zero interference.",
+    heroAccent: "The ultra-spec electromagnetic boundary.",
     heroBody:
-      "Shielded rooms have always been the fixed part of a building. CyberShield is not—a measurable electromagnetic boundary that adapts to your facility, assembles alongside live operations and is proven by measurement on site.",
+      "Protect high-value AI and data workloads with the market’s most flexible, high-attenuation shielding system. CyberShield seamlessly integrates around active operations, delivering certified zero-emission security right where you need it.",
     explore: "Explore the system",
     metrics: [
       ["Verified on site", "Shielding performance is measured after installation—not assumed"],
@@ -58,32 +60,36 @@ const copy = {
       "For as long as shielded rooms have existed, the facility has had to accommodate the shield. Conventional shielding is welded into place, fixed at design stage and permanent from the day it is finished. The building is planned around it. Construction stops for it. And when racks change, power density rises or the site outgrows itself, the room cannot follow. Protection ends up being the least flexible part of the fastest-moving infrastructure there is.",
     beliefBelief:
       "We believe it should be the other way around: the room adapts to the facility, not the facility to the room. So we build ours from prefabricated steel modules that pass through a standard building door, assemble from the inside, sit close to existing walls and bolt together—no welding, no glue, nothing irreversible. The room can be extended, reconfigured or relocated entirely, then measured again. Full protection, none of the permanence.",
-    auditTitle: "What is the shielding effectiveness of your facility—today, in decibels?",
-    auditBody:
-      "If the answer is a specification rather than a measurement, the number is unverified. A boundary is only as good as its weakest penetration, and a weak penetration stays invisible until the day it matters.",
-    auditLink: "See how CyberShield rooms are measured",
     audienceEyebrow: "WHO CYBERSHIELD IS BUILT FOR",
     audienceTitle: "Three environments where the boundary has to hold.",
     audience: [
       [
-        "Hyperscale cloud & AI centres",
+        "Hyperscale cloud & AI centers",
         "Core AI compute clusters, quantum hardware and critical availability zones, shielded against RF tampering and high-power electromagnetic threats.",
       ],
       [
-        "Colocation & enterprise data centres",
+        "Colocation & enterprise data centers",
         "A certified shielded vault offered as a premium, measurable security tier for enterprise customers under strict governance requirements.",
       ],
       [
-        "Defence, government & financial institutions",
-        "Sovereign cloud deployments, command centres and high-frequency trading platforms where confidentiality cannot be left to assumption.",
+        "Defense, government & financial institutions",
+        "Sovereign cloud deployments, command centers and high-frequency trading platforms where confidentiality cannot be left to assumption.",
       ],
     ],
+    coverEyebrow: "WHAT THE BOUNDARY HAS TO COVER",
+    coverTitle: "Four things the boundary has to enclose.",
+    cover: [
+      "Core compute environments and high-density accelerated racks",
+      "Key management, crypto and administration rooms",
+      "Network entry points, meet-me rooms and cross-connects",
+      "Power rooms, UPS lines and every filtered service crossing",
+    ],
     whyEyebrow: "SECURITY BEYOND SOFTWARE",
-    whyTitle: "AI data centre security no longer ends at the software layer.",
+    whyTitle: "AI data center security no longer ends at the software layer.",
     whyBody:
-      "Firewalls, encryption and zero trust stop what arrives over the network. As the value held inside an AI data centre grows, the paths that never touch the network—through physical space and through electromagnetic coupling—have become a real part of the assessment. Software security and physical security now have to be designed together.",
-    whyMetric: "0 dB",
-    whyMetricLabel: "The attenuation firewalls, encryption and zero trust provide against a signal that never enters the network.",
+      "Firewalls, encryption and zero trust stop what arrives over the network. As the value held inside an AI data center grows, the paths that never touch the network—through physical space and through electromagnetic coupling—have become a real part of the assessment. Software security and physical security now have to be designed together.",
+    whyMetric: "−120 dB",
+    whyMetricLabel: "The attenuation CyberShield provides against a signal that never enters the network — peak shielding effectiveness, measured on site to EN 50147-1.",
     whyValueLabel: "THE SHORT ANSWER",
     whyValueTitle: "One boundary — designed, built and measured under a single responsibility.",
     whyValueBody:
@@ -91,14 +97,14 @@ const copy = {
     assetCards: [
       ["A national strategic asset", "AI compute is already treated as national capability. Model weights, training data and sovereign workloads are corporate property and a matter of state interest at once — which is exactly what makes them worth targeting."],
       ["EMC and EMP exposed by design", "Dense GPU racks take tens of kilowatts through switching electronics, and 400G/800G interconnects work to noise budgets measured in millivolts. As power density rises, emission goes up and immunity headroom comes down. Protection sized for a conventional server room does not cover this."],
-      ["Protection from what is outside", "Data centres sit near industry, transmitters and transport infrastructure. The ambient RF environment is not yours to control and only gets busier. Intentional interference can be assembled from commercially available parts — which is why IEC 61000-4-36 exists as a test standard in its own right."],
+      ["Protection from what is outside", "Data centers sit near industry, transmitters and transport infrastructure. The ambient RF environment is not yours to control and only gets busier. Intentional interference can be assembled from commercially available parts — which is why IEC 61000-4-36 exists as a test standard in its own right."],
     ],
     threatEyebrow: "HOW THE EXPOSURE ARRIVES",
     threatTitle: "Four routes to the same asset—none of them across a firewall.",
     threatBody:
       "Each one reaches processing hardware through physical space or through electromagnetic coupling. Each one is closed at the facility boundary.",
     threats: [
-      ["Compromising emanations", "Sensitive processing activity can be exposed through unintended electromagnetic signals—without touching the network.", "Confidentiality exposed"],
+      ["Compromising emanations", "Processing activity radiates. In 2026 a neural network's architecture was reconstructed from GPU emissions 6 m away through a wall, and model parameters were read directly from NVIDIA Tensor Cores. Neither attack touched the network.", "Confidentiality exposed"],
       ["Intentional interference", "Localized high-power RF or electromagnetic energy can disrupt electronics, controls and communications.", "Service interruption"],
       ["EMP / HEMP exposure", "Radiated and conducted pulse effects can challenge critical systems and continuity architectures. The E1 pulse rises in 2.5 ns—before surge protection rated for lightning has reacted.", "Mission continuity risk"],
       ["Boundary vulnerabilities", "Doors, ventilation, power, data, cooling and utility penetrations can become the weakest path through the shield.", "Protection degraded"],
@@ -120,38 +126,6 @@ const copy = {
       "Twenty-one engineered solutions make up the shielding boundary — structure, penetrations, building services and power. Pick any one to see what it does and why it is there.",
     cutawayAlt: "Cutaway view of a CyberShield shielded data hall with its structure, doors, filters, ducts and power room",
     cutawayHint: "Choose a number on the render, or any part in the list.",
-    compareEyebrow: "ENGINEERED BEYOND THE INDUSTRY BASELINE",
-    compareTitle: "Where standard shielding stops, the engineering starts.",
-    compareBody:
-      "How CyberShield compares with conventional shielding approaches across the criteria that decide long-term performance.",
-    compareHead: ["Performance criterion", "Conventional shielding", "Frankonia CyberShield"],
-    compareRows: [
-      [
-        "RF attenuation spectrum",
-        "60–80 dB across a narrow frequency band",
-        "Peak ≥ 120 dB (100–400 MHz) and ≥ 100 dB from 10 kHz to 40 GHz",
-      ],
-      [
-        "Shielding panel engineering",
-        "Thin sheet metal or welded steel construction",
-        "2.0 mm galvanized steel PAN modules bolted every 75 mm to defined torque",
-      ],
-      [
-        "Joinery & sealing technology",
-        "Conductive adhesive or continuous welding",
-        "High-conductivity mesh gasket — no glue, no welding, 100 % reusable",
-      ],
-      [
-        "Airflow & acoustic efficiency",
-        "Basic cut-outs with thermal loss and RF leakage paths",
-        "Honeycomb waveguide ventilation and ISO 354 sound absorption (α = 0.65)",
-      ],
-      [
-        "Building integration",
-        "High static loads within a permanent structure",
-        "Self-supporting or seismic steel structure, dismountable without damage",
-      ],
-    ],
     ecosystemEyebrow: "ONE CONTINUOUS BARRIER",
     ecosystemTitle: "Six product lines. One zero-leak boundary.",
     ecosystemBody:
@@ -160,7 +134,7 @@ const copy = {
       [
         "CyberShield Structure",
         "Prefabricated 2.0 mm galvanized steel PAN module system for walls, ceilings and floors.",
-        "Sheet steel to DIN 17162 / EN 10142 DX 52 D+Z, 275 g/m² galvanising, bolted every 75 mm onto a self-supporting steel structure.",
+        "Sheet steel to DIN 17162 / EN 10142 DX 52 D+Z, 275 g/m² galvanizing, bolted every 75 mm onto a self-supporting steel structure.",
       ],
       [
         "CyberShield Access",
@@ -169,7 +143,7 @@ const copy = {
       ],
       [
         "CyberShield Connectivity",
-        "High-performance power line filters, fibre-optic waveguide penetrations and RF signal suppressors.",
+        "High-performance power line filters, fiber-optic waveguide penetrations and RF signal suppressors.",
         "Power, data and signal feed-throughs filtered to the same attenuation as the wall they cross — up to DN200 media penetrations.",
       ],
       [
@@ -202,16 +176,27 @@ const copy = {
       ["MIL-STD-188-125-1 / -2", "HEMP and IEMI protection, project-specific validation"],
       ["ISO/IEC 27001", "Supports the physical and environmental security controls"],
     ],
+    regulatoryIntro: "Why it is being specified now",
+    regulatory: [
+      ["ICD 705, 2025 revision", "RF shielding must be integrated into walls, ceilings and doors — existing SCIFs become retrofit candidates"],
+      ["CISA EMP Guidelines v2.2, Level 4", "MIL-STD-188-125-1 protection at 1–5 % of new-build cost"],
+      ["SL5 Standard, Section 3.9 SA-4", "Shielded rack enclosures in the AI weight enclave — not law, but written by the frontier labs themselves"],
+      ["EO 13865 / NDAA CIPA", "EMP resilience duties across 16 critical-infrastructure sectors"],
+    ],
     evidenceTitle: "Evidence base",
     evidenceNote:
       "Figures, terminology and threat definitions on this page are read from the publications below. Each entry names the issuing body, the document and the clause the statement comes from.",
     evidenceUsedFor: [
+      "Cited for: model architecture recovered from GPU emissions at 6 m, through a wall",
+      "Cited for: model parameters extracted directly from GPU tensor cores",
       "Cited for: the E1 HEMP waveform and the 2.5 ns rise time quoted on this page",
       "Cited for: intentional electromagnetic interference treated as its own test discipline",
       "Cited for: the definition and scope of compromising emanations",
+      "Cited for: shielded rack enclosures at NSA 94-106 levels inside the weight enclave",
+      "Cited for: the SL1–SL5 framework these mission profiles are anchored to",
       "Cited for: information leakage as a physical and environmental protection control",
-      "Cited for: power resilience practice in critical facilities",
-      "Cited for: data centre facility and infrastructure terminology",
+      "Cited for: Level 4 protection defined as MIL-STD-188-125-1, at 1–5 % of new-build cost",
+      "Cited for: data center facility and infrastructure terminology",
     ],
     attenuationEyebrow: "GUARANTEED ATTENUATION PERFORMANCE",
     attenuationTitle: "One shielding envelope, verified from 10 kHz to 40 GHz.",
@@ -234,24 +219,24 @@ const copy = {
     scenarios: [
       [
         "Government & sovereign cloud",
-        "A classified zone inside a live facility",
-        "A government cloud programme required a secure processing zone for classified workloads inside an existing data centre.",
+        "A classified zone inside a live facility. Sovereign Compute Vault.",
+        "A government cloud program required a secure processing zone for classified workloads inside an existing data center.",
         "The shielded vault was engineered around live operations, installed without welding and verified on site.",
         "A high-security zone delivered and acceptance-tested without interrupting the surrounding facility.",
       ],
       [
-        "AI lab",
-        "A measurable boundary around model assets",
-        "An AI company needed to protect model weights and training clusters against emanation and interference risks.",
-        "A dedicated shielded hall integrated cooling, power and monitoring for high-density racks.",
+        "AI labs & hyperscale operations",
+        "A measurable boundary around assets. AI & HPC Shielded Zones.",
+        "An AI firm sought to safeguard its proprietary model weights and training clusters from side-channel emanations and external interference.",
+        "A dedicated shielded room, integrated cooling, power and monitoring for high-density racks.",
         "A measured, documented security boundary around the company's most valuable IP.",
       ],
       [
-        "Colocation",
-        "A premium security tier without rebuilding",
-        "A colocation operator wanted a premium tier for regulated customers—without rebuilding the site.",
+        "Colocation providers, defense, finance & communications",
+        "A premium security without rebuilding. Colocation Shielded Vault.",
+        "A colocation operator wanted a premium tier for regulated customers without rebuilding the site.",
         "A modular vault was added inside existing white space and packaged as a verified product.",
-        "A new revenue stream from a security tier competitors cannot easily match.",
+        "A high-margin revenue stream driven by an exclusive, hard-to-replicate security tier.",
       ],
     ],
     scenarioNote: "Representative scenarios based on typical project profiles.",
@@ -285,14 +270,15 @@ const copy = {
     companyEyebrow: "FRANKONIA AT A GLANCE",
     companyTitle: "The shielding is not new. The application is.",
     companyBody:
-      "The Frankonia Group was founded in 1987 as a solution provider for EMC and antenna test laboratories, and is today a specialised technology corporation for anechoic chambers and test systems in the automotive, military and industrial sectors. CyberShield applies that same shielding engineering to data infrastructure. In-house project management, engineering and production — with Frankonia's own installation and service teams — mean the boundary, the doors, the filters and the acceptance measurement all come from one source.",
+      "The Frankonia Group was founded in 1987 as a solution provider for EMC and antenna test laboratories, and is today a specialized technology corporation for anechoic chambers and test systems in the automotive, military and industrial sectors. CyberShield applies that same shielding engineering to data infrastructure. In-house project management, engineering and production — with Frankonia's own installation and service teams — mean the boundary, the doors, the filters and the acceptance measurement all come from one source.",
     companyImageAlt: "Aerial view of the Frankonia Group headquarters and production site in Germany",
+    companyLink: "Visit Frankonia",
     companyGlanceTitle: "Frankonia stands for",
     companyGlance: [
       ["Global presence", "A well-structured network of production, representation and service units, active worldwide."],
       ["Complete solution provider", "Fundamental knowledge across every discipline a shielded facility touches."],
       ["Innovation as method", "Technologies adopted to raise efficiency, outcome and quality alongside customer needs."],
-      ["Preferred partner", "Customised, state-of-the-art solutions rather than catalogue products."],
+      ["Preferred partner", "Customized, state-of-the-art solutions rather than catalog products."],
     ],
     companyColumns: [
       [
@@ -351,8 +337,7 @@ const copy = {
     contactTitle: "Let’s define the right protection boundary.",
     contactBody:
       "Tell us what you need to protect. A Frankonia specialist will review your project and respond by email.",
-    contactPhoneLabel: "",
-    contactPhone: "",
+    contactEmail: "sales-cybershield@frankoniagroup.com",
     brochureLabel: "Download the CyberShield brochure",
     brochureMeta: "PDF · 7.4 MB · English",
     labels: {
@@ -365,8 +350,8 @@ const copy = {
       stage: "Project stage",
       message: "Project requirements",
       consent: "I agree that Frankonia may use this information to respond to my request.",
-      submitConsultation: "Prepare consultation email",
-      submitQuote: "Prepare quote request email",
+      submitConsultation: "Send consultation request",
+      submitQuote: "Send quote request",
     },
     options: {
       newBuild: "New build",
@@ -378,7 +363,12 @@ const copy = {
       urgent: "Active project / urgent",
     },
     emailNote:
-      "Submitting opens your email application with the project details pre-filled. No form data is stored on this website.",
+      "Your details are sent to Frankonia over an encrypted connection and forwarded to the sales contact responsible for your region. They are used for nothing else.",
+    formSending: "Sending…",
+    formSent: "Thank you — your request has reached us. A Frankonia specialist will reply by email.",
+    formError: "The request could not be sent. Please try again, or send it as an email instead.",
+    formErrorAction: "Send as email",
+    formHoneypot: "Leave this field empty",
     footer:
       "CyberShield is a high-assurance engineering solution. Performance, standards and certification scope depend on the agreed project configuration and final validation.",
   },
@@ -390,6 +380,7 @@ const copy = {
       verification: "Nachweis",
       applications: "Anwendungen",
       process: "Ablauf",
+      company: "Frankonia",
       contact: "Kontakt",
     },
     langLabel: "Sprache wählen",
@@ -410,11 +401,11 @@ const copy = {
     ],
     consultation: "Beratung vereinbaren",
     quote: "Angebot anfordern",
-    eyebrow: "PHYSISCHE UND ELEKTROMAGNETISCHE SICHERHEIT BEIM BAU VON KI-RECHENZENTREN",
-    heroTitle: "KI-Rechenzentren schützen.",
-    heroAccent: "Signale einschließen.",
+    eyebrow: "ELEKTROMAGNETISCHE SCHIRMUNG DER NÄCHSTEN GENERATION UND HOCHSICHERE RECHENZENTRUMS-ZELLEN",
+    heroTitle: "Null Leckage. Null Störung.",
+    heroAccent: "Die elektromagnetische Grenze in Ultra-Spezifikation.",
     heroBody:
-      "Schirmräume waren immer der feste Teil eines Gebäudes. CyberShield ist es nicht – eine messbare elektromagnetische Sicherheitsgrenze, die sich an Ihre Anlage anpasst, im laufenden Betrieb montiert wird und vor Ort messtechnisch nachgewiesen ist.",
+      "Schützen Sie hochwertige KI- und Datenlasten mit dem flexibelsten hochdämpfenden Schirmungssystem am Markt. CyberShield fügt sich nahtlos in den laufenden Betrieb ein und liefert zertifizierte emissionsfreie Sicherheit genau dort, wo Sie sie brauchen.",
     explore: "System kennenlernen",
     metrics: [
       ["Vor Ort nachgewiesen", "Die Schirmdämpfung wird nach der Montage gemessen – nicht angenommen"],
@@ -429,10 +420,6 @@ const copy = {
       "Solange es Schirmräume gibt, musste die Anlage der Schirmung entgegenkommen. Herkömmliche Schirmung wird eingeschweißt, in der Planungsphase festgelegt und ist ab Fertigstellung unveränderlich. Das Gebäude wird um sie herum geplant. Der Bau steht für sie still. Und wenn sich Racks ändern, die Leistungsdichte steigt oder der Standort an seine Grenzen kommt, kann der Raum nicht folgen. Der Schutz wird zum unbeweglichsten Teil der beweglichsten Infrastruktur überhaupt.",
     beliefBelief:
       "Wir sind überzeugt, dass es umgekehrt sein muss: Der Raum passt sich der Anlage an, nicht die Anlage dem Raum. Deshalb bauen wir aus vorgefertigten Stahlmodulen, die durch eine normale Gebäudetür passen, von innen montiert werden, nah an bestehenden Wänden stehen und verschraubt werden – ohne Schweißen, ohne Kleber, nichts Unumkehrbares. Der Raum lässt sich erweitern, umbauen oder vollständig verlagern und danach erneut messen. Voller Schutz, ohne die Endgültigkeit.",
-    auditTitle: "Wie hoch ist die Schirmdämpfung Ihrer Anlage – heute, in Dezibel?",
-    auditBody:
-      "Wenn die Antwort eine Spezifikation und keine Messung ist, ist der Wert nicht nachgewiesen. Eine Schirmgrenze ist nur so gut wie ihre schwächste Durchführung – und eine schwache Durchführung bleibt unsichtbar, bis es darauf ankommt.",
-    auditLink: "So werden CyberShield-Räume gemessen",
     audienceEyebrow: "FÜR WEN CYBERSHIELD GEBAUT WIRD",
     audienceTitle: "Drei Umgebungen, in denen die Schirmgrenze halten muss.",
     audience: [
@@ -449,12 +436,20 @@ const copy = {
         "Souveräne Cloud-Umgebungen, Führungszentralen und Hochfrequenzhandelsplattformen, deren Vertraulichkeit nicht auf Annahmen beruhen darf.",
       ],
     ],
+    coverEyebrow: "WAS DIE SCHIRMGRENZE ABDECKEN MUSS",
+    coverTitle: "Vier Bereiche, die die Schirmgrenze einschließen muss.",
+    cover: [
+      "Kernrechenumgebungen und hochdichte Beschleuniger-Racks",
+      "Schlüsselverwaltung, Krypto- und Administrationsräume",
+      "Netzzugangspunkte, Meet-me-Räume und Cross-Connects",
+      "Stromräume, USV-Leitungen und jede gefilterte Versorgungsdurchführung",
+    ],
     whyEyebrow: "SICHERHEIT ÜBER SOFTWARE HINAUS",
     whyTitle: "Die Sicherheit eines KI-Rechenzentrums endet nicht mehr auf der Softwareebene.",
     whyBody:
       "Firewalls, Verschlüsselung und Zero Trust halten auf, was über das Netzwerk kommt. Je größer der Wert wird, der in einem KI-Rechenzentrum liegt, desto ernsthafter gehören auch die Wege in die Betrachtung, die das Netzwerk nie berühren – über den physischen Raum und über elektromagnetische Kopplung. Software- und physische Sicherheit müssen heute gemeinsam geplant werden.",
-    whyMetric: "0 dB",
-    whyMetricLabel: "Die Dämpfung, die Firewalls, Verschlüsselung und Zero Trust einem Signal entgegensetzen, das nie ins Netzwerk gelangt.",
+    whyMetric: "−120 dB",
+    whyMetricLabel: "Die Dämpfung, die CyberShield einem Signal entgegensetzt, das nie ins Netzwerk gelangt – Spitzenwert der Schirmdämpfung, vor Ort nach EN 50147-1 gemessen.",
     whyValueLabel: "DIE KURZE ANTWORT",
     whyValueTitle: "Eine Grenze – geplant, gebaut und gemessen aus einer Hand.",
     whyValueBody:
@@ -469,7 +464,7 @@ const copy = {
     threatBody:
       "Jeder erreicht die Verarbeitungshardware über den physischen Raum oder über elektromagnetische Kopplung. Jeder wird an der Gebäudehülle geschlossen.",
     threats: [
-      ["Kompromittierende Abstrahlung", "Sensible Verarbeitungsvorgänge können über unbeabsichtigte elektromagnetische Signale offengelegt werden – ohne Zugriff auf das Netzwerk.", "Vertraulichkeit gefährdet"],
+      ["Kompromittierende Abstrahlung", "Verarbeitung strahlt ab. 2026 wurde die Architektur eines neuronalen Netzes aus GPU-Emissionen über 6 m durch eine Wand rekonstruiert, und Modellparameter wurden direkt aus NVIDIA-Tensor-Cores ausgelesen. Keiner der beiden Angriffe berührte das Netzwerk.", "Vertraulichkeit gefährdet"],
       ["Vorsätzliche Störbeeinflussung", "Lokale HF- oder elektromagnetische Energie hoher Leistung kann Elektronik, Steuerungen und Kommunikation stören.", "Betriebsunterbrechung"],
       ["EMP-/HEMP-Exposition", "Gestrahlte und geleitete Impulseinwirkungen können kritische Systeme und Kontinuitätsarchitekturen beeinträchtigen. Der E1-Impuls steigt in 2,5 ns an – bevor blitzschutzgerechte Ableiter reagiert haben.", "Risiko für die Betriebskontinuität"],
       ["Schwachstellen der Schirmgrenze", "Türen, Lüftung sowie Strom-, Daten-, Kühl- und Versorgungsdurchführungen können zum schwächsten Punkt der Abschirmung werden.", "Schutzwirkung reduziert"],
@@ -498,15 +493,26 @@ const copy = {
       ["MIL-STD-188-125-1 / -2", "HEMP- und IEMI-Schutz, projektspezifische Validierung"],
       ["ISO/IEC 27001", "Unterstützt die physischen und umgebungsbezogenen Sicherheitsmaßnahmen"],
     ],
+    regulatoryIntro: "Warum jetzt spezifiziert wird",
+    regulatory: [
+      ["BSI TL-03305, Nationales Zonenmodell", "Der Schirmraum senkt die Zonenanforderung — und damit den Aufwand für zonengerechte Geräte"],
+      ["NATO SDIP-27 / NIAPC", "Geschirmte Kabinen als anerkannte Gegenmaßnahme innerhalb von Liegenschaften"],
+      ["KRITIS-Dachgesetz, seit 17.03.2026", "Physische Resilienz ist gesetzliche Pflicht — EMP und IEMI gehören in die Allgefahrenanalyse"],
+      ["NIS2 / DORA, EN 50600-2-5", "EMV ist aus EN 50600 ausdrücklich ausgenommen — die Anforderung muss gesondert spezifiziert werden"],
+    ],
     evidenceTitle: "Quellen und Nachweise",
     evidenceNote:
       "Kennwerte, Begriffe und Bedrohungsdefinitionen dieser Seite stammen aus den unten genannten Veröffentlichungen. Jeder Eintrag nennt die herausgebende Stelle, das Dokument und die Stelle, auf die sich die Aussage stützt.",
     evidenceUsedFor: [
+      "Belegt: aus GPU-Abstrahlung über 6 m durch eine Wand rekonstruierte Modellarchitektur",
+      "Belegt: direkt aus GPU-Tensor-Cores extrahierte Modellparameter",
       "Belegt: die E1-NEMP-Wellenform und die auf dieser Seite genannte Anstiegszeit von 2,5 ns",
       "Belegt: absichtliche elektromagnetische Störungen als eigene Prüfdisziplin",
       "Belegt: Definition und Umfang kompromittierender Abstrahlung",
+      "Belegt: geschirmte Rack-Gehäuse nach NSA 94-106 im Weight Enclave",
+      "Belegt: das SL1–SL5-Rahmenwerk, an dem sich diese Einsatzprofile orientieren",
       "Belegt: Informationsabfluss als Maßnahme des physischen und umgebungsbezogenen Schutzes",
-      "Belegt: Praxis der Stromversorgungsresilienz in kritischen Anlagen",
+      "Belegt: Schutzgrad Level 4 nach MIL-STD-188-125-1 bei 1–5 % der Neubaukosten",
       "Belegt: Begriffe zu Rechenzentrumsgebäuden und -infrastruktur",
     ],
     attenuationEyebrow: "GARANTIERTE SCHIRMDÄMPFUNG",
@@ -522,38 +528,6 @@ const copy = {
       "Einundzwanzig durchdachte Lösungen bilden die Schirmgrenze — Konstruktion, Durchführungen, Gebäudetechnik und Stromversorgung. Wählen Sie eine aus, um zu sehen, was sie leistet und warum sie dort sitzt.",
     cutawayAlt: "Schnittansicht einer geschirmten CyberShield-Datenhalle mit Konstruktion, Türen, Filtern, Kanälen und Stromversorgungsraum",
     cutawayHint: "Wählen Sie eine Nummer im Schnitt oder ein Bauteil aus der Liste.",
-    compareEyebrow: "ENGINEERING JENSEITS DES BRANCHENSTANDARDS",
-    compareTitle: "Wo übliche Abschirmung endet, beginnt das Engineering.",
-    compareBody:
-      "Wie CyberShield gegenüber konventionellen Schirmlösungen in genau den Kriterien abschneidet, die die Langzeitleistung bestimmen.",
-    compareHead: ["Leistungskriterium", "Konventionelle Abschirmung", "Frankonia CyberShield"],
-    compareRows: [
-      [
-        "HF-Dämpfungsspektrum",
-        "60–80 dB in einem schmalen Frequenzbereich",
-        "Spitzenwert ≥ 120 dB (100–400 MHz) und ≥ 100 dB von 10 kHz bis 40 GHz",
-      ],
-      [
-        "Paneelkonstruktion",
-        "Dünnes Blech oder geschweißte Stahlkonstruktion",
-        "PAN-Module aus 2,0 mm verzinktem Stahlblech, alle 75 mm mit definiertem Drehmoment verschraubt",
-      ],
-      [
-        "Fügetechnik und Abdichtung",
-        "Leitfähiger Kleber oder durchgehende Schweißnaht",
-        "Hochleitfähige Geflechtdichtung – ohne Kleber, ohne Schweißen, zu 100 % wiederverwendbar",
-      ],
-      [
-        "Luftführung und Akustik",
-        "Einfache Ausschnitte mit Wärmeverlust und HF-Leckpfaden",
-        "Wabenkamine als Hohlleiter und Schallabsorption nach ISO 354 (α = 0,65)",
-      ],
-      [
-        "Gebäudeintegration",
-        "Hohe statische Lasten in einer dauerhaften Struktur",
-        "Selbsttragende oder erdbebensichere Stahlkonstruktion, beschädigungsfrei rückbaubar",
-      ],
-    ],
     ecosystemEyebrow: "EINE DURCHGÄNGIGE SCHIRMGRENZE",
     ecosystemTitle: "Sechs Produktlinien. Eine lückenlose Schirmhülle.",
     ecosystemBody:
@@ -605,24 +579,24 @@ const copy = {
     scenarios: [
       [
         "Behörden und souveräne Cloud",
-        "Eine Verschlusssachenzone im laufenden Betrieb",
+        "Eine Verschlusssachenzone im laufenden Betrieb. Sovereign Compute Vault.",
         "Ein staatliches Cloud-Programm benötigte eine sichere Verarbeitungszone für eingestufte Workloads in einem bestehenden Rechenzentrum.",
         "Der Schirmraum wurde um den laufenden Betrieb herum geplant, schweißfrei montiert und vor Ort nachgewiesen.",
         "Eine Hochsicherheitszone, übergeben und abgenommen ohne Unterbrechung des umgebenden Betriebs.",
       ],
       [
-        "KI-Labor",
-        "Eine messbare Grenze um die Modell-Assets",
-        "Ein KI-Unternehmen musste Modellgewichte und Trainingscluster gegen Abstrahlung und Störbeeinflussung schützen.",
-        "Eine dedizierte Schirmhalle integrierte Kühlung, Stromversorgung und Monitoring für hochdichte Racks.",
+        "KI-Labore und Hyperscale-Betreiber",
+        "Eine messbare Grenze um die Assets. AI & HPC Shielded Zones.",
+        "Ein KI-Unternehmen wollte seine Modellgewichte und Trainingscluster gegen Seitenkanal-Abstrahlung und äußere Störbeeinflussung absichern.",
+        "Ein dedizierter Schirmraum mit integrierter Kühlung, Stromversorgung und Monitoring für hochdichte Racks.",
         "Eine gemessene, dokumentierte Sicherheitsgrenze um das wertvollste geistige Eigentum des Unternehmens.",
       ],
       [
-        "Colocation",
-        "Eine Premium-Sicherheitsstufe ohne Neubau",
-        "Ein Colocation-Betreiber wollte eine Premiumstufe für regulierte Kunden – ohne den Standort umzubauen.",
+        "Colocation, Verteidigung, Finanzwesen und Kommunikation",
+        "Premium-Sicherheit ohne Neubau. Colocation Shielded Vault.",
+        "Ein Colocation-Betreiber wollte eine Premiumstufe für regulierte Kunden, ohne den Standort umzubauen.",
         "Ein modularer Schirmraum wurde in bestehender Weißfläche ergänzt und als nachgewiesenes Produkt paketiert.",
-        "Eine neue Erlösquelle durch eine Sicherheitsstufe, die Wettbewerber nicht ohne Weiteres nachbilden können.",
+        "Eine margenstarke Erlösquelle durch eine exklusive, schwer nachbildbare Sicherheitsstufe.",
       ],
     ],
     scenarioNote: "Repräsentative Szenarien auf Basis typischer Projektprofile.",
@@ -658,6 +632,7 @@ const copy = {
     companyBody:
       "Die Frankonia Group wurde 1987 als Lösungsanbieter für EMV- und Antennenmesslabore gegründet und ist heute ein spezialisiertes Technologieunternehmen für Absorberhallen und Prüfsysteme in der Automobil-, Wehr- und Industrietechnik. CyberShield überträgt dieselbe Schirmtechnik auf Dateninfrastruktur. Projektmanagement, Engineering und Fertigung im eigenen Haus — dazu eigene Montage- und Serviceteams — sorgen dafür, dass Schirmgrenze, Türen, Filter und Abnahmemessung aus einer Hand kommen.",
     companyImageAlt: "Luftaufnahme des Stammsitzes und Produktionsstandorts der Frankonia Group in Deutschland",
+    companyLink: "Frankonia besuchen",
     companyGlanceTitle: "Wofür Frankonia steht",
     companyGlance: [
       ["Weltweite Präsenz", "Ein gut strukturiertes Netz aus Produktions-, Vertriebs- und Serviceeinheiten, weltweit tätig."],
@@ -722,8 +697,7 @@ const copy = {
     contactTitle: "Definieren wir die passende Schutzgrenze.",
     contactBody:
       "Sagen Sie uns, was Sie schützen müssen. Ein Frankonia-Spezialist prüft Ihr Projekt und antwortet per E-Mail.",
-    contactPhoneLabel: "Direkt aus Heideck",
-    contactPhone: "+49 9177 98-500",
+    contactEmail: "sales-cybershield@frankoniagroup.com",
     brochureLabel: "CyberShield Broschüre herunterladen",
     brochureMeta: "PDF · 7,4 MB · Englisch",
     labels: {
@@ -736,8 +710,8 @@ const copy = {
       stage: "Projektphase",
       message: "Projektanforderungen",
       consent: "Ich bin damit einverstanden, dass Frankonia diese Angaben zur Beantwortung meiner Anfrage verwendet.",
-      submitConsultation: "Beratungs-E-Mail vorbereiten",
-      submitQuote: "Angebots-E-Mail vorbereiten",
+      submitConsultation: "Beratungsanfrage senden",
+      submitQuote: "Angebotsanfrage senden",
     },
     options: {
       newBuild: "Neubau",
@@ -749,7 +723,12 @@ const copy = {
       urgent: "Laufendes Projekt / dringend",
     },
     emailNote:
-      "Beim Absenden öffnet sich Ihr E-Mail-Programm mit den vorausgefüllten Projektangaben. Auf dieser Website werden keine Formulardaten gespeichert.",
+      "Ihre Angaben werden verschlüsselt an Frankonia übertragen und an den für Ihre Region zuständigen Vertriebskontakt weitergeleitet. Eine andere Verwendung findet nicht statt.",
+    formSending: "Wird gesendet …",
+    formSent: "Vielen Dank — Ihre Anfrage ist bei uns eingegangen. Ein Frankonia-Spezialist antwortet Ihnen per E-Mail.",
+    formError: "Die Anfrage konnte nicht gesendet werden. Bitte versuchen Sie es erneut oder senden Sie sie als E-Mail.",
+    formErrorAction: "Als E-Mail senden",
+    formHoneypot: "Dieses Feld bitte leer lassen",
     footer:
       "CyberShield ist eine Engineering-Lösung mit hohem Sicherheitsanspruch. Leistung, Normenbezug und Zertifizierungsumfang richten sich nach der vereinbarten Projektkonfiguration und der abschließenden Validierung.",
   },
@@ -761,6 +740,7 @@ const copy = {
       verification: "검증",
       applications: "적용 분야",
       process: "도입 절차",
+      company: "회사 소개",
       contact: "문의",
     },
     langLabel: "언어 선택",
@@ -781,11 +761,11 @@ const copy = {
     ],
     consultation: "상담 예약",
     quote: "견적 요청",
-    eyebrow: "AI 데이터센터 구축을 위한 물리·전자기 보안",
-    heroTitle: "AI 데이터센터를 보호하고,",
-    heroAccent: "신호를 경계 안에 가두십시오.",
+    eyebrow: "차세대 전자기 차폐 및 고보안 데이터센터 엔클로저",
+    heroTitle: "누설 제로. 간섭 제로.",
+    heroAccent: "최상위 사양의 전자기 경계.",
     heroBody:
-      "차폐실은 언제나 건물에서 고정된 부분이었습니다. CyberShield는 다릅니다. 시설에 맞춰 구성되고, 운영 중에 조립되며, 현장 측정으로 성능이 입증되는 전자기 보안 경계입니다.",
+      "시장에서 가장 유연한 고차폐 시스템으로 고가치 AI·데이터 워크로드를 보호하십시오. CyberShield는 운영 중인 시설에 매끄럽게 통합되어, 필요한 곳에 정확히 인증된 무방출 보안을 제공합니다.",
     explore: "시스템 살펴보기",
     metrics: [
       ["현장 측정 검증", "설치 후 차폐 성능을 현장에서 측정합니다 — 추정이 아닌 증거"],
@@ -800,10 +780,6 @@ const copy = {
       "차폐실이 존재해온 내내, 시설이 차폐에 맞춰야 했습니다. 기존 차폐는 용접으로 고정되고, 설계 단계에서 확정되며, 완공된 날부터 바뀌지 않습니다. 건물은 그 방을 중심으로 계획되고, 공사는 그 방 때문에 멈춥니다. 그리고 랙 구성이 바뀌거나 전력 밀도가 올라가거나 시설이 한계에 이르렀을 때, 그 방은 따라가지 못합니다. 가장 빠르게 변하는 인프라 안에서 보호 설비만 가장 움직이지 않는 부분으로 남습니다.",
     beliefBelief:
       "우리는 반대여야 한다고 생각합니다. 시설이 방에 맞추는 것이 아니라, 방이 시설에 맞춰야 합니다. 그래서 CyberShield는 표준 출입문을 통과하는 사전 제작 강판 모듈로 만들어집니다. 내부에서 조립하고, 기존 벽에 가깝게 세우며, 볼트로 체결합니다. 용접도 접착도, 되돌릴 수 없는 작업도 없습니다. 확장하고, 다시 구성하고, 다른 현장으로 통째로 옮긴 뒤 다시 측정할 수 있습니다. 성능은 그대로 두고, 영구 고정만 걷어냈습니다.",
-    auditTitle: "지금 이 시설의 차폐 성능은 몇 dB입니까?",
-    auditBody:
-      "그 답이 측정값이 아니라 사양서 수치라면, 그 숫자는 검증된 것이 아닙니다. 차폐 경계의 성능은 가장 취약한 관통부가 결정하고, 취약한 관통부는 문제가 드러나는 날까지 보이지 않습니다.",
-    auditLink: "CyberShield의 측정 방식 보기",
     audienceEyebrow: "CYBERSHIELD가 지키는 현장",
     audienceTitle: "차폐 경계가 반드시 유지되어야 하는 세 가지 환경.",
     audience: [
@@ -820,12 +796,20 @@ const copy = {
         "소버린 클라우드, 지휘통제 센터, 고빈도 거래 플랫폼처럼 기밀성을 가정에 맡길 수 없는 환경을 지원합니다.",
       ],
     ],
+    coverEyebrow: "차폐 경계가 감싸야 할 범위",
+    coverTitle: "차폐 경계가 감싸야 할 네 가지.",
+    cover: [
+      "핵심 연산 환경과 고밀도 가속 컴퓨팅 랙",
+      "키 관리, 암호 운영 및 관제 공간",
+      "네트워크 진입점, 미트미 룸, 크로스커넥트",
+      "전원실과 UPS 계통, 그리고 모든 필터 관통부",
+    ],
     whyEyebrow: "소프트웨어를 넘어선 보안",
     whyTitle: "AI 데이터센터의 보안은 이제 소프트웨어에서 끝나지 않습니다.",
     whyBody:
       "방화벽과 암호화, 제로 트러스트는 네트워크를 통해 들어오는 위협을 막습니다. 그러나 AI 데이터센터가 품는 자산의 가치가 커지면서, 네트워크를 거치지 않고 물리 공간과 전자기 결합으로 접근하는 경로까지 검토 대상이 되었습니다. 이제 소프트웨어 보안과 물리적 보안은 함께 설계되어야 합니다.",
-    whyMetric: "0 dB",
-    whyMetricLabel: "네트워크를 거치지 않는 신호에 대해 방화벽과 암호화, 제로 트러스트가 제공하는 감쇠량.",
+    whyMetric: "−120 dB",
+    whyMetricLabel: "네트워크를 거치지 않는 신호에 대해 CyberShield가 제공하는 감쇠량 — 차폐 성능 최대치, EN 50147-1에 따라 현장에서 측정합니다.",
     whyValueLabel: "짧은 답",
     whyValueTitle: "설계부터 시공, 측정까지 하나의 책임으로 묶인 단일 경계.",
     whyValueBody:
@@ -840,7 +824,7 @@ const copy = {
     threatBody:
       "모두 물리 공간이나 전자기 결합을 통해 연산 하드웨어에 도달합니다. 그리고 모두 시설 경계에서 차단됩니다.",
     threats: [
-      ["전자기 정보 방사", "네트워크에 접촉하지 않고도 비의도적 전자기 신호를 통해 민감한 처리 활동이 노출될 수 있습니다.", "기밀성 노출"],
+      ["전자기 정보 방사", "연산은 방사됩니다. 2026년 벽 너머 6 m 거리의 GPU 방사만으로 신경망 아키텍처가 재구성되었고, NVIDIA Tensor Core에서 모델 파라미터가 직접 추출되었습니다. 두 공격 모두 네트워크에 접촉하지 않았습니다.", "기밀성 노출"],
       ["의도적 전자기 간섭", "국소 고출력 RF 또는 전자기 에너지는 전자장비, 제어 및 통신을 교란할 수 있습니다.", "서비스 중단"],
       ["EMP / HEMP 노출", "방사 및 전도성 펄스 영향은 중요 시스템과 업무 연속성 체계를 위협할 수 있습니다. E1 펄스는 2.5 ns 만에 상승합니다 — 낙뢰 기준 서지 보호기가 반응하기 전입니다.", "업무 연속성 위험"],
       ["경계 구성요소 취약점", "도어, 환기, 전원, 데이터, 냉각 및 설비 관통부가 차폐 경계의 가장 약한 경로가 될 수 있습니다.", "보호 성능 저하"],
@@ -862,38 +846,6 @@ const copy = {
       "구조, 관통부, 건축설비, 전력까지 차폐 경계를 이루는 21가지 솔루션을 도면에서 바로 살펴보세요. 궁금한 항목을 선택하면 어떤 역할을 하고 왜 필요한지 설명해 드립니다.",
     cutawayAlt: "구조, 도어, 필터, 덕트, 전력실을 포함한 CyberShield 차폐 데이터홀 단면도",
     cutawayHint: "도면의 번호 또는 목록에서 궁금한 항목을 선택해 보세요.",
-    compareEyebrow: "업계 기준을 넘어서는 엔지니어링",
-    compareTitle: "일반적인 차폐가 멈추는 지점에서 엔지니어링이 시작됩니다.",
-    compareBody:
-      "장기 성능을 좌우하는 기술 항목에서 CyberShield가 일반적인 차폐 방식과 어떻게 다른지 비교했습니다.",
-    compareHead: ["성능 항목", "일반적인 차폐 방식", "Frankonia CyberShield"],
-    compareRows: [
-      [
-        "RF 차폐 스펙트럼",
-        "좁은 주파수 대역에서 60~80 dB",
-        "100~400 MHz 최대 120 dB 이상, 10 kHz~40 GHz 전 대역 100 dB 이상",
-      ],
-      [
-        "차폐 패널 엔지니어링",
-        "얇은 강판 또는 용접 강구조",
-        "2.0 mm 아연도금 강판 PAN 모듈, 75 mm 간격 규정 토크 체결",
-      ],
-      [
-        "접합·실링 기술",
-        "전도성 접착제 또는 연속 용접",
-        "고전도성 메시 개스킷 — 접착제·용접 없이 100 % 재사용",
-      ],
-      [
-        "공조·음향 효율",
-        "단순 개구부로 인한 열손실과 RF 누설 경로",
-        "허니콤 도파관 환기 및 ISO 354 흡음 성능 (α = 0.65)",
-      ],
-      [
-        "건축 통합",
-        "큰 고정하중을 갖는 영구 구조물",
-        "자립형 또는 내진 강구조, 손상 없이 해체 가능",
-      ],
-    ],
     ecosystemEyebrow: "하나의 연속된 차폐 경계",
     ecosystemTitle: "여섯 개의 제품군, 누설 없는 하나의 차폐 경계.",
     ecosystemBody:
@@ -944,15 +896,26 @@ const copy = {
       ["MIL-STD-188-125-1 / -2", "HEMP·IEMI 방호, 프로젝트별 검증"],
       ["ISO/IEC 27001", "물리적·환경적 보안 통제 항목 지원"],
     ],
+    regulatoryIntro: "지금 사양에 반영되는 이유",
+    regulatory: [
+      ["국가정보원 보안업무 기본지침 제95조", "공공기관·공공클라우드에 대한 고출력 전자기 보안 요구"],
+      ["국방·군사시설 EMP 방호시설 설계기준", "차폐판, 차폐문, 허니컴 환기구, 관통부, 필터 — 국방 실무 기준 100 dB"],
+      ["데이터센터 재난관리 의무, 2023.7 시행", "물리적 보호조치 요건이 강화되는 흐름 — EMP·IEMI는 아직 미포함"],
+      ["IEEE 299 / MIL-STD-188-125 인수 SE 측정", "국내 인정(KOLAS) 성적서로 재입증되는 인수 검증 신뢰성"],
+    ],
     evidenceTitle: "근거 자료",
     evidenceNote:
       "이 페이지의 수치, 용어, 위협 정의는 아래 자료에서 인용했습니다. 각 항목에 발행 기관, 문서, 해당 내용을 인용한 조항을 표기했습니다.",
     evidenceUsedFor: [
+      "인용 근거: 벽 너머 6 m 거리의 GPU 방사에서 재구성된 신경망 아키텍처",
+      "인용 근거: GPU 텐서 코어에서 직접 추출된 모델 파라미터",
       "인용 근거: 이 페이지에 표기된 E1 HEMP 파형과 2.5 ns 상승 시간",
       "인용 근거: 의도적 전자기 방해(IEMI)를 독립된 시험 분야로 규정",
       "인용 근거: 정보 누설 방사(compromising emanations)의 정의와 범위",
+      "인용 근거: weight enclave 내부에 NSA 94-106 수준의 차폐 랙을 요구",
+      "인용 근거: 본 미션 프로파일이 기준으로 삼는 SL1–SL5 체계",
       "인용 근거: 물리적·환경적 보호 통제 항목으로서의 정보 누설",
-      "인용 근거: 중요 시설의 전력 복원력 확보 방안",
+      "인용 근거: 신축 대비 1~5% 비용의 MIL-STD-188-125-1 기준 Level 4 방호",
       "인용 근거: 데이터센터 시설 및 인프라 관련 용어",
     ],
     attenuationEyebrow: "보증 차폐 성능",
@@ -976,24 +939,24 @@ const copy = {
     scenarios: [
       [
         "정부·소버린 클라우드",
-        "운영 중인 시설 안의 기밀 처리 구역",
+        "운영 중인 시설 안의 기밀 처리 구역. Sovereign Compute Vault.",
         "정부 클라우드 프로그램이 기존 데이터센터 내부에 기밀 워크로드용 보안 구역을 요구했습니다.",
         "운영을 유지한 채 무용접 방식으로 차폐 볼트를 설계·시공하고 현장에서 성능을 검증했습니다.",
         "주변 시설 중단 없이 고보안 구역을 구축하고 인수 시험까지 완료했습니다.",
       ],
       [
-        "AI 연구소",
-        "모델 자산을 둘러싼 측정 가능한 경계",
-        "AI 기업이 모델 가중치와 학습 클러스터를 정보 방사와 간섭 위험으로부터 보호해야 했습니다.",
-        "고밀도 랙을 위한 냉각·전원·모니터링을 통합한 전용 차폐 홀을 구축했습니다.",
+        "AI 연구소·하이퍼스케일 운영사",
+        "자산을 둘러싼 측정 가능한 경계. AI & HPC Shielded Zones.",
+        "AI 기업이 자사 모델 가중치와 학습 클러스터를 부채널 방사와 외부 간섭으로부터 보호하고자 했습니다.",
+        "고밀도 랙을 위한 냉각·전원·모니터링을 통합한 전용 차폐실을 구축했습니다.",
         "기업의 가장 가치 있는 IP 주변에 측정되고 문서화된 보안 경계를 확보했습니다.",
       ],
       [
-        "코로케이션",
-        "재건축 없이 만든 프리미엄 보안 등급",
+        "코로케이션·국방·금융·통신",
+        "재건축 없는 프리미엄 보안. Colocation Shielded Vault.",
         "코로케이션 사업자가 시설 재구축 없이 규제 산업 고객용 프리미엄 등급을 원했습니다.",
         "기존 상면 내부에 모듈형 볼트를 증설하고 검증된 상품으로 패키지화했습니다.",
-        "경쟁사가 따라오기 어려운 보안 등급으로 신규 매출원을 확보했습니다.",
+        "모방하기 어려운 독점적 보안 등급으로 고마진 매출원을 확보했습니다.",
       ],
     ],
     scenarioNote: "일반적인 프로젝트 유형을 바탕으로 구성한 예시입니다.",
@@ -1029,6 +992,7 @@ const copy = {
     companyBody:
       "Frankonia Group은 1987년 EMC·안테나 시험 실험실을 위한 솔루션 제공사로 설립되어, 현재는 자동차·방산·산업 분야의 무반사실과 시험 시스템을 다루는 전문 기술 기업입니다. CyberShield는 그 차폐 기술을 데이터 인프라에 적용한 것입니다. 프로젝트 관리, 엔지니어링, 생산을 자체 수행하고 설치·서비스 팀까지 직접 운영하기 때문에 차폐 경계와 도어, 필터, 인수 측정 성적서가 모두 한 곳에서 나옵니다.",
     companyImageAlt: "독일에 위치한 Frankonia Group 본사 및 생산 시설 항공 전경",
+    companyLink: "Frankonia 방문하기",
     companyGlanceTitle: "Frankonia가 지향하는 것",
     companyGlance: [
       ["글로벌 네트워크", "생산·영업·서비스 거점이 체계적으로 연결되어 전 세계에서 활동합니다."],
@@ -1093,8 +1057,7 @@ const copy = {
     contactTitle: "필요한 보호 경계를 함께 정의하겠습니다.",
     contactBody:
       "보호해야 할 자산과 프로젝트 정보를 알려주십시오. Frankonia 전문가가 검토한 후 이메일로 연락드립니다.",
-    contactPhoneLabel: "",
-    contactPhone: "",
+    contactEmail: "sales-cybershield@frankoniagroup.com",
     brochureLabel: "CyberShield 브로슈어 내려받기",
     brochureMeta: "PDF · 7.4 MB · 영문",
     labels: {
@@ -1107,8 +1070,8 @@ const copy = {
       stage: "프로젝트 단계",
       message: "프로젝트 요구사항",
       consent: "Frankonia가 문의 회신을 위해 이 정보를 사용하는 데 동의합니다.",
-      submitConsultation: "상담 이메일 작성",
-      submitQuote: "견적요청 이메일 작성",
+      submitConsultation: "상담 요청 보내기",
+      submitQuote: "견적 요청 보내기",
     },
     options: {
       newBuild: "신규 시설",
@@ -1120,7 +1083,12 @@ const copy = {
       urgent: "진행 중 / 긴급",
     },
     emailNote:
-      "제출하면 입력한 프로젝트 정보가 포함된 이메일 작성 화면이 열립니다. 이 웹사이트에는 양식 데이터가 저장되지 않습니다.",
+      "입력하신 내용은 암호화되어 Frankonia로 전송되며, 해당 지역 담당 영업 연락처로 전달됩니다. 그 외의 용도로는 사용되지 않습니다.",
+    formSending: "전송 중…",
+    formSent: "감사합니다 — 문의가 접수되었습니다. Frankonia 전문가가 이메일로 회신드립니다.",
+    formError: "요청을 보내지 못했습니다. 다시 시도하시거나 이메일로 보내주십시오.",
+    formErrorAction: "이메일로 보내기",
+    formHoneypot: "이 항목은 비워 두십시오",
     footer:
       "CyberShield는 높은 수준의 보증이 요구되는 엔지니어링 솔루션입니다. 성능, 적용 규격 및 인증 범위는 합의된 프로젝트 구성과 최종 검증 결과에 따라 결정됩니다.",
   },
@@ -1151,6 +1119,9 @@ const threatIcons = [
   </svg>,
 ];
 
+// Anchor standards per mission profile, index-aligned with `applications`.
+// Standard designations are proper nouns and stay in their original form; only
+// the label above them is translated.
 // Guaranteed attenuation per EN 50147-1 / IEEE 299. Frequency labels and the
 // decibel figures are language-independent; only the field type is translated.
 // The bar maps 80–125 dB onto the column height so the curve stays readable.
@@ -1173,11 +1144,15 @@ const barHeight = (db: number) => `${Math.round(((db - 80) / 45) * 100)}%`;
 // Document titles are proper nouns and stay in English; what each one supports
 // on this page is translated per locale as `evidenceUsedFor`.
 const evidenceSources = [
+  ["NDSS 2026", "Peering Inside the Black Box — long-range model architecture snooping via GPU electromagnetic side channels"],
+  ["arXiv 2603.02891", "Kraken — parameter extraction from NVIDIA Tensor Cores"],
   ["IEC 61000-2-9", "Electromagnetic compatibility — Part 2-9: Description of HEMP environment, radiated disturbance"],
   ["IEC 61000-4-36", "Electromagnetic compatibility — Part 4-36: IEMI immunity test methods for equipment and systems"],
   ["NCSC", "TEMPEST and electromagnetic security guidance"],
+  ["SL5 Standard v0.1", "Security Level 5 Standard for AI security — Section 3.9 SA-4, shielded rack enclosures in the weight enclave"],
+  ["RAND RRA2849-1", "Securing AI Model Weights — the SL1–SL5 security level framework"],
   ["NIST SP 800-53", "Security and Privacy Controls for Information Systems and Organizations — control PE-19, Information Leakage"],
-  ["CISA", "Resilient Power Best Practices for Critical Facilities and Sites"],
+  ["CISA", "EMP Protection and Resilience Guidelines for Critical Infrastructure, v2.2 — Level 4 protection"],
   ["EN 50600", "Information technology — Data centre facilities and infrastructures"],
 ] as const;
 
@@ -1227,7 +1202,7 @@ const ecosystemImages = ["structure", "access", "connectivity", "air", "validati
  *
  *  Subject placement decided the shortlist as much as subject did: the scrim
  *  is opaque ink to 44% of the band and only clears past 78%, so a frame only
- *  earns a place if what it shows sits right of centre. The first frame is the
+ *  earns a place if what it shows sits right of center. The first frame is the
  *  LCP image — it loads at high priority and is what a visitor sees at t=0. */
 const heroSlides = [
   { src: "/images/hero/hero-shielded-hall.webp" },
@@ -1236,7 +1211,7 @@ const heroSlides = [
   { src: "/images/hero/hero-power-filters.webp" },
 ];
 
-const navSectionIds = ["why", "solution", "verification", "ecosystem", "applications", "process"];
+const navSectionIds = ["why", "solution", "verification", "ecosystem", "applications", "process", "company"];
 
 export function Landing({ lang }: { lang: Lang }) {
   const [inquiry, setInquiry] = useState<Inquiry>("consultation");
@@ -1405,9 +1380,16 @@ export function Landing({ lang }: { lang: Lang }) {
     document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
   };
 
-  const submit = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
+  const [sendState, setSendState] = useState<SendState>("idle");
+  const [fallbackHref, setFallbackHref] = useState("");
+  // Bots submit instantly; the endpoint drops anything filled in faster than a
+  // person could plausibly type it.
+  const formOpenedAt = useRef(Date.now());
+
+  /** The mailto this form used to be. Kept as the escape hatch for when the
+   *  endpoint is unreachable, so a visitor is never left holding an inquiry
+   *  with nowhere to put it. */
+  const mailtoHref = (data: FormData) => {
     const subject =
       inquiry === "quote"
         ? "[CyberShield] Quote request"
@@ -1424,17 +1406,56 @@ export function Landing({ lang }: { lang: Lang }) {
       "Requirements:",
       String(data.get("message") || ""),
     ].join("\n");
-    window.location.href = `mailto:sales@frankoniagroup.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    return `mailto:${t.contactEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  };
+
+  const submit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    if (sendState === "sending") return;
+    const form = event.currentTarget;
+    const data = new FormData(form);
+    setFallbackHref(mailtoHref(data));
+    setSendState("sending");
+    try {
+      const response = await fetch(asset("/api/inquiry.php"), {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          request: inquiry,
+          lang,
+          name: data.get("name"),
+          company: data.get("company"),
+          email: data.get("email"),
+          country: data.get("country"),
+          project: data.get("project"),
+          stage: data.get("stage"),
+          message: data.get("message"),
+          consent: data.get("consent") === "on",
+          website: data.get("website"),
+          elapsed: (Date.now() - formOpenedAt.current) / 1000,
+        }),
+      });
+      const result = response.ok ? await response.json().catch(() => null) : null;
+      if (!result?.ok) throw new Error("rejected");
+      form.reset();
+      setInquiry("consultation");
+      setSendState("sent");
+    } catch {
+      setSendState("error");
+    }
   };
 
   const navLinks = (
     <>
+      {/* Listed in the order the sections now appear, so the scroll-spy
+          highlight only ever moves forward as the reader goes down. */}
       <a href="#why" onClick={() => setMenuOpen(false)}>{t.nav.threats}</a>
-      <a href="#solution" onClick={() => setMenuOpen(false)}>{t.nav.solution}</a>
       <a href="#verification" onClick={() => setMenuOpen(false)}>{t.nav.verification}</a>
+      <a href="#solution" onClick={() => setMenuOpen(false)}>{t.nav.solution}</a>
       <a href="#ecosystem" onClick={() => setMenuOpen(false)}>{t.nav.ecosystem}</a>
       <a href="#applications" onClick={() => setMenuOpen(false)}>{t.nav.applications}</a>
       <a href="#process" onClick={() => setMenuOpen(false)}>{t.nav.process}</a>
+      <a href="#company" onClick={() => setMenuOpen(false)}>{t.nav.company}</a>
     </>
   );
 
@@ -1552,6 +1573,18 @@ export function Landing({ lang }: { lang: Lang }) {
         </div>
       </section>
 
+      {/* The answer, stated once and compactly. The system and verification
+          sections below are the elaboration, not the reveal. */}
+      <section className="answer-section">
+        <div className="why-value">
+          <div>
+            <p className="eyebrow">{t.whyValueLabel}</p>
+            <h3>{t.whyValueTitle}</h3>
+          </div>
+          <p>{t.whyValueBody}</p>
+        </div>
+      </section>
+
       <div className="proof-strip">
         {t.proof.map((item, index) => <span key={item}><b>0{index + 1}</b>{item}</span>)}
       </div>
@@ -1591,6 +1624,20 @@ export function Landing({ lang }: { lang: Lang }) {
         </div>
       </section>
 
+      {/* The scope of the boundary, listed before the argument for it. Four
+          lines from the brochure; deliberately a list, not a set of cards. */}
+      <section className="cover-section" aria-labelledby="cover-title">
+        <div className="section-heading">
+          <p className="eyebrow">{t.coverEyebrow}</p>
+          <h2 id="cover-title">{t.coverTitle}</h2>
+        </div>
+        <ul className="cover-list">
+          {t.cover.map((item) => (
+            <li key={item}>{item}</li>
+          ))}
+        </ul>
+      </section>
+
       <section className="why-section" id="why">
         <div className="why-intro">
           <div>
@@ -1614,6 +1661,49 @@ export function Landing({ lang }: { lang: Lang }) {
         </div>
       </section>
 
+      <section className="verify-section" id="verification">
+        <div className="verify-content">
+          <p className="eyebrow">{t.verifyEyebrow}</p>
+          <h2>{t.verifyTitle}</h2>
+          <p className="lead">{t.verifyBody}</p>
+          <p className="standards-intro">{t.standardsIntro}</p>
+          <div className="standards-row">
+            {t.standards.map(([name, note]) => (
+              <div key={name}><strong>{name}</strong><span>{note}</span></div>
+            ))}
+          </div>
+          <p className="standards-intro">{t.regulatoryIntro}</p>
+          <div className="standards-row">
+            {t.regulatory.map(([name, note]) => (
+              <div key={name}><strong>{name}</strong><span>{note}</span></div>
+            ))}
+          </div>
+          <div className="evidence-row">
+            <strong>{t.evidenceTitle}</strong>
+            <p className="evidence-note">{t.evidenceNote}</p>
+            <ul className="evidence-list">
+              {evidenceSources.map(([reference, title], index) => (
+                <li key={reference}>
+                  <strong>{reference}</strong>
+                  <span>{title}</span>
+                  <em>{t.evidenceUsedFor[index]}</em>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+        <div className="verify-visual">
+          <img
+            src={asset("/images/technician-verification.webp")}
+            width={768}
+            height={1376}
+            loading="lazy"
+            decoding="async"
+            alt={t.alt.technician}
+          />
+        </div>
+      </section>
+
       <section className="threat-section section-dark" aria-labelledby="threat-title">
         <div className="section-heading">
           <p className="eyebrow">{t.threatEyebrow}</p>
@@ -1630,28 +1720,6 @@ export function Landing({ lang }: { lang: Lang }) {
               <div className="impact-tag"><span>{t.impactLabel}</span><strong>{impact}</strong></div>
             </article>
           ))}
-        </div>
-      </section>
-
-      {/* Peak of the argument: one question the reader answers for themselves. Kept deliberately bare. */}
-      <section className="audit-section" aria-labelledby="audit-title">
-        <div className="audit-inner">
-          <span className="audit-rule" aria-hidden="true" />
-          <h2 id="audit-title">{t.auditTitle}</h2>
-          <p>{t.auditBody}</p>
-          <a className="audit-link" href="#verification">{t.auditLink}<span>↓</span></a>
-        </div>
-      </section>
-
-      {/* The answer, stated once and compactly. The system and verification
-          sections below are the elaboration, not the reveal. */}
-      <section className="answer-section">
-        <div className="why-value">
-          <div>
-            <p className="eyebrow">{t.whyValueLabel}</p>
-            <h3>{t.whyValueTitle}</h3>
-          </div>
-          <p>{t.whyValueBody}</p>
         </div>
       </section>
 
@@ -1690,41 +1758,33 @@ export function Landing({ lang }: { lang: Lang }) {
         <CutawayMap lang={lang} alt={t.cutawayAlt} hint={t.cutawayHint} />
       </section>
 
-      <section className="verify-section" id="verification">
-        <div className="verify-content">
-          <p className="eyebrow">{t.verifyEyebrow}</p>
-          <h2>{t.verifyTitle}</h2>
-          <p className="lead">{t.verifyBody}</p>
-          <p className="standards-intro">{t.standardsIntro}</p>
-          <div className="standards-row">
-            {t.standards.map(([name, note]) => (
-              <div key={name}><strong>{name}</strong><span>{note}</span></div>
-            ))}
-          </div>
-          <div className="evidence-row">
-            <strong>{t.evidenceTitle}</strong>
-            <p className="evidence-note">{t.evidenceNote}</p>
-            <ul className="evidence-list">
-              {evidenceSources.map(([reference, title], index) => (
-                <li key={reference}>
-                  <strong>{reference}</strong>
-                  <span>{title}</span>
-                  <em>{t.evidenceUsedFor[index]}</em>
-                </li>
-              ))}
-            </ul>
-          </div>
+      <section className="scenario-section">
+        <div className="section-heading light">
+          <p className="eyebrow">{t.scenarioEyebrow}</p>
+          <h2>{t.scenarioTitle}</h2>
         </div>
-        <div className="verify-visual">
-          <img
-            src={asset("/images/technician-verification.webp")}
-            width={768}
-            height={1376}
-            loading="lazy"
-            decoding="async"
-            alt={t.alt.technician}
-          />
+        <div className="scenario-grid">
+          {t.scenarios.map(([tag, title, challenge, approach, outcome]) => (
+            <article key={title}>
+              <p className="scenario-tag">{tag}</p>
+              <h3>{title}</h3>
+              <div><span>{t.scenarioLabels.challenge}</span><p>{challenge}</p></div>
+              <div><span>{t.scenarioLabels.approach}</span><p>{approach}</p></div>
+              <div className="scenario-outcome"><span>{t.scenarioLabels.outcome}</span><p>{outcome}</p></div>
+            </article>
+          ))}
         </div>
+        <p className="scenario-note">
+          {t.scenarioNote}
+          <a
+            className="outbound"
+            href="https://frankonia-solutions.com/anechoic-chambers/references_anechoic-chambers/"
+            target="_blank"
+            rel="noreferrer"
+          >
+            {t.scenarioLink}<span aria-hidden="true">↗</span>
+          </a>
+        </p>
       </section>
 
       <section className="attenuation-section section-dark" id="attenuation" aria-labelledby="attenuation-title">
@@ -1792,31 +1852,6 @@ export function Landing({ lang }: { lang: Lang }) {
         </p>
       </section>
 
-      <section className="compare-section" aria-labelledby="compare-title">
-        <div className="section-heading light">
-          <p className="eyebrow">{t.compareEyebrow}</p>
-          <h2 id="compare-title">{t.compareTitle}</h2>
-          <p>{t.compareBody}</p>
-        </div>
-        <div className="table-scroll" role="region" tabIndex={0} aria-label={t.compareTitle}>
-          <table className="compare-table">
-            <caption className="visually-hidden">{t.compareBody}</caption>
-            <thead>
-              <tr>{t.compareHead.map((label) => <th key={label} scope="col">{label}</th>)}</tr>
-            </thead>
-            <tbody>
-              {t.compareRows.map(([criterion, standard, advantage]) => (
-                <tr className="compare-row" key={criterion}>
-                  <th scope="row">{criterion}</th>
-                  <td className="standard">{standard}</td>
-                  <td className="advantage">{advantage}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </section>
-
       <section className="applications-section" id="applications">
         <div className="section-heading light">
           <p className="eyebrow">{t.applicationsEyebrow}</p>
@@ -1829,39 +1864,16 @@ export function Landing({ lang }: { lang: Lang }) {
               <p className="audience">{audience}</p>
               <h3>{title}</h3>
               <p>{body}</p>
-              <button onClick={() => goContact("consultation")}>{t.consultation}</button>
             </article>
           ))}
         </div>
-      </section>
-
-      <section className="scenario-section">
-        <div className="section-heading light">
-          <p className="eyebrow">{t.scenarioEyebrow}</p>
-          <h2>{t.scenarioTitle}</h2>
+        {/* One call to action for the section, not one per profile: four
+            identical buttons in a row read as a pricing table, not a choice. */}
+        <div className="applications-cta">
+          <button className="button" onClick={() => goContact("consultation")}>
+            {t.consultation}<span>↗</span>
+          </button>
         </div>
-        <div className="scenario-grid">
-          {t.scenarios.map(([tag, title, challenge, approach, outcome]) => (
-            <article key={title}>
-              <p className="scenario-tag">{tag}</p>
-              <h3>{title}</h3>
-              <div><span>{t.scenarioLabels.challenge}</span><p>{challenge}</p></div>
-              <div><span>{t.scenarioLabels.approach}</span><p>{approach}</p></div>
-              <div className="scenario-outcome"><span>{t.scenarioLabels.outcome}</span><p>{outcome}</p></div>
-            </article>
-          ))}
-        </div>
-        <p className="scenario-note">
-          {t.scenarioNote}
-          <a
-            className="outbound"
-            href="https://frankonia-solutions.com/anechoic-chambers/references_anechoic-chambers/"
-            target="_blank"
-            rel="noreferrer"
-          >
-            {t.scenarioLink}<span aria-hidden="true">↗</span>
-          </a>
-        </p>
       </section>
 
       <section className="lifecycle-section" id="process">
@@ -1926,6 +1938,17 @@ export function Landing({ lang }: { lang: Lang }) {
             <p className="eyebrow">{t.companyEyebrow}</p>
             <h2 id="company-title">{t.companyTitle}</h2>
             <p>{t.companyBody}</p>
+            {/* The group site is the proof behind the paragraph above: the
+                reader who wants to check who Frankonia is leaves from here,
+                in a new tab so the page they are reading survives it. */}
+            <a
+              className="text-link company-link"
+              href="https://www.frankonia-korea.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {t.companyLink}<span>↗</span>
+            </a>
           </div>
           <img
             className="company-banner"
@@ -1979,13 +2002,10 @@ export function Landing({ lang }: { lang: Lang }) {
           <p className="eyebrow">{t.contactEyebrow}</p>
           <h2>{t.contactTitle}</h2>
           <p>{t.contactBody}</p>
-          <a href="mailto:sales@frankoniagroup.com">sales@frankoniagroup.com</a>
-          {t.contactPhone && (
-            <a className="contact-phone" href={`tel:${t.contactPhone.replace(/[^+\d]/g, "")}`}>
-              <small>{t.contactPhoneLabel}</small>
-              {t.contactPhone}
-            </a>
-          )}
+          {/* No e-mail address and no phone number here by request: the form is
+              the only route in, so every enquiry arrives already qualified.
+              `contactEmail` still backs the mailto fallback shown if the form
+              endpoint is unreachable — it is never rendered as an address. */}
           {/* Wrapped rather than left as a bare child: `.contact-intro > a`
               owns the underlined e-mail treatment, which this must not take. */}
           <div className="brochure">
@@ -2004,7 +2024,7 @@ export function Landing({ lang }: { lang: Lang }) {
             <p className="brochure-meta">{t.brochureMeta}</p>
           </div>
         </div>
-        <form onSubmit={submit}>
+        <form onSubmit={submit} action={asset("/api/inquiry.php")} method="post">
           <fieldset className="request-toggle">
             <legend>{t.labels.type}</legend>
             <label className={inquiry === "consultation" ? "selected" : ""}>
@@ -2035,10 +2055,26 @@ export function Landing({ lang }: { lang: Lang }) {
             </label>
             <label className="full">{t.labels.message}<textarea required name="message" rows={5} /></label>
           </div>
-          <label className="consent"><input type="checkbox" required /> <span>{t.labels.consent}</span></label>
-          <button className="button submit" type="submit">
-            {inquiry === "quote" ? t.labels.submitQuote : t.labels.submitConsultation}<span>↗</span>
+          <label className="consent"><input type="checkbox" name="consent" required /> <span>{t.labels.consent}</span></label>
+          {/* Honeypot. Moved off-screen rather than display:none, because
+              headless browsers routinely skip fields they cannot see. */}
+          <div className="honeypot" aria-hidden="true">
+            <label>{t.formHoneypot}<input type="text" name="website" tabIndex={-1} autoComplete="off" /></label>
+          </div>
+          <button className="button submit" type="submit" disabled={sendState === "sending" || sendState === "sent"}>
+            {sendState === "sending"
+              ? t.formSending
+              : inquiry === "quote" ? t.labels.submitQuote : t.labels.submitConsultation}
+            <span>↗</span>
           </button>
+          <p className="form-status" role="status" aria-live="polite">
+            {sendState === "sent" && <span className="form-status-ok">{t.formSent}</span>}
+            {sendState === "error" && (
+              <span className="form-status-error">
+                {t.formError} <a href={fallbackHref}>{t.formErrorAction}</a>
+              </span>
+            )}
+          </p>
           <p className="email-note">{t.emailNote}</p>
         </form>
       </section>

@@ -4,9 +4,9 @@ import { asset, isIndexable, langPath, route, siteOrigin } from "./site-config";
 
 const content = {
   en: {
-    title: "Frankonia CyberShield | RF Shielded Rooms for Data Centres",
+    title: "Frankonia CyberShield | RF Shielded Rooms for Data Centers",
     description:
-      "Modular RF shielding for AI data centre builds. Up to 120 dB attenuation from 10 kHz to 40 GHz, measured on site to EN 50147-1.",
+      "Modular RF shielding for AI data center builds. Up to 120 dB attenuation from 10 kHz to 40 GHz, measured on site to EN 50147-1.",
   },
   de: {
     title: "Frankonia CyberShield | HF-Abschirmung für Rechenzentren",

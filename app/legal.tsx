@@ -14,7 +14,7 @@ export const company = {
   phone: "+49 9177 98-500",
   fax: "+49 9177 98-520",
   email: "info@frankoniagroup.com",
-  salesEmail: "sales@frankoniagroup.com",
+  salesEmail: "sales-cybershield@frankoniagroup.com",
   website: "frankonia-solutions.com",
   directors: "Wolfgang Opitz, Dr. Daniel Feyerlein",
   registerCourt: "Amtsgericht Nürnberg",

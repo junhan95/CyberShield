@@ -27,7 +27,7 @@ export const hotspots: Hotspot[] = [
       ko: "모듈형 사전제작 PAN 구조",
     },
     detail: {
-      en: "2.0 mm galvanised steel panels bolted every 75 mm, above 100 dB from 10 kHz to 40 GHz.",
+      en: "2.0 mm galvanized steel panels bolted every 75 mm, above 100 dB from 10 kHz to 40 GHz.",
       de: "2,0 mm verzinkte Stahlpaneele, alle 75 mm verschraubt, über 100 dB von 10 kHz bis 40 GHz.",
       ko: "2.0 mm 아연도금 강판을 75 mm 간격으로 체결. 10 kHz~40 GHz에서 100 dB 이상.",
     },
@@ -53,7 +53,7 @@ export const hotspots: Hotspot[] = [
       ko: "GFRP 절연 그리드",
     },
     detail: {
-      en: "Glass-fibre grid isolating the floor build-up from the shielding envelope.",
+      en: "Glass-fiber grid isolating the floor build-up from the shielding envelope.",
       de: "Glasfasergitter, das den Bodenaufbau von der Schirmhülle trennt.",
       ko: "유리섬유 그리드로 바닥 구조와 차폐 외피를 절연합니다.",
     },
@@ -191,7 +191,7 @@ export const hotspots: Hotspot[] = [
   {
     id: "access-control", group: "services", x: 35.65, y: 31.64,
     title: {
-      en: "Access control and signalling",
+      en: "Access control and signaling",
       de: "Zutrittskontrolle und Meldetechnik",
       ko: "출입통제·신호 전송",
     },
@@ -222,7 +222,7 @@ export const hotspots: Hotspot[] = [
       ko: "내부 전기 설비",
     },
     detail: {
-      en: "Power, data and fibre optics installed inside the shielded envelope.",
+      en: "Power, data and fiber optics installed inside the shielded envelope.",
       de: "Strom, Daten und Lichtwellenleiter werden innerhalb der Schirmhülle verlegt.",
       ko: "전원·데이터·광케이블을 차폐 외피 안쪽에 설치합니다.",
     },

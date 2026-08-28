@@ -8,7 +8,7 @@ export const viewport: Viewport = siteViewport;
 export const metadata: Metadata = {
   title: "Privacy Policy | Frankonia CyberShield",
   description:
-    "How Frankonia handles personal data in connection with the CyberShield website and enquiries.",
+    "How Frankonia handles personal data in connection with the CyberShield website and inquiries.",
   icons: {
     icon: [
       { url: asset("/favicon.svg"), type: "image/svg+xml" },
@@ -26,7 +26,7 @@ export default function Privacy() {
     <LegalPage
       title="Privacy Policy"
       intro="This policy explains what personal data is processed in connection with this website, on what legal basis, and what rights you have."
-      updated="3 August 2026"
+      updated="26 August 2026"
     >
       <section>
         <h2>1. Controller</h2>
@@ -37,7 +37,7 @@ export default function Privacy() {
         </p>
         <p>
           The group data protection officer is {company.dpoName}, reachable at {company.dpoEmail} or
-          by post at the address above. Please direct data protection enquiries there.
+          by post at the address above. Please direct data protection inquiries there.
         </p>
       </section>
 
@@ -68,29 +68,37 @@ export default function Privacy() {
       <section>
         <h2>4. Web fonts</h2>
         <p>
-          Typefaces used on this site are loaded from Google Fonts, a service provided by Google
-          Ireland Limited. When a page loads, your browser connects to Google servers, which means
-          your IP address is transmitted to Google and may be processed on servers outside the
-          European Economic Area. The legal basis is Art. 6(1)(f) GDPR — our legitimate interest in
-          a consistent presentation of the site. If you prefer to avoid this transfer, the fonts can
-          be self-hosted on request.
+          Typefaces used on this site are hosted on our own infrastructure and served with the
+          rest of the page. Your browser makes no connection to Google Fonts or to any other
+          external font provider, and no IP address is transmitted to a third party in order to
+          display this site&rsquo;s typography.
         </p>
       </section>
 
       <section>
-        <h2>5. Contact form and enquiries</h2>
+        <h2>5. Contact form and inquiries</h2>
         <p>
-          The enquiry form on this website does not transmit or store any data on our servers.
-          Submitting the form opens your own e-mail application with the details you entered
-          pre-filled, so that you can review and send the message yourself. No form data is
-          collected by this website.
+          When you submit the inquiry form, the details you entered — your name, company, e-mail
+          address, country, project type, project stage and the requirements you describe — are
+          transmitted over an encrypted connection to this website&rsquo;s own server and forwarded
+          by e-mail to the Frankonia sales contact responsible for your region. Inquiries submitted
+          from the Korean version of the site go to Frankonia Korea EMC Solutions. The form sets no
+          cookies, and the submission is not passed to any third-party form or marketing service.
+        </p>
+        <p>
+          Ticking the consent box is what permits us to use these details to answer you. To limit
+          automated abuse, the server briefly keeps a one-way hash of the e-mail address used, so
+          that the same address cannot submit the form more than five times an hour; the hash is not
+          reversible, is not linked to any other data, and expires within the hour. Your IP address
+          is not stored with the inquiry. If the submission cannot be delivered, the page offers to
+          open your own e-mail application instead, in which case nothing reaches our server.
         </p>
         <p>
           Once you send us an e-mail, we process the data it contains — typically your name, company,
           e-mail address, country and the project details you describe — in order to respond to your
-          enquiry. The legal basis is Art. 6(1)(b) GDPR where the enquiry relates to a contract or
+          inquiry. The legal basis is Art. 6(1)(b) GDPR where the inquiry relates to a contract or
           pre-contractual steps, and otherwise Art. 6(1)(f) GDPR. Correspondence is deleted once
-          your enquiry has been dealt with and no further processing is required, unless commercial
+          your inquiry has been dealt with and no further processing is required, unless commercial
           or tax retention obligations require us to keep it for longer.
         </p>
       </section>
@@ -99,7 +107,7 @@ export default function Privacy() {
         <h2>6. Recipients and transfers</h2>
         <p>
           Personal data is disclosed only where it is necessary to operate this website or respond
-          to your enquiry — for example to our hosting provider, which acts as a processor under a
+          to your inquiry — for example to our hosting provider, which acts as a processor under a
           data processing agreement, or to affiliated Frankonia companies where they are responsible
           for your region. Data is not sold and is not passed on for advertising purposes.
         </p>
@@ -130,8 +138,8 @@ export default function Privacy() {
         <h2>8. Security</h2>
         <p>
           This website is delivered over an encrypted TLS connection. We maintain technical and
-          organisational measures appropriate to the risk to protect data against loss, misuse and
-          unauthorised access.
+          organizational measures appropriate to the risk to protect data against loss, misuse and
+          unauthorized access.
         </p>
       </section>
 

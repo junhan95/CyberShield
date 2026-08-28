@@ -1,4 +1,21 @@
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=Jost:wght@400;500;700&family=Noto+Sans+KR:wght@300;400;700;800&display=swap");
+/* Self-hosted, not fonts.googleapis.com. Loading the faces from Google's CDN
+   sends every visitor's IP address to Google before a byte of the page is
+   painted, which a German court found unlawful without consent (LG München I,
+   3 O 17493/20). The group site does not do it either. @fontsource ships the
+   same Google-licensed files, already split by unicode-range — the Latin
+   subsets carry the page and the Korean subsets are only fetched on /ko. */
+@import "@fontsource/inter/latin-300.css";
+@import "@fontsource/inter/latin-400.css";
+@import "@fontsource/inter/latin-600.css";
+@import "@fontsource/inter/latin-700.css";
+@import "@fontsource/inter/latin-800.css";
+@import "@fontsource/jost/latin-400.css";
+@import "@fontsource/jost/latin-500.css";
+@import "@fontsource/jost/latin-700.css";
+@import "@fontsource/noto-sans-kr/korean-300.css";
+@import "@fontsource/noto-sans-kr/korean-400.css";
+@import "@fontsource/noto-sans-kr/korean-700.css";
+@import "@fontsource/noto-sans-kr/korean-800.css";
 @import "tailwindcss";
 
 :root {
@@ -47,7 +64,7 @@ img { display: block; max-width: 100%; }
 /* The bar was `--ink` from the first release. It is `--canvas` now, for the
    same reason frankonia-korea.com's is: "align it more with the existing
    Frankonia homepage and the light colours. No red on black please."
-   frankonia-solutions.com's own bar is #fff with grey links and one red pill,
+   frankonia-solutions.com's own bar is #fff with gray links and one red pill,
    and the group site this one sits beside made the same move — a CyberShield
    page opening under a black bar read as a different company's site.
 
@@ -94,13 +111,13 @@ img { display: block; max-width: 100%; }
 }
 .site-header .brand-product { border-left-color: var(--line); color: var(--ink); }
 .nav-desktop { display: flex; align-items: center; gap: 30px; margin-left: auto; }
-/* `--body-dark`, not `--body-text`: the site's running grey is 4.06:1 on paper
+/* `--body-dark`, not `--body-text`: the site's running gray is 4.06:1 on paper
    and a 15px regular label may not use it. This is 7.6:1, and near enough the
    #666 the head office sets its own nav links in. The underline is the group
    site's signature — a primary rule that wipes in from the left rather than a
    border that appears all at once. On ink the same red would have been 3.08:1;
    on paper it is 5.11:1, so the accent moves from failing AA to clearing it. */
-.nav-desktop a { position: relative; color: var(--body-dark); font-size: 15px; font-weight: 400; padding: 6px 2px 8px; }
+.nav-desktop a { position: relative; color: var(--body-dark); font-size: 15px; font-weight: 400; padding: 6px 2px 8px; white-space: nowrap; }
 .nav-desktop a::after {
   content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 2px;
   background: var(--primary); transform: scaleX(0); transform-origin: 0 50%;
@@ -111,7 +128,7 @@ img { display: block; max-width: 100%; }
    the bar always marks where the reader is. It was `#fff`, which was the right
    answer for exactly as long as the band behind it was ink: on paper the label
    disappeared and the marked item read as a red rule with nothing above it.
-   Ink, the same colour hover resolves to — the underline is what distinguishes
+   Ink, the same color hover resolves to — the underline is what distinguishes
    the two, and it is the section marker either way. */
 .nav-desktop a:hover, .nav-desktop a.active { color: var(--ink); }
 .nav-desktop a:hover::after, .nav-desktop a.active::after { transform: scaleX(1); }
@@ -188,7 +205,7 @@ img { display: block; max-width: 100%; }
    cover of the landing page more aligned with the Frankonia homepage".
    frankonia-solutions.com opens on white, and a black cover under a black bar
    was the single largest way this page did not look like the group's. Red on
-   black is a warning colour; red on white is an accent.
+   black is a warning color; red on white is an accent.
 
    The paper stays underneath the photographs rather than being replaced by
    them, so the band still reads as itself if an image is slow or missing.
@@ -197,7 +214,7 @@ img { display: block; max-width: 100%; }
    reach the viewport edges while the copy stays inset. */
 .hero { position: relative; padding: 0 4vw; overflow: hidden; background: var(--canvas); color: var(--ink); }
 .hero-media { position: absolute; inset: 0; z-index: 0; }
-/* `object-position` sits above centre on every frame: what is worth seeing is
+/* `object-position` sits above center on every frame: what is worth seeing is
    the shielded envelope and the ceiling services, and centring would put bare
    floor behind the headline. */
 .hero-shot {
@@ -385,7 +402,7 @@ h1 {
    the Dark Red plate measures 3.4. It is also the red the lockup a few
    centimetres above it is now set in — they were two reds, and are one. */
 h1 span { color: var(--primary-deep); }
-/* --body-dark, not --body-text: at 20px regular the lighter grey is 4.06:1 on
+/* --body-dark, not --body-text: at 20px regular the lighter gray is 4.06:1 on
    paper, and 20px is not large text. */
 .hero-body { max-width: 600px; color: var(--body-dark); font-size: 20px; line-height: 1.5; }
 .hero-actions { display: flex; align-items: center; gap: 14px; margin-top: 38px; flex-wrap: wrap; }
@@ -393,7 +410,7 @@ h1 span { color: var(--primary-deep); }
    render it — the hero actions and the legal pages' Back link, which sits in
    the header — are paper now; a white border on white is nothing. Same
    geometry, drawn on a light surface: a --mute hairline that takes the brand
-   colour on hover rather than a fill that inverts.
+   color on hover rather than a fill that inverts.
 
    The fill is not decoration. In the hero this pill sits where the wash has
    thinned to about 72%, and a --mute hairline over a lit ceiling at that
@@ -425,7 +442,7 @@ h1 span { color: var(--primary-deep); }
 
 /* ── Belief: the practice we reject, beside the one we hold.
    Two columns, deliberately unequal in weight — the status quo
-   is set back in muted grey, the belief carries the red rule. ── */
+   is set back in muted gray, the belief carries the red rule. ── */
 .belief-section { padding: 110px max(4vw, calc((100% - 1400px) / 2)); background: var(--canvas-soft); }
 .belief-section .section-heading { margin-bottom: 52px; }
 .belief-grid { display: grid; grid-template-columns: 1fr 1fr; border-top: 1px solid var(--line); }
@@ -453,8 +470,16 @@ h1 span { color: var(--primary-deep); }
 .why-intro { display: grid; grid-template-columns: 1.35fr .65fr; gap: 6vw; align-items: end; }
 .why-intro h2 { margin-bottom: 26px; font-size: clamp(34px, 3.6vw, 48px); line-height: 1.1; letter-spacing: 0; font-weight: 300; }
 .why-intro .lead { max-width: 760px; margin-bottom: 0; color: var(--body-text); font-size: 18px; line-height: 1.6; }
-.why-metric { padding: 5px 0 4px 30px; border-left: 3px solid var(--primary); }
-.why-metric strong { display: block; color: var(--primary); font-size: clamp(70px, 8vw, 126px); line-height: .9; letter-spacing: -1px; font-weight: 800; }
+/* The figure sits in the narrow right column of `.why-intro`, and that column
+   gets *narrower* as the viewport grows: the content band caps at 1400px while
+   the 6vw gutter keeps widening. So `8vw` sized the number against the one axis
+   that moves the wrong way, and "−120 dB" — nearly twice the width of the "0 dB"
+   it replaced — broke to a second line. `cqw` sizes it against the column it
+   actually has to fit in, at every width, in one and two column layout alike.
+   The vw clamp above it is the fallback for browsers without container units. */
+.why-metric { container-type: inline-size; padding: 5px 0 4px 30px; border-left: 3px solid var(--primary); }
+.why-metric strong { display: block; color: var(--primary); font-size: clamp(56px, 6vw, 92px); line-height: .9; letter-spacing: -1px; font-weight: 800; white-space: nowrap; }
+.why-metric strong { font-size: clamp(56px, 22cqw, 92px); }
 .why-metric > span { display: block; max-width: 360px; margin-top: 24px; font-size: 16px; line-height: 1.5; font-weight: 700; }
 .asset-grid { margin: 72px 0 0; display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1px solid var(--ink); }
 .asset-grid article { min-height: 235px; padding: 24px 30px 25px 0; margin-right: 30px; border-right: 1px solid var(--line); }
@@ -473,11 +498,32 @@ h1 span { color: var(--primary-deep); }
 .why-value h3 { margin: 0; font-size: clamp(22px, 2.1vw, 28px); line-height: 1.25; font-weight: 300; }
 .why-value > p { margin: 0; color: var(--body-text); font-size: 15.5px; line-height: 1.7; }
 
-/* ── Answer: the whole proposition in one card, sitting where the
-   audit question leaves the reader waiting for it. Everything below
-   elaborates this — nothing below reveals it. ─────────────── */
-.answer-section { padding: 0 max(4vw, calc((100% - 1400px) / 2)) 120px; background: var(--canvas); }
+/* ── Answer: the whole proposition in one card. It opens the page now,
+   directly under the hero — "what CyberShield adds", before any argument
+   for why it is needed. Everything below elaborates this.
+   The top padding is real: this used to inherit the bottom of the audit
+   section above it, and 0 would collide with the hero. ────────── */
+.answer-section { padding: 96px max(4vw, calc((100% - 1400px) / 2)) 110px; background: var(--canvas); }
 .answer-section .why-value { margin-top: 0; }
+
+/* ── What the boundary has to cover: a plain enumeration between the
+   three environments and the argument. Two columns of hanging red
+   markers — a list, deliberately not another set of cards. ────── */
+.cover-section { padding: 100px max(4vw, calc((100% - 1400px) / 2)); background: var(--canvas-soft); }
+.cover-list {
+  display: grid; grid-template-columns: repeat(2, 1fr);
+  gap: 0 60px; margin: 0; padding: 0; list-style: none;
+  border-top: 1px solid var(--ink);
+}
+.cover-list li {
+  position: relative; padding: 22px 0 22px 30px;
+  border-bottom: 1px solid var(--line);
+  color: var(--ink); font-size: 18px; line-height: 1.5; font-weight: 700;
+}
+.cover-list li::before {
+  content: ""; position: absolute; left: 0; top: 31px;
+  width: 14px; height: 2px; background: var(--primary);
+}
 
 /* ── Threat band: ink polarity flip ───────────────────── */
 .section-dark { background: var(--ink); color: white; }
@@ -498,19 +544,6 @@ h1 span { color: var(--primary-deep); }
 .impact-tag { margin-top: 27px; padding-top: 14px; border-top: 1px solid rgba(255, 255, 255, .15); }
 .impact-tag span { display: block; margin-bottom: 6px; color: rgba(255, 255, 255, .45); font-size: 12px; text-transform: uppercase; letter-spacing: .5px; font-weight: 600; }
 .impact-tag strong { color: white; font-size: 14px; font-weight: 700; }
-
-/* ── Audit: the one question the reader answers themselves.
-   Stark white after the dark threat band — the pause is the point,
-   so nothing else is allowed on screen with it. ────────── */
-.audit-section { padding: 130px max(4vw, calc((100% - 1400px) / 2)) 64px; background: var(--canvas); text-align: center; }
-.audit-inner { max-width: 940px; margin: 0 auto; }
-.audit-rule { display: block; width: 44px; height: 3px; margin: 0 auto 38px; background: var(--primary); }
-.audit-section h2 { margin: 0 0 26px; font-size: clamp(32px, 4vw, 54px); line-height: 1.12; font-weight: 300; letter-spacing: 0; }
-.audit-section p { max-width: 720px; margin: 0 auto 34px; color: var(--body-text); font-size: 18px; line-height: 1.65; }
-.audit-link { display: inline-flex; gap: 10px; align-items: center; padding-bottom: 4px; border-bottom: 1px solid var(--mute); color: var(--ink); font-size: 15px; font-weight: 700; }
-.audit-link:hover { border-bottom-color: var(--primary); color: var(--primary); }
-.audit-link span { transition: transform .25s ease; }
-.audit-link:hover span { transform: translateY(3px); }
 
 .evidence-row { margin: 30px 0 0; padding-top: 18px; border-top: 1px solid var(--line); color: var(--body-text); font-size: 13px; }
 .evidence-row strong { display: block; color: var(--ink); text-transform: uppercase; letter-spacing: .5px; font-size: 12px; font-weight: 600; }
@@ -615,23 +648,8 @@ h1 span { color: var(--primary-deep); }
 .cutaway-group button.is-pinned { background: rgba(255, 255, 255, .13); color: #fff; box-shadow: inset 2px 0 0 var(--primary); }
 .cutaway-group button.is-on b { color: var(--primary); }
 
-/* ── Comparison table: soft canvas, red advantage rail ── */
-.compare-section { padding: 120px max(4vw, calc((100% - 1400px) / 2)); background: var(--canvas-soft); }
 .table-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
 .table-scroll:focus-visible { outline: 2px solid var(--primary); outline-offset: 3px; }
-.compare-table { width: 100%; min-width: 720px; border-collapse: collapse; border-top: 1px solid var(--ink); table-layout: fixed; }
-.compare-table thead th {
-  padding: 14px 34px 14px 0; border-bottom: 1px solid var(--line); text-align: left;
-  color: var(--body-text); font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: .5px;
-}
-.compare-table thead th:last-child { color: var(--primary); padding-right: 0; }
-.compare-table th:first-child { width: 26%; }
-.compare-table th:nth-child(2) { width: 31%; }
-.compare-row > * { padding: 26px 34px 26px 0; border-bottom: 1px solid var(--line); vertical-align: top; text-align: left; }
-.compare-row th { font-size: 18px; font-weight: 700; color: var(--ink); }
-.compare-row .standard { color: var(--body-text); font-size: 15px; line-height: 1.55; }
-.compare-row .advantage { padding-left: 22px; padding-right: 0; border-left: 2px solid var(--primary); font-size: 15px; line-height: 1.55; font-weight: 700; }
-
 /* ── Product ecosystem: soft tier cards ───────────────── */
 .ecosystem-section { padding: 120px max(4vw, calc((100% - 1400px) / 2)); background: var(--canvas); }
 .ecosystem-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
@@ -698,14 +716,10 @@ h1 span { color: var(--primary-deep); }
 .application-top b { font-size: 18px; }
 .audience { margin: 48px 0 12px; color: var(--primary); font-size: 12px; text-transform: uppercase; letter-spacing: .5px; font-weight: 600; }
 .application-grid h3 { min-height: 54px; font-size: 22px; line-height: 1.2; font-weight: 700; }
-.application-grid article > p:not(.audience) { min-height: 72px; margin-bottom: 24px; color: var(--body-text); font-size: 15px; line-height: 1.55; }
-.application-grid button {
-  border: 1px solid var(--primary); border-radius: var(--pill);
-  padding: 9px 20px; background: transparent;
-  color: var(--primary); font-size: 15px; font-weight: 400; cursor: pointer;
-  transition: background .2s, color .2s;
-}
-.application-grid button:hover { background: var(--primary); color: #fff; }
+/* No bottom margin reserved for a button any more — the four per-card CTAs
+   collapsed into one for the section, below. */
+.application-grid article > p:not(.audience) { min-height: 72px; margin-bottom: 0; color: var(--body-text); font-size: 15px; line-height: 1.55; }
+.applications-cta { margin-top: 46px; padding-top: 34px; border-top: 1px solid var(--line); }
 
 /* ── Scenario cards: canvas-soft tier cards ───────────── */
 .scenario-section { padding: 120px max(4vw, calc((100% - 1400px) / 2)); background: var(--canvas); }
@@ -761,11 +775,14 @@ h1 span { color: var(--primary-deep); }
 /* --body-text on the soft canvas only reaches 3.6:1. This band carries the most
    prose of any section, so its running text is darkened to 7.6:1. */
 .company-section .section-heading > p:last-child { color: var(--body-dark); }
-/* Heading left, campus photo right; the photo centres against the copy so the
+/* Heading left, campus photo right; the photo centers against the copy so the
    two columns read as one block whatever the locale does to the text length. */
 .company-intro { display: grid; grid-template-columns: 1fr 1fr; gap: 4vw; align-items: center; }
 .company-intro .section-heading { max-width: none; margin-bottom: 0; }
 .company-banner { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; border-radius: var(--radius); }
+/* Sits under the paragraph rather than in the heading block, so the pill
+   keeps its own breathing room without stretching the grid row. */
+.company-link { margin-top: 32px; }
 .company-glance { margin: 64px 0 58px; padding-top: 26px; border-top: 1px solid var(--mute); }
 .company-glance > h3 {
   margin: 0 0 22px;
@@ -819,12 +836,10 @@ h1 span { color: var(--primary-deep); }
    this eyebrow is 15px ExtraBold — not large text, so the floor is 4.5 and it
    misses by 0.2. The Dark Red plate returns 5.42 on the same field. */
 .contact-intro .eyebrow { color: var(--primary-deep); }
-/* --body-dark, not --body-text: the running grey is only 3.6:1 on the soft
+/* --body-dark, not --body-text: the running gray is only 3.6:1 on the soft
    band. This is 7.6. */
 .contact-intro > p:nth-of-type(2) { max-width: 520px; color: var(--body-dark); font-size: 18px; line-height: 1.6; }
 .contact-intro > a { display: inline-block; margin-top: 25px; padding-bottom: 6px; border-bottom: 1px solid var(--mute); font-size: 16px; font-weight: 700; }
-.contact-phone { display: block; font-size: 22px; letter-spacing: -.01em; }
-.contact-phone small { display: block; margin-bottom: 6px; color: var(--body-dark); font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: .5px; }
 
 /* Brochure download, under the e-mail address. Outlined rather than solid: the
    filled submit button is the primary action here and this should read as the
@@ -906,7 +921,7 @@ footer > div:last-child { display: flex; justify-content: flex-end; align-items:
 footer a:hover { color: #fff; }
 
 /* ── Interaction layer ───────────────────────────────────
-   Brand rule: depth comes from colour and surface contrast,
+   Brand rule: depth comes from color and surface contrast,
    never from drop shadows. Motion stays short and linear. */
 
 .scroll-progress { position: absolute; left: 0; right: 0; bottom: -1px; height: 3px; overflow: hidden; }
@@ -980,12 +995,6 @@ input:focus-visible, select:focus-visible, textarea:focus-visible {
 .feature-list h3, .step-list h3 { transition: color .25s ease; }
 .feature-list article:hover h3, .step-list article:hover h3 { color: var(--primary); }
 
-/* Comparison and scope rows follow the same row-shift language */
-.compare-row, .scope-list tbody tr { transition: background .25s ease; }
-.compare-row:hover { background: var(--canvas); }
-.scope-list tbody tr:hover { background: var(--canvas-soft); }
-.compare-row th, .scope-list tbody th { transition: color .25s ease; }
-.compare-row:hover th, .scope-list tbody tr:hover th { color: var(--primary); }
 
 /* Ecosystem cards lift like the scenario tiers */
 .ecosystem-grid article { transition: border-color .25s ease, background .25s ease, transform .3s cubic-bezier(.22, .61, .36, 1); }
@@ -1019,13 +1028,18 @@ input:focus-visible, select:focus-visible, textarea:focus-visible {
 .form-grid label:hover input, .form-grid label:hover select, .form-grid label:hover textarea { border-color: var(--body-text); }
 .form-grid input:focus, .form-grid select:focus, .form-grid textarea:focus { border-color: var(--primary); }
 
-/* The brand lockup, six nav items and the actions need ~1180px side by side —
-   with German labels it is tighter still, so the nav folds before the content
-   sections do. */
-@media (max-width: 1240px) {
+/* The brand lockup, seven nav items and the actions need ~1385px side by side
+   on the German page, whose labels are the longest of the three — measured, and
+   it is German that sets this number, so the nav folds well before the content
+   sections do. Its own query: the cutaway below still has room at this width
+   and should not fold with it. */
+@media (max-width: 1420px) {
   .nav-desktop { display: none; }
   .menu-toggle { display: inline-flex; }
   .mobile-menu { display: flex; }
+}
+
+@media (max-width: 1240px) {
   /* Too narrow for a side rail — render, caption, then the parts underneath. */
   .cutaway { grid-template-columns: 1fr; gap: 0; }
   .cutaway-view { position: static; }
@@ -1061,7 +1075,7 @@ input:focus-visible, select:focus-visible, textarea:focus-visible {
   .scenario-grid { grid-template-columns: 1fr; }
   .ecosystem-grid { grid-template-columns: repeat(2, 1fr); }
   .cutaway-groups { grid-template-columns: repeat(2, 1fr); gap: 20px 26px; }
-  .compare-row > *, .scope-list tbody th, .scope-list tbody td { padding-right: 24px; }
+  .scope-list tbody th, .scope-list tbody td { padding-right: 24px; }
   .contact-section { grid-template-columns: 1fr; }
   .contact-intro { position: static; }
 }
@@ -1069,7 +1083,7 @@ input:focus-visible, select:focus-visible, textarea:focus-visible {
 /* The band gets shorter with the viewport, and 90/100 of padding on a phone
    reads as two empty strips of hall above and below the copy. The asymmetry
    stays — the foot carries a little more than the head, so the copy sits above
-   the optical centre rather than in it — it is just smaller. This lives out
+   the optical center rather than in it — it is just smaller. This lives out
    here rather than beside the `--hero-scrim` override so it lands after the
    base `.hero-copy` padding and the 1100px block, both of which would
    otherwise win on source order. */
@@ -1098,16 +1112,17 @@ input:focus-visible, select:focus-visible, textarea:focus-visible {
   .proof-strip { grid-template-columns: 1fr 1fr; padding: 0 18px; }
   .proof-strip span { padding: 17px 7px; font-size: 13px; }
   .why-section, .threat-section, .applications-section, .verify-section, .scenario-section, .faq-section, .contact-section,
-  .compare-section, .ecosystem-section, .attenuation-section, .scope-section, .cutaway-section, .company-section,
-  .belief-section, .audit-section { padding: 85px 18px; }
+  .ecosystem-section, .attenuation-section, .scope-section, .cutaway-section, .company-section,
+  .belief-section, .cover-section { padding: 85px 18px; }
   .audience-section { padding: 75px 18px 0; }
+  .cover-list { grid-template-columns: 1fr; gap: 0; }
+  .cover-list li { font-size: 16px; padding: 18px 0 18px 26px; }
+  .cover-list li::before { top: 27px; }
   .belief-grid { grid-template-columns: 1fr; }
   .belief-grid article, .belief-grid article + article { padding: 28px 0 0; border-left: 0; }
   .belief-grid article + article { border-top: 1px solid var(--line); }
   .belief-grid p { font-size: 16px; }
-  .audit-section { padding-bottom: 44px; }
-  .audit-section p { font-size: 16px; }
-  .answer-section { padding: 0 18px 85px; }
+  .answer-section { padding: 60px 18px 70px; }
   .company-glance ul { grid-template-columns: 1fr; gap: 20px; }
   .company-glance { margin: 34px 0 42px; }
   .cutaway-pin { width: 21px; height: 21px; font-size: 10px; border-width: 1.5px; }
@@ -1131,9 +1146,6 @@ input:focus-visible, select:focus-visible, textarea:focus-visible {
   .ecosystem-grid { grid-template-columns: 1fr; }
   .ecosystem-grid article { padding: 24px 20px 26px; }
   .ecosystem-grid h3 { margin-top: 28px; }
-  .compare-table thead th, .compare-row > * { padding-right: 18px; }
-  .compare-row th { font-size: 16px; }
-  .compare-row .advantage { padding-left: 16px; }
   .attenuation-bar { height: 110px; }
   .attenuation-values td { font-size: 19px; }
   .scope-list thead th, .scope-list tbody th, .scope-list tbody td { padding-right: 20px; }
@@ -1162,3 +1174,12 @@ input:focus-visible, select:focus-visible, textarea:focus-visible {
   .hero-shot { transform: none; }
   .hero-media .hero-shot:not(:first-child) { opacity: 0; }
 }
+
+/* Inquiry form submission states. */
+.honeypot { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+.form-status:empty { display: none; }
+.form-status { margin: 14px 0 0; font-size: 14px; line-height: 1.6; }
+.form-status-ok { color: var(--ink); font-weight: 600; }
+.form-status-error { color: var(--primary); }
+.form-status-error a { color: inherit; text-decoration: underline; }
+.button.submit[disabled] { opacity: .55; cursor: default; }

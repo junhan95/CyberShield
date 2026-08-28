@@ -7,7 +7,7 @@ import { asset } from "./site-config";
  * sheet shown through the letterforms, a polished chamfer, a cast shadow. It
  * was built for an ink bar, where a lit sheet of metal has something to be lit
  * against. On the paper header it had nothing — the plate's own mid-tones are
- * light greys, so the letterforms came out as a grey smudge beside a crisp red
+ * light grays, so the letterforms came out as a gray smudge beside a crisp red
  * knot, and the two halves of the lockup no longer read as one mark.
  *
  * Darkening the plate was tried first and is the wrong shape of fix: the whole

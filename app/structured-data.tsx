@@ -8,7 +8,7 @@ const localeTag = { en: "en", de: "de", ko: "ko" } as const;
 
 /**
  * Answer engines have to infer entities from prose unless they are stated
- * outright. Everything below is already on the page — the organisation details
+ * outright. Everything below is already on the page — the organization details
  * come from the imprint, the questions from the FAQ section — so this only
  * restates it in a machine-readable form.
  */
@@ -24,7 +24,7 @@ export function StructuredData({
   productLines: readonly (readonly [string, string, string])[];
   description: string;
 }) {
-  const organisation = {
+  const organization = {
     "@type": "Organization",
     "@id": `${siteOrigin}${route("/")}#organization`,
     name: "Frankonia Group",
@@ -40,23 +40,26 @@ export function StructuredData({
       addressLocality: company.city.split(" ").slice(1).join(" "),
       addressCountry: "DE",
     },
+    // No telephone here on purpose. Enquiries are meant to arrive through the
+    // form, and a number in this block is exactly what a search engine or an
+    // assistant reads out — the contact section no longer shows one, so this
+    // must not either. The legally required number stays on the imprint.
     contactPoint: {
       "@type": "ContactPoint",
       contactType: "sales",
-      telephone: company.phone,
       email: company.salesEmail,
       availableLanguage: ["en", "de", "ko"],
     },
   };
 
   const graph = [
-    organisation,
+    organization,
     {
       "@type": "WebSite",
       "@id": `${siteOrigin}${route("/")}#website`,
       url: url("/"),
       name: "Frankonia CyberShield",
-      publisher: { "@id": organisation["@id"] },
+      publisher: { "@id": organization["@id"] },
       inLanguage: Object.values(localeTag),
     },
     {
@@ -73,9 +76,9 @@ export function StructuredData({
       "@id": `${siteOrigin}${route("/")}#product`,
       name: "Frankonia CyberShield",
       description,
-      brand: { "@id": organisation["@id"] },
-      manufacturer: { "@id": organisation["@id"] },
-      category: "RF shielded enclosures for data centres",
+      brand: { "@id": organization["@id"] },
+      manufacturer: { "@id": organization["@id"] },
+      category: "RF shielded enclosures for data centers",
       hasMeasurement: [
         {
           "@type": "QuantitativeValue",

@@ -54,7 +54,7 @@ export default function Imprint() {
           <br />
           E-mail: {company.email}
           <br />
-          CyberShield enquiries: {company.salesEmail}
+          CyberShield inquiries: {company.salesEmail}
           <br />
           Website: {company.website}
         </p>
