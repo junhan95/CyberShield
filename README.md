@@ -15,7 +15,7 @@ AI clusters, sovereign cloud and colocation halls in a measurable electromagneti
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.9-3178C6?logo=typescript&logoColor=white)
 ![Static export](https://img.shields.io/badge/output-static%20export-2ea44f)
 
-### [English](https://junhan95.github.io/CyberShield/) · [Deutsch](https://junhan95.github.io/CyberShield/de/) · [한국어](https://junhan95.github.io/CyberShield/ko/)
+### [English](https://www.frankonia-cybershield.com/) · [Deutsch](https://www.frankonia-cybershield.com/de/) · [한국어](https://www.frankonia-cybershield.com/ko/)
 
 </div>
 
@@ -23,17 +23,20 @@ AI clusters, sovereign cloud and colocation halls in a measurable electromagneti
 
 ## What this is
 
-A single-page product site, prerendered to static HTML and served from GitHub Pages.
-Three fully translated locales, two standalone legal pages, no client-side data fetching
-and no tracking of any kind.
+A single-page product site, prerendered to static HTML and served from the
+`www.frankonia-cybershield.com` document root. Three fully translated locales, two
+standalone legal pages, no tracking of any kind and no third-party requests at all.
+
+The one thing on the site that is not a static file is `public/api/inquiry.php`, the
+endpoint the contact form posts to.
 
 | Route | Locale | Page |
 |---|---|---|
-| [`/`](https://junhan95.github.io/CyberShield/) | English | Landing |
-| [`/de/`](https://junhan95.github.io/CyberShield/de/) | Deutsch | Landing |
-| [`/ko/`](https://junhan95.github.io/CyberShield/ko/) | 한국어 | Landing |
-| [`/privacy/`](https://junhan95.github.io/CyberShield/privacy/) | English | Privacy policy |
-| [`/imprint/`](https://junhan95.github.io/CyberShield/imprint/) | English | Imprint |
+| [`/`](https://www.frankonia-cybershield.com/) | English | Landing |
+| [`/de/`](https://www.frankonia-cybershield.com/de/) | Deutsch | Landing |
+| [`/ko/`](https://www.frankonia-cybershield.com/ko/) | 한국어 | Landing |
+| [`/privacy/`](https://www.frankonia-cybershield.com/privacy/) | English | Privacy policy |
+| [`/imprint/`](https://www.frankonia-cybershield.com/imprint/) | English | Imprint |
 
 ## Highlights
 
@@ -46,16 +49,27 @@ translation of the English.
 a double-contour letterform mask, with a polished chamfer from `feSpecularLighting` and a
 cast shadow. The filter values are tuned to the 26 px header size on purpose: SVG filters
 rasterise at final render scale, so a grain tuned on a large canvas dissolves into flat
-grey when scaled down.
+gray when scaled down.
 
-**A hero that loops both ways.** The render plays forward for 8 s, holds, runs backward,
-holds, and repeats. Reversing in the browser means seeking frame by frame, which measured
-at roughly 2–3 fps on this 1080p source — so the whole cycle is baked into the file and
-played back natively.
+**A hero that never dips through the background.** Four photographs cross-dissolve on one
+round, each with its own slow push in a different direction. The outgoing frame does not
+fade — it drops a z-index level and the incoming one fades in above it, so an opaque
+photograph covers the band at every instant. Cross-fading the pair would let the ground
+show through at the midpoint of every hand-over, which reads as a flicker. Under
+`prefers-reduced-motion` the band settles on the first frame, the one already downloaded
+at high priority.
 
 **Measured, not asserted.** The attenuation band charts guaranteed shielding performance
 from 10 kHz to 40 GHz against EN 50147-1 / IEEE 299, with bar heights derived from the
 decibel figures rather than hand-placed.
+
+**An enquiry form that survives its own edge cases.** It posts JSON to a first-party PHP
+endpoint, but carries a real `action` and `method` as well, so a visitor without
+JavaScript posts natively rather than losing the enquiry — and if the endpoint is
+unreachable the UI hands back a prefilled mailto. Bots meet a honeypot field and a minimum
+fill time, both of which answer as though they succeeded so there is nothing to tune
+against. Rate limiting is keyed on the email address rather than the IP, which keeps the
+endpoint out of the log-retention question entirely.
 
 **The brand lockup is the real artwork.** `frankonia-logo.svg` is built from vector
 outlines extracted from the official brand PDF, not approximated with a web font, so the
@@ -69,7 +83,9 @@ FRANKONIA wordmark is glyph-exact.
 | Runtime | React 19 · TypeScript 5.9 |
 | Dev server | [vinext](https://github.com/cloudflare/vinext) on Vite 8 |
 | Styling | Hand-written CSS in `app/globals.css` (Tailwind 4 is installed but barely used) |
-| Hosting | GitHub Pages, static export |
+| Fonts | Inter · Jost · Noto Sans KR, self-hosted via `@fontsource` |
+| Enquiry endpoint | PHP `mail()` on the host, `public/api/inquiry.php` |
+| Hosting | Static export on Apache, uploaded over SFTP |
 
 ## Local development
 
@@ -78,36 +94,48 @@ npm install
 npm run dev
 ```
 
-The dev server runs at `http://localhost:3000`.
+The dev server prints its URL on start. `.claude/launch.json` pins the editor preview to
+port 3200.
 
-To reproduce the production build exactly — including the `/CyberShield` base path that
-GitHub Pages needs baked in at build time:
+To reproduce the production build exactly:
 
 ```bash
-STATIC_EXPORT=1 NEXT_PUBLIC_BASE_PATH=/CyberShield NEXT_PUBLIC_SITE_ORIGIN=https://junhan95.github.io npx next build
+STATIC_EXPORT=1 NEXT_PUBLIC_BASE_PATH= NEXT_PUBLIC_SITE_ORIGIN=https://www.frankonia-cybershield.com NEXT_PUBLIC_INDEXABLE=1 npx next build
 ```
 
-Output lands in `out/`.
+Output lands in `out/`. The GitHub Pages mirror is built the same way but with
+`NEXT_PUBLIC_BASE_PATH=/CyberShield` and
+`NEXT_PUBLIC_SITE_ORIGIN=https://junhan95.github.io`, which Pages needs baked in at build
+time.
 
-> **On Windows, run that from PowerShell rather than Git Bash.** Git Bash rewrites
-> `/CyberShield` into a Windows path and the build fails with an invalid `basePath`.
+> **On Windows, run the Pages variant from PowerShell rather than Git Bash.** Git Bash
+> rewrites `/CyberShield` into a Windows path and the build fails with an invalid
+> `basePath`.
 
 ## Layout
 
 ```
 app/
-  landing.tsx        # the whole landing page, and all copy keyed by locale
-  brand.tsx          # cut-metal wordmark definitions, shared across pages
-  legal.tsx          # shell and company details for the legal pages
-  site-config.ts     # base path, locale table, asset/route helpers
-  site-metadata.ts   # per-locale title, description, hreflang, Open Graph
-  page.tsx           # /
-  de/  ko/           # /de/  /ko/
-  privacy/ imprint/  # standalone legal pages
+  landing.tsx         # the whole landing page, and all copy keyed by locale
+  brand.tsx           # cut-metal wordmark definitions, shared across pages
+  cutaway-map.tsx     # the interactive cutaway render and its hotspots
+  cutaway.ts          # the parts behind the cutaway, keyed by locale
+  legal.tsx           # shell and company details for the legal pages
+  site-config.ts      # base path, locale table, asset/route helpers
+  site-metadata.ts    # per-locale title, description, hreflang, Open Graph
+  structured-data.tsx # JSON-LD: organization, product, FAQ
+  page.tsx            # /
+  de/  ko/            # /de/  /ko/
+  privacy/ imprint/   # standalone legal pages
 public/
-  frankonia-logo.svg     # brand lockup, vector outlines from the brand PDF
-  images/hero/           # the four photographs the hero band cross-dissolves
-  images/                # facility photography
+  frankonia-logo.svg  # brand lockup, vector outlines from the brand PDF
+  api/inquiry.php     # enquiry endpoint, copied into out/ by the build
+  images/hero/        # the four photographs the hero band cross-dissolves
+  images/             # facility photography
+deploy/
+  deploy.py           # production build and upload, one command
+  upload.py           # SFTP push of out/ to the document root
+  htaccess            # Apache config, uploaded last so the root is never half-live
 ```
 
 `db/`, `worker/`, `examples/` and `drizzle.config.ts` are scaffolding left over from the
@@ -115,16 +143,36 @@ project starter. The site does not use them.
 
 ## Deployment
 
-Pushing to `main` triggers [`deploy-pages.yml`](.github/workflows/deploy-pages.yml), which
-runs the static export and publishes `out/` to GitHub Pages. There is no manual step.
+**Production — www.frankonia-cybershield.com.** Copy `.env.example` to `.env`, fill in the
+SFTP credentials, then:
+
+```bash
+npm run deploy
+```
+
+`deploy/deploy.py` runs the production build and hands off to `deploy/upload.py`, which
+pushes `out/` over SFTP. A failed build aborts before the upload. Site content goes up
+first and `.htaccess` last, so the document root is never left pointing at a half-uploaded
+tree; the previous `.htaccess` is backed up beside it, and files left over from the last
+build are pruned afterwards.
+
+`.env` is gitignored — credentials never enter the repository.
+
+**Mirror — GitHub Pages.** Pushing to `main` triggers
+[`deploy-pages.yml`](.github/workflows/deploy-pages.yml), which runs the static export with
+the `/CyberShield` base path and publishes `out/` to Pages. The two targets are
+independent: a commit does not update the live site, and `npm run deploy` does not update
+the mirror.
 
 ## Notes
 
 - Content is derived from Frankonia's CyberShield product documentation. Performance
   figures, standards and certification scope depend on the agreed project configuration
   and final on-site validation.
-- The site sets no cookies and embeds no analytics. The only third-party request is
-  Google Fonts.
+- The site sets no cookies, embeds no analytics and makes no third-party requests. The
+  fonts are served from our own origin.
+- Enquiries are handed straight to the responsible mailbox. Nothing is written to disk
+  inside the document root, and no IP address is stored.
 - The imprint carries the statutory details of Frankonia Germany EMC Solutions GmbH.
 
 ---
