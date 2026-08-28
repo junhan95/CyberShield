@@ -19,10 +19,10 @@ declare(strict_types=1);
 // Korean enquiries go to Frankonia Korea, everything else to HQ sales.
 const RECIPIENTS = [
     'ko' => 'Junhan.Park@frankoniagroup.com',
-    'de' => 'sales@frankoniagroup.com',
-    'en' => 'sales@frankoniagroup.com',
+    'de' => 'sales-cybershield@frankoniagroup.com',
+    'en' => 'sales-cybershield@frankoniagroup.com',
 ];
-const RECIPIENT_FALLBACK = 'sales@frankoniagroup.com';
+const RECIPIENT_FALLBACK = 'sales-cybershield@frankoniagroup.com';
 
 // Envelope sender must be on our own domain or the host's MTA will refuse it.
 const MAIL_FROM = 'noreply@frankonia-cybershield.com';
@@ -79,7 +79,7 @@ function respond(bool $ok, int $status, string $error, string $heading, string $
 function fail(int $status, string $error): never
 {
     respond(false, $status, $error, 'Your request could not be sent',
-        'Something went wrong on our side. Please try again, or write to sales@frankoniagroup.com directly.');
+        'Something went wrong on our side. Please try again, or write to sales-cybershield@frankoniagroup.com directly.');
 }
 
 function succeed(): never
