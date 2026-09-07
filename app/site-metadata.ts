@@ -6,17 +6,17 @@ const content = {
   en: {
     title: "Frankonia CyberShield | RF Shielded Rooms for Data Centers",
     description:
-      "Modular RF shielding for AI data center builds. Up to 120 dB attenuation from 10 kHz to 40 GHz, measured on site to EN 50147-1.",
+      "Modular RF shielding for AI data centers, sovereign infrastructure and private safe rooms. Up to 120 dB attenuation from 10 kHz to 40 GHz, measured on site to EN 50147-1.",
   },
   de: {
     title: "Frankonia CyberShield | HF-Abschirmung für Rechenzentren",
     description:
-      "Modulare, messtechnisch nachgewiesene HF-Abschirmung für KI-, Cloud- und Colocation-Rechenzentren. Schirmdämpfung bis 120 dB, geprüft nach EN 50147-1.",
+      "Modulare, messtechnisch nachgewiesene HF-Abschirmung für KI-, Cloud- und Colocation-Rechenzentren sowie private Schutzräume. Schirmdämpfung bis 120 dB, geprüft nach EN 50147-1.",
   },
   ko: {
     title: "Frankonia CyberShield | 데이터센터 전자기 차폐 솔루션",
     description:
-      "AI·소버린 클라우드·코로케이션 데이터센터를 위한 모듈형 전자기 차폐(EMC/TEMPEST) 솔루션. 10 kHz~40 GHz 최대 120 dB, EN 50147-1 현장 검증.",
+      "AI·소버린 클라우드·코로케이션 데이터센터와 개인 안전 공간을 위한 모듈형 전자기 차폐(EMC/TEMPEST) 솔루션. 10 kHz~40 GHz 최대 120 dB, EN 50147-1 현장 검증.",
   },
 } as const;
 

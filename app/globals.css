@@ -456,15 +456,6 @@ h1 span { color: var(--primary-deep); }
 .belief-next .belief-label::before { background: var(--primary); }
 .belief-next p { color: var(--ink); }
 
-/* ── Audience band: who the room is built for ─────────── */
-.audience-section { padding: 110px max(4vw, calc((100% - 1400px) / 2)) 0; background: var(--canvas); }
-.audience-grid { display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1px solid var(--line); }
-.audience-grid article { padding: 26px 30px 0 0; border-right: 1px solid var(--line); margin-right: 30px; }
-.audience-grid article:last-child { border-right: 0; margin-right: 0; padding-right: 0; }
-.audience-grid span { display: block; margin-bottom: 12px; color: var(--primary); font-size: 13px; font-weight: 800; }
-.audience-grid h3 { margin-bottom: 10px; font-size: 20px; font-weight: 700; line-height: 1.3; }
-.audience-grid p { margin: 0; color: var(--body-text); font-size: 15px; line-height: 1.6; }
-
 /* ── Section headline voice: weight 300 calm displays ─── */
 .why-section { padding: 120px max(4vw, calc((100% - 1400px) / 2)); background: var(--canvas); }
 .why-intro { display: grid; grid-template-columns: 1.35fr .65fr; gap: 6vw; align-items: end; }
@@ -524,6 +515,8 @@ h1 span { color: var(--primary-deep); }
   content: ""; position: absolute; left: 0; top: 31px;
   width: 14px; height: 2px; background: var(--primary);
 }
+.cover-list strong { display: block; font-weight: 700; }
+.cover-list span { display: block; margin-top: 6px; color: var(--body-text); font-size: 15px; line-height: 1.55; font-weight: 400; }
 
 /* ── Threat band: ink polarity flip ───────────────────── */
 .section-dark { background: var(--ink); color: white; }
@@ -566,6 +559,36 @@ h1 span { color: var(--primary-deep); }
 .feature-list article > span, .step-list article > span { color: var(--primary); font-size: 13px; font-weight: 800; }
 .feature-list h3, .step-list h3 { margin-bottom: 7px; font-size: 18px; font-weight: 700; }
 .feature-list p, .step-list p { margin: 0; color: var(--body-text); font-size: 15px; line-height: 1.55; }
+/* What is handed over: the brochure's "technology received" list, as a
+   plain hanging-dash enumeration under the four numbered features. */
+.technology-block { margin-top: 44px; padding-top: 24px; border-top: 1px solid var(--ink); }
+.technology-block h3, .environment-lists h3, .accessory-grid h4, .focus-block h4 {
+  margin: 0 0 14px;
+  font-size: 12px; font-weight: 800; letter-spacing: .09em; text-transform: uppercase; color: var(--primary);
+}
+.technology-block ul, .environment-lists ul, .accessory-grid ul { margin: 0; padding: 0; list-style: none; }
+.technology-block li, .environment-lists li, .accessory-grid li {
+  position: relative; padding: 9px 0 9px 22px;
+  color: var(--ink); font-size: 15px; line-height: 1.55;
+}
+.technology-block li, .environment-lists li { border-bottom: 1px solid var(--line); }
+.technology-block li::before, .environment-lists li::before, .accessory-grid li::before {
+  content: ""; position: absolute; left: 0; top: 19px;
+  width: 12px; height: 2px; background: var(--primary);
+}
+
+/* ── Shielded environment: the PAN module system ──────── */
+.environment-section { padding: 120px max(4vw, calc((100% - 1400px) / 2)); background: var(--canvas-soft); }
+.environment-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6vw; align-items: center; }
+.environment-content h2 { margin-bottom: 26px; font-size: clamp(34px, 3.6vw, 48px); line-height: 1.1; letter-spacing: 0; font-weight: 300; }
+/* --body-dark, not --body-text: this runs on the soft canvas. */
+.environment-content .lead { max-width: 640px; margin: 0 0 18px; color: var(--body-dark); font-size: 17px; line-height: 1.65; }
+.environment-content .lead:last-child { margin-bottom: 0; }
+.environment-visual { overflow: hidden; border-radius: var(--radius); }
+.environment-visual img { display: block; width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: cover; }
+.environment-lists { display: grid; grid-template-columns: 1.4fr 1fr; gap: 6vw; margin-top: 64px; padding-top: 30px; border-top: 1px solid var(--ink); }
+.environment-lists section:first-child ul { display: grid; grid-template-columns: 1fr 1fr; gap: 0 30px; }
+.environment-lists li { color: var(--ink); }
 
 /* ── Cutaway map: hotspots over the shielded-room render ─ */
 .cutaway-section { padding: 120px max(4vw, calc((100% - 1400px) / 2)); background: var(--ink); color: #fff; }
@@ -677,7 +700,19 @@ h1 span { color: var(--primary-deep); }
 .ecosystem-note a { display: inline-flex; align-items: baseline; gap: 9px; border-bottom: 1px solid var(--mute); padding-bottom: 3px; }
 .ecosystem-note a:hover { border-bottom-color: var(--primary); color: var(--primary); }
 .ecosystem-note b { font-size: 15px; transition: transform .25s ease; }
-.ecosystem-note a:hover b { transform: translateY(3px); }
+.ecosystem-note a:hover b { transform: translateY(-3px); }
+/* Accessory catalogue: an intro line across two columns, then six lists. */
+.accessory-intro {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 6vw; align-items: start;
+  margin-top: 90px; padding-top: 34px; border-top: 1px solid var(--ink);
+}
+.accessory-intro h3 { margin: 0; font-size: clamp(24px, 2.4vw, 32px); line-height: 1.2; font-weight: 300; }
+.accessory-intro p { margin: 0; color: var(--body-text); font-size: 16px; line-height: 1.65; }
+.accessory-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 44px; }
+.accessory-grid section { padding: 24px 26px 26px; background: var(--canvas-soft); border: 1px solid var(--mute); border-radius: var(--radius); }
+.accessory-grid h4 { padding-bottom: 12px; border-bottom: 1px solid var(--ink); }
+.accessory-grid li { padding: 8px 0 8px 20px; color: var(--body-dark); font-size: 14px; }
+.accessory-grid li::before { top: 18px; }
 
 /* ── Verification band ────────────────────────────────── */
 .verify-section { padding: 120px max(4vw, calc((100% - 1400px) / 2)); display: grid; grid-template-columns: 1.05fr .95fr; gap: 6vw; background: var(--canvas); }
@@ -686,7 +721,15 @@ h1 span { color: var(--primary-deep); }
 .standards-row div { padding: 16px 18px; border: 1px solid var(--mute); background: var(--canvas-soft); border-radius: var(--radius); }
 .standards-row strong { display: block; font-size: 16px; font-weight: 700; }
 .standards-row span { display: block; margin-top: 5px; color: var(--body-text); font-size: 13px; line-height: 1.5; }
-.verify-visual { position: relative; min-height: 560px; overflow: hidden; border-radius: var(--radius); }
+.verify-aside { display: flex; flex-direction: column; gap: 14px; }
+.verify-visual { position: relative; flex: 1; min-height: 480px; overflow: hidden; border-radius: var(--radius); }
+/* The brochure sets these on red tiles; here they sit on ink, with the
+   red kept for the rule above the figure — red is an accent, not a surface. */
+.verify-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+.verify-stats div { padding: 18px 20px 16px; background: var(--ink); color: #fff; border-radius: var(--radius); }
+.verify-stats div::before { content: ""; display: block; width: 26px; margin-bottom: 14px; border-top: 2px solid var(--primary); }
+.verify-stats strong { display: block; font-size: 26px; font-weight: 800; letter-spacing: -.02em; white-space: nowrap; }
+.verify-stats span { display: block; margin-top: 8px; color: rgba(255, 255, 255, .62); font-size: 13px; line-height: 1.45; }
 .verify-visual img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center 25%; }
 
 /* ── Attenuation band: measured values on ink ─────────── */
@@ -706,23 +749,39 @@ h1 span { color: var(--primary-deep); }
 .attenuation-fields td { padding-top: 8px; padding-bottom: 28px; color: rgba(255, 255, 255, .55); font-size: 13px; line-height: 1.45; }
 .attenuation-note { margin: 32px 0 0; max-width: 780px; color: rgba(255, 255, 255, .55); font-size: 14px; line-height: 1.6; }
 
-/* ── Applications ─────────────────────────────────────── */
+/* ── Applications: the brochure's two groups ───────────
+   The group label holds the left rail and stays pinned while its cards
+   scroll past, so "industrial" and "home security" are on screen with
+   whatever sector the reader is looking at. ────────────── */
 .applications-section { padding: 120px max(4vw, calc((100% - 1400px) / 2)); background: var(--canvas); }
 .section-heading.light > p:last-child { color: var(--body-text); }
-.application-grid { display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid var(--ink); }
-.application-grid article { padding: 24px 25px 30px 0; margin-right: 25px; border-right: 1px solid var(--line); }
-.application-grid article:last-child { border-right: 0; }
-.application-top { display: flex; justify-content: space-between; color: var(--primary); font-size: 13px; font-weight: 800; }
-.application-top b { font-size: 18px; }
-.audience { margin: 48px 0 12px; color: var(--primary); font-size: 12px; text-transform: uppercase; letter-spacing: .5px; font-weight: 600; }
-.application-grid h3 { min-height: 54px; font-size: 22px; line-height: 1.2; font-weight: 700; }
-/* No bottom margin reserved for a button any more — the four per-card CTAs
-   collapsed into one for the section, below. */
-.application-grid article > p:not(.audience) { min-height: 72px; margin-bottom: 0; color: var(--body-text); font-size: 15px; line-height: 1.55; }
-.applications-cta { margin-top: 46px; padding-top: 34px; border-top: 1px solid var(--line); }
+.application-group { display: grid; grid-template-columns: 260px 1fr; gap: 5vw; padding: 48px 0 56px; border-top: 1px solid var(--ink); }
+.application-group + .application-group { border-top-color: var(--line); }
+.application-group-label { position: sticky; top: 110px; align-self: start; }
+.application-group-label > span { display: block; margin-bottom: 18px; color: var(--primary); font-size: 13px; font-weight: 800; }
+.application-group-label h3 { margin: 0 0 12px; font-size: 26px; line-height: 1.15; font-weight: 700; }
+.application-group-label p { margin: 0; color: var(--body-text); font-size: 15px; line-height: 1.55; }
+.sector-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+.sector-grid article {
+  display: flex; flex-direction: column; padding: 26px 26px 28px;
+  background: var(--canvas-soft); border: 1px solid var(--mute); border-radius: var(--radius);
+}
+.sector-grid article > span { color: var(--primary); font-size: 13px; font-weight: 800; }
+.sector-grid h4 { margin: 14px 0 10px; font-size: 21px; line-height: 1.25; font-weight: 700; }
+.sector-grid p { margin: 0; color: var(--body-text); font-size: 15px; line-height: 1.6; }
+/* Pushed to the card foot so the two cards in a row keep their rule aligned. */
+.sector-grid .sector-deliverable { margin-top: auto; padding-top: 18px; color: var(--ink); font-size: 13px; line-height: 1.6; }
+.sector-deliverable::before { content: ""; display: block; width: 28px; margin-bottom: 12px; border-top: 2px solid var(--primary); }
+.sector-deliverable > span { display: block; margin-bottom: 4px; color: var(--primary); font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .5px; }
+.focus-block { margin-top: 28px; padding-top: 22px; border-top: 1px solid var(--line); }
+.focus-block ul { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px 30px; margin: 0; padding: 0; list-style: none; }
+.focus-block li { padding-left: 16px; border-left: 2px solid var(--primary); }
+.focus-block strong { display: block; margin-bottom: 5px; font-size: 15px; font-weight: 700; }
+.focus-block span { display: block; color: var(--body-text); font-size: 14px; line-height: 1.55; }
+.applications-cta { margin-top: 10px; padding-top: 34px; border-top: 1px solid var(--line); }
 
 /* ── Scenario cards: canvas-soft tier cards ───────────── */
-.scenario-section { padding: 120px max(4vw, calc((100% - 1400px) / 2)); background: var(--canvas); }
+.scenario-section { padding: 120px max(4vw, calc((100% - 1400px) / 2)); background: var(--canvas); border-top: 1px solid var(--line); }
 .scenario-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
 .scenario-grid article { padding: 26px 26px 30px; background: var(--canvas-soft); border: 1px solid var(--mute); border-radius: var(--radius); }
 .scenario-tag { margin: 0 0 28px; color: var(--primary); font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: .5px; }
@@ -784,6 +843,7 @@ h1 span { color: var(--primary-deep); }
    keeps its own breathing room without stretching the grid row. */
 .company-link { margin-top: 32px; }
 .company-glance { margin: 64px 0 58px; padding-top: 26px; border-top: 1px solid var(--mute); }
+.company-values, .company-locations { margin: 58px 0 0; }
 .company-glance > h3 {
   margin: 0 0 22px;
   font-size: 12px; font-weight: 800; letter-spacing: .09em; text-transform: uppercase; color: var(--primary);
@@ -940,7 +1000,7 @@ footer a:hover { color: #fff; }
 .button:hover span, .text-link:hover span { transform: translate(3px, -3px); }
 .language, .menu-toggle, .button, .text-link { transition: background .2s, color .2s, border-color .2s, transform .2s; }
 .language:hover { background: rgba(255, 255, 255, .12); }
-.button:hover, .application-grid button:hover { transform: translateY(-2px); }
+.button:hover { transform: translateY(-2px); }
 
 a:focus-visible, button:focus-visible, summary:focus-visible, details:focus-visible,
 input:focus-visible, select:focus-visible, textarea:focus-visible {
@@ -956,29 +1016,25 @@ input:focus-visible, select:focus-visible, textarea:focus-visible {
 
 
 /* Cards: a red rule grows across the top edge on hover */
-.asset-grid article, .threat-grid article, .application-grid article {
+.asset-grid article, .threat-grid article {
   position: relative;
   transition: background .25s ease;
 }
-.asset-grid article::before, .threat-grid article::before, .application-grid article::before {
+.asset-grid article::before, .threat-grid article::before {
   content: ""; position: absolute; top: -1px; left: 0; right: 0; height: 2px;
   background: var(--primary); transform: scaleX(0); transform-origin: 0 50%;
   transition: transform .3s cubic-bezier(.22, .61, .36, 1);
 }
-.asset-grid article:hover::before, .threat-grid article:hover::before,
-.application-grid article:hover::before { transform: scaleX(1); }
+.asset-grid article:hover::before, .threat-grid article:hover::before { transform: scaleX(1); }
 
-.asset-grid h3, .threat-grid h3, .application-grid h3 { transition: color .25s ease; }
-.asset-grid article:hover h3, .application-grid article:hover h3 { color: var(--primary); }
+.asset-grid h3, .threat-grid h3 { transition: color .25s ease; }
+.asset-grid article:hover h3 { color: var(--primary); }
 .threat-grid article:hover h3 { color: var(--primary); }
 
 .threat-icon svg { transition: transform .35s cubic-bezier(.22, .61, .36, 1); transform-origin: 0 50%; }
 .threat-grid article:hover .threat-icon svg { transform: scale(1.12); }
 .impact-tag strong { transition: color .25s ease; }
 .threat-grid article:hover .impact-tag strong { color: var(--primary); }
-
-.application-top b { display: inline-block; transition: transform .3s cubic-bezier(.22, .61, .36, 1); }
-.application-grid article:hover .application-top b { transform: translate(4px, -4px); }
 
 /* Scenario tiers: hairline turns brand red and the card lifts */
 .scenario-grid article { transition: border-color .25s ease, background .25s ease, transform .3s cubic-bezier(.22, .61, .36, 1); }
@@ -996,11 +1052,11 @@ input:focus-visible, select:focus-visible, textarea:focus-visible {
 .feature-list article:hover h3, .step-list article:hover h3 { color: var(--primary); }
 
 
-/* Ecosystem cards lift like the scenario tiers */
-.ecosystem-grid article { transition: border-color .25s ease, background .25s ease, transform .3s cubic-bezier(.22, .61, .36, 1); }
-.ecosystem-grid article:hover { border-color: var(--primary); background: var(--canvas); transform: translateY(-4px); }
-.ecosystem-grid h3 { transition: color .25s ease; }
-.ecosystem-grid article:hover h3 { color: var(--primary); }
+/* Ecosystem cards, sector cards and accessory lists lift like the scenario tiers */
+.ecosystem-grid article, .sector-grid article, .accessory-grid section { transition: border-color .25s ease, background .25s ease, transform .3s cubic-bezier(.22, .61, .36, 1); }
+.ecosystem-grid article:hover, .sector-grid article:hover, .accessory-grid section:hover { border-color: var(--primary); background: var(--canvas); transform: translateY(-4px); }
+.ecosystem-grid h3, .sector-grid h4 { transition: color .25s ease; }
+.ecosystem-grid article:hover h3, .sector-grid article:hover h4 { color: var(--primary); }
 
 /* Attenuation columns echo the hero metric band */
 .attenuation-bar i { transition: width .25s ease; }
@@ -1013,8 +1069,8 @@ input:focus-visible, select:focus-visible, textarea:focus-visible {
 .contact-intro > a:hover { color: var(--primary); border-color: var(--primary); }
 .brochure-link { transition: background .25s ease, border-color .25s ease, color .25s ease; }
 
-.system-image img, .lifecycle-visual img, .verify-visual img { transition: transform .7s cubic-bezier(.22, .61, .36, 1); }
-.system-image:hover img, .lifecycle-visual:hover img, .verify-visual:hover img { transform: scale(1.04); }
+.system-image img, .lifecycle-visual img, .verify-visual img, .environment-visual img { transition: transform .7s cubic-bezier(.22, .61, .36, 1); }
+.system-image:hover img, .lifecycle-visual:hover img, .verify-visual:hover img, .environment-visual:hover img { transform: scale(1.04); }
 
 .faq-list summary { transition: color .25s ease; }
 .faq-list details:hover summary, .faq-list details[open] summary { color: var(--primary); }
@@ -1060,14 +1116,19 @@ input:focus-visible, select:focus-visible, textarea:focus-visible {
   .why-intro { grid-template-columns: 1fr; gap: 50px; }
   .why-metric { max-width: 520px; }
   .why-value { grid-template-columns: 1fr; padding: 34px 30px; }
-  .threat-grid, .application-grid { grid-template-columns: repeat(2, 1fr); }
-  .threat-grid article:nth-child(2), .application-grid article:nth-child(2) { border-right: 0; }
-  .audience-grid, .company-grid { grid-template-columns: 1fr; }
+  .threat-grid { grid-template-columns: repeat(2, 1fr); }
+  .threat-grid article:nth-child(2) { border-right: 0; }
+  .company-grid { grid-template-columns: 1fr; }
   .company-intro { grid-template-columns: 1fr; gap: 40px; }
   .company-glance ul { grid-template-columns: repeat(2, 1fr); }
-  .audience-grid article { border-right: 0; margin-right: 0; padding: 26px 0 0; border-bottom: 1px solid var(--line); padding-bottom: 26px; }
-  .audience-grid article:last-child { border-bottom: 0; }
   .company-grid { gap: 44px; }
+  .application-group { grid-template-columns: 1fr; gap: 30px; }
+  .application-group-label { position: static; }
+  .environment-grid, .environment-lists, .accessory-intro { grid-template-columns: 1fr; }
+  .environment-grid { gap: 40px; }
+  .environment-lists { gap: 40px; }
+  .accessory-intro { gap: 20px; }
+  .accessory-grid { grid-template-columns: repeat(2, 1fr); }
   .system-section, .lifecycle-section { grid-template-columns: 1fr; }
   .system-image, .lifecycle-visual { min-height: 580px; }
   .verify-section { grid-template-columns: 1fr; gap: 55px; }
@@ -1113,8 +1174,13 @@ input:focus-visible, select:focus-visible, textarea:focus-visible {
   .proof-strip span { padding: 17px 7px; font-size: 13px; }
   .why-section, .threat-section, .applications-section, .verify-section, .scenario-section, .faq-section, .contact-section,
   .ecosystem-section, .attenuation-section, .scope-section, .cutaway-section, .company-section,
-  .belief-section, .cover-section { padding: 85px 18px; }
-  .audience-section { padding: 75px 18px 0; }
+  .belief-section, .cover-section, .environment-section { padding: 85px 18px; }
+  .application-group { padding: 36px 0 40px; }
+  .sector-grid, .focus-block ul, .accessory-grid, .environment-lists section:first-child ul, .verify-stats { grid-template-columns: 1fr; }
+  .sector-grid article { padding: 24px 20px 26px; }
+  .accessory-grid section { padding: 22px 20px 24px; }
+  .verify-stats strong { font-size: 22px; }
+  .accessory-intro { margin-top: 64px; }
   .cover-list { grid-template-columns: 1fr; gap: 0; }
   .cover-list li { font-size: 16px; padding: 18px 0 18px 26px; }
   .cover-list li::before { top: 27px; }
@@ -1130,9 +1196,8 @@ input:focus-visible, select:focus-visible, textarea:focus-visible {
   .cutaway-caption { padding: 14px 16px; }
   .section-heading h2, .system-content h2, .verify-content h2, .lifecycle-content h2, .faq-inner h2, .contact-intro h2 { font-size: 32px; }
   .section-heading { margin-bottom: 45px; }
-  .threat-grid, .application-grid { grid-template-columns: 1fr; }
-  .threat-grid article, .application-grid article { border-right: 0; border-bottom: 1px solid rgba(255, 255, 255, .15); margin-right: 0; padding-right: 0; min-height: auto; }
-  .application-grid article { border-bottom-color: var(--line); }
+  .threat-grid { grid-template-columns: 1fr; }
+  .threat-grid article { border-right: 0; border-bottom: 1px solid rgba(255, 255, 255, .15); margin-right: 0; padding-right: 0; min-height: auto; }
   .asset-grid { grid-template-columns: 1fr; margin-top: 55px; }
   .asset-grid article { min-height: auto; margin: 0; padding-right: 0; border-right: 0; border-bottom: 1px solid var(--line); }
   .asset-grid h3 { margin-top: 30px; }
