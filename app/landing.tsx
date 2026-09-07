@@ -31,6 +31,14 @@ const copy = {
       technician: "Technician verifying systems inside the data hall",
       engineer: "Engineer inspecting racks inside a protected server aisle",
     },
+    sectorAlt: [
+      "Rows of GPU racks inside a galvanized steel shielded hall with red frame accents",
+      "Modular shielded vault with a double-leaf RF door standing in a colocation hall",
+      "Dark shielded command room with wall displays and a heavy RF door",
+      "Low RF-shielded field shelter on open terrain under an overcast sky with a drone overhead",
+      "Residential safe room with a shielded steel door opening onto a bright hallway",
+      "Shielded boardroom with acoustic wall panels and a glass-and-steel RF door",
+    ],
     ecosystemAlt: [
       "Modular PAN shielding panels forming the wall of a shielded room, carried on a self-supporting steel structure",
       "Double-leaf RF shielded doors set into the facade of a shielded room",
@@ -500,6 +508,14 @@ const copy = {
       technician: "Prüfung der Systeme in der Datenhalle",
       engineer: "Inspektion der Racks in einem geschützten Servergang",
     },
+    sectorAlt: [
+      "GPU-Rackreihen in einer geschirmten Halle aus verzinktem Stahl mit roten Rahmenakzenten",
+      "Modularer Schirmtresor mit zweiflügeliger HF-Tür in einer Colocation-Halle",
+      "Dunkler geschirmter Führungsraum mit Wanddisplays und schwerer HF-Tür",
+      "Niedriger HF-geschirmter Feldraum in offenem Gelände unter bedecktem Himmel mit einer Drohne darüber",
+      "Privater Schutzraum mit geschirmter Stahltür, die in einen hellen Flur öffnet",
+      "Geschirmter Sitzungsraum mit Akustikpaneelen und einer HF-Tür aus Glas und Stahl",
+    ],
     ecosystemAlt: [
       "Modulare PAN-Schirmpaneele als Wand eines Schirmraums, getragen von einer selbsttragenden Stahlkonstruktion",
       "Zweiflügelige HF-Schirmtüren in der Fassade eines Schirmraums",
@@ -969,6 +985,14 @@ const copy = {
       technician: "데이터홀 내부에서 시스템을 검증하는 기술자",
       engineer: "보호 구역 서버 통로에서 랙을 점검하는 엔지니어",
     },
+    sectorAlt: [
+      "붉은 프레임 강조가 있는 아연도금 강판 차폐 홀 내부의 GPU 랙 열",
+      "코로케이션 홀에 설치된 양문형 RF 도어의 모듈형 차폐 볼트",
+      "벽면 디스플레이와 중량 RF 도어가 있는 어두운 차폐 지휘실",
+      "흐린 하늘 아래 드론이 떠 있는 개활지의 낮은 RF 차폐 야전 대피소",
+      "밝은 복도로 열린 차폐 강철 도어가 있는 주거용 안전실",
+      "흡음 벽 패널과 유리·강철 RF 도어가 있는 차폐 회의실",
+    ],
     ecosystemAlt: [
       "자립형 강구조에 지지된 차폐실 벽체의 모듈형 PAN 차폐 패널",
       "차폐실 외벽에 설치된 양문형 RF 차폐 도어",
@@ -1520,6 +1544,9 @@ const revealSelector = [
 
 // Photography for the six product lines, in the order the cards are listed.
 const ecosystemImages = ["structure", "access", "connectivity", "air", "validation", "lifecycle"];
+// Photography for the six application sectors, in group order: four
+// industrial, then two home security. Index-aligned with `sectorAlt`.
+const sectorImages = ["hyperscale", "colocation", "government", "drone", "home", "chamber"];
 
 /** The hero backdrop, in the order it plays.
  *
@@ -1974,7 +2001,10 @@ export function Landing({ lang }: { lang: Lang }) {
           <h2>{t.applicationsTitle}</h2>
           <p>{t.applicationsBody}</p>
         </div>
-        {t.applicationGroups.map((group, g) => (
+        {t.applicationGroups.map((group, g, groups) => {
+          // Sector images and alts are one flat list across both groups.
+          const offset = groups.slice(0, g).reduce((n, previous) => n + previous.sectors.length, 0);
+          return (
           <div className="application-group" key={group.title}>
             <div className="application-group-label">
               <span>0{g + 1}</span>
@@ -1985,10 +2015,20 @@ export function Landing({ lang }: { lang: Lang }) {
               <div className="sector-grid">
                 {group.sectors.map(([title, body, deliverable], i) => (
                   <article key={title}>
-                    <span>0{g + 1}.{i + 1}</span>
-                    <h4>{title}</h4>
-                    <p>{body}</p>
-                    <p className="sector-deliverable"><span>{t.deliverableLabel}</span>{deliverable}</p>
+                    <img
+                      src={asset(`/images/sectors/${sectorImages[offset + i]}.webp`)}
+                      width={1000}
+                      height={667}
+                      loading="lazy"
+                      decoding="async"
+                      alt={t.sectorAlt[offset + i]}
+                    />
+                    <div className="sector-body">
+                      <span>0{g + 1}.{i + 1}</span>
+                      <h4>{title}</h4>
+                      <p>{body}</p>
+                      <p className="sector-deliverable"><span>{t.deliverableLabel}</span>{deliverable}</p>
+                    </div>
                   </article>
                 ))}
               </div>
@@ -2002,7 +2042,8 @@ export function Landing({ lang }: { lang: Lang }) {
               </div>
             </div>
           </div>
-        ))}
+          );
+        })}
         {/* One call to action for the section, not one per sector. */}
         <div className="applications-cta">
           <button className="button" onClick={() => goContact("consultation")}>

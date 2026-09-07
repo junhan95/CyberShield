@@ -762,11 +762,15 @@ h1 span { color: var(--primary-deep); }
 .application-group-label h3 { margin: 0 0 12px; font-size: 26px; line-height: 1.15; font-weight: 700; }
 .application-group-label p { margin: 0; color: var(--body-text); font-size: 15px; line-height: 1.55; }
 .sector-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+/* Photo on top, copy below — the same card the product lines use, so the
+   sectors and the components read as one family. */
 .sector-grid article {
-  display: flex; flex-direction: column; padding: 26px 26px 28px;
+  display: flex; flex-direction: column; overflow: hidden;
   background: var(--canvas-soft); border: 1px solid var(--mute); border-radius: var(--radius);
 }
-.sector-grid article > span { color: var(--primary); font-size: 13px; font-weight: 800; }
+.sector-grid img { display: block; width: 100%; aspect-ratio: 3 / 2; object-fit: cover; }
+.sector-body { display: flex; flex-direction: column; flex: 1; padding: 22px 26px 28px; }
+.sector-body > span { color: var(--primary); font-size: 13px; font-weight: 800; }
 .sector-grid h4 { margin: 14px 0 10px; font-size: 21px; line-height: 1.25; font-weight: 700; }
 .sector-grid p { margin: 0; color: var(--body-text); font-size: 15px; line-height: 1.6; }
 /* Pushed to the card foot so the two cards in a row keep their rule aligned. */
@@ -1177,7 +1181,7 @@ input:focus-visible, select:focus-visible, textarea:focus-visible {
   .belief-section, .cover-section, .environment-section { padding: 85px 18px; }
   .application-group { padding: 36px 0 40px; }
   .sector-grid, .focus-block ul, .accessory-grid, .environment-lists section:first-child ul, .verify-stats { grid-template-columns: 1fr; }
-  .sector-grid article { padding: 24px 20px 26px; }
+  .sector-body { padding: 22px 20px 26px; }
   .accessory-grid section { padding: 22px 20px 24px; }
   .verify-stats strong { font-size: 22px; }
   .accessory-intro { margin-top: 64px; }
