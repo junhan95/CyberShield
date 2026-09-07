@@ -127,10 +127,6 @@ export default function Imprint() {
           permitted for private, non-commercial use only. Where content was not created by the
           operator, third-party rights are respected and such content is identified accordingly.
         </p>
-        <p>
-          Frankonia, CyberShield and Frankosorb are trademarks of the Frankonia group of
-          companies.
-        </p>
       </section>
 
       <section>
