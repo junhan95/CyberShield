@@ -20,11 +20,16 @@ import { asset } from "./site-config";
  *
  * `decorative` is for placements whose link already carries an aria-label —
  * repeating the name there would have a screen reader say it twice.
+ *
+ * `registered` adds the ®. It is set in the footer and nowhere else: once per
+ * page is what the mark is for, and the header bar is read too often for a
+ * superscript to stay quiet in it.
  */
 export function BrandLockup({
   decorative = false,
   onLight = false,
-}: { decorative?: boolean; onLight?: boolean }) {
+  registered = false,
+}: { decorative?: boolean; onLight?: boolean; registered?: boolean }) {
   return (
     <>
       {/* The group artwork ships as two files: `-dark` sets the wordmark in
@@ -39,8 +44,11 @@ export function BrandLockup({
         alt={decorative ? "" : "Frankonia"}
         aria-hidden={decorative || undefined}
       />
+      {/* The inner span keeps the wordmark as one flex item, so the ® can be
+          set with vertical-align rather than becoming a flex item of its own
+          and aligning to the 44px lockup box instead of to the letterforms. */}
       <span className="brand-product" aria-hidden={decorative || undefined}>
-        CyberShield
+        <span>CyberShield{registered && <sup>®</sup>}</span>
       </span>
     </>
   );

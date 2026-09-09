@@ -1,5 +1,5 @@
 import type { MetadataRoute } from "next";
-import { languages, route, siteOrigin } from "./site-config";
+import { contactPath, languages, route, siteOrigin } from "./site-config";
 
 export const dynamic = "force-static";
 
@@ -20,6 +20,18 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "monthly" as const,
       priority: path === "/" ? 1 : 0.9,
       alternates: { languages: localeAlternates },
+    })),
+    // The enquiry page, one per locale, each carrying the full alternate set.
+    ...languages.map(([code]) => ({
+      url: `${siteOrigin}${contactPath(code)}`,
+      lastModified,
+      changeFrequency: "monthly" as const,
+      priority: 0.7,
+      alternates: {
+        languages: Object.fromEntries(
+          languages.map(([other]) => [other, `${siteOrigin}${contactPath(other)}`]),
+        ),
+      },
     })),
     {
       url: url("/privacy"),

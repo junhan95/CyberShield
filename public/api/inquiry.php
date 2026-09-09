@@ -138,7 +138,18 @@ if ($elapsed > 0 && $elapsed < MIN_FILL_SECONDS) {
 $name = field($data, 'name', 120);
 $company = field($data, 'company', 160);
 $email = field($data, 'email', 200);
+$phone = field($data, 'phone', 60);
+$street = field($data, 'street', 160);
+$zip = field($data, 'zip', 30);
+$city = field($data, 'city', 120);
 $country = field($data, 'country', 120);
+$industry = field($data, 'industry', 120);
+// Checkbox group: an array over JSON, repeated keys over a native POST.
+$rawInterest = $data['interest'] ?? ($_POST['interest'] ?? []);
+$interest = implode(', ', array_slice(array_filter(array_map(
+    static fn ($value): string => is_string($value) ? mb_substr(trim($value), 0, 80) : '',
+    is_array($rawInterest) ? $rawInterest : [$rawInterest],
+)), 0, 12));
 $project = field($data, 'project', 120);
 $stage = field($data, 'stage', 120);
 $message = field($data, 'message', 6000, true);
@@ -148,7 +159,14 @@ $request = in_array($data['request'] ?? '', ['consultation', 'quote'], true)
 $lang = in_array($data['lang'] ?? '', ['en', 'de', 'ko'], true) ? $data['lang'] : 'en';
 $consent = in_array($data['consent'] ?? false, [true, 'on', '1', 'true'], true);
 
-foreach (['name' => $name, 'company' => $company, 'email' => $email, 'message' => $message] as $key => $value) {
+foreach ([
+    'name' => $name,
+    'company' => $company,
+    'email' => $email,
+    'phone' => $phone,
+    'country' => $country,
+    'message' => $message,
+] as $key => $value) {
     if ($value === '') {
         fail(422, "missing_$key");
     }
@@ -191,7 +209,12 @@ $body = implode("\n", [
     'Name:           ' . $name,
     'Company:        ' . $company,
     'Email:          ' . $email,
+    'Phone:          ' . $phone,
+    'Street:         ' . $street,
+    'ZIP / City:     ' . trim($zip . ' ' . $city),
     'Country/region: ' . $country,
+    'Industry:       ' . $industry,
+    'Concerns:       ' . $interest,
     'Project type:   ' . $project,
     'Project stage:  ' . $stage,
     '',

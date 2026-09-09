@@ -38,7 +38,7 @@ export default function NotFound() {
       </article>
 
       <footer>
-        <div className="footer-brand"><BrandLockup /></div>
+        <div className="footer-brand"><BrandLockup registered /></div>
         <p>
           CyberShield is a high-assurance engineering solution. Performance, standards and
           certification scope depend on the agreed project configuration and final validation.

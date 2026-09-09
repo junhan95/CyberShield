@@ -79,7 +79,8 @@ export default function Privacy() {
         <h2>5. Contact form and inquiries</h2>
         <p>
           When you submit the inquiry form, the details you entered — your name, company, e-mail
-          address, country, project type, project stage and the requirements you describe — are
+          address, telephone number, postal address, country, industry, what the enquiry concerns,
+          project type, project stage and the requirements you describe — are
           transmitted over an encrypted connection to this website&rsquo;s own server and forwarded
           by e-mail to the Frankonia sales contact responsible for your region. Inquiries submitted
           from the Korean version of the site go to Frankonia Korea EMC Solutions. The form sets no

@@ -39,3 +39,10 @@ export const route = (path: string) => {
   const withBase = `${basePath}${path}`;
   return withBase.endsWith("/") ? withBase : `${withBase}/`;
 };
+
+/** The enquiry form has a page of its own, one per locale: `/contact`,
+ *  `/de/contact`, `/ko/contact`. */
+export const contactPath = (lang: Lang) => {
+  const prefix = langPath(lang);
+  return route(prefix === "/" ? "/contact" : `${prefix}/contact`);
+};
