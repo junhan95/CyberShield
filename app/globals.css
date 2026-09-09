@@ -690,7 +690,11 @@ h1 span { color: var(--primary-deep); }
 .accessory-intro h3 { margin: 0; font-size: clamp(24px, 2.4vw, 32px); line-height: 1.2; font-weight: 300; }
 .accessory-intro p { margin: 0; color: var(--body-text); font-size: 16px; line-height: 1.65; }
 .accessory-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 44px; }
-.accessory-grid section { padding: 24px 26px 26px; background: var(--canvas-soft); border: 1px solid var(--mute); border-radius: var(--radius); }
+.accessory-grid section { padding: 0; overflow: hidden; background: var(--canvas-soft); border: 1px solid var(--mute); border-radius: var(--radius); }
+/* A band, not a hero: the list is what the card is for, so the photograph is
+   cropped to 16:9 rather than the 3:2 the file is stored at. */
+.accessory-grid img { display: block; width: 100%; aspect-ratio: 16 / 9; object-fit: cover; border-bottom: 1px solid var(--mute); }
+.accessory-body { padding: 22px 26px 26px; }
 .accessory-grid h4 { padding-bottom: 12px; border-bottom: 1px solid var(--ink); }
 .accessory-grid li { padding: 8px 0 8px 20px; color: var(--body-dark); font-size: 14px; }
 .accessory-grid li::before { top: 18px; }

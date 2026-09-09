@@ -32,6 +32,14 @@ export const copy = {
       "Residential safe room with a shielded steel door opening onto a bright hallway",
       "Shielded boardroom with acoustic wall panels and a glass-and-steel RF door",
     ],
+    accessoryAlt: [
+      "Row of prefabricated PAN steel shielding modules standing in a plant hall on red support columns",
+      "Two double-leaf RF shielded doors in red frames set into the wall of a shielded hall",
+      "Flush-entrance ramp with hazard edging leading through an open shielded gate into an absorber-lined chamber",
+      "Electrical distribution cabinets standing beside the shielded door at the boundary of a shielded room",
+      "Honeycomb ventilation waveguide mounted into the steel wall of a shielded room",
+      "Control room beside a shielded chamber with measuring instruments and monitors on the operator desk",
+    ],
     ecosystemAlt: [
       "Modular PAN shielding panels forming the wall of a shielded room, carried on a self-supporting steel structure",
       "Double-leaf RF shielded doors set into the facade of a shielded room",
@@ -517,6 +525,14 @@ export const copy = {
       "Privater Schutzraum mit geschirmter Stahltür, die in einen hellen Flur öffnet",
       "Geschirmter Sitzungsraum mit Akustikpaneelen und einer HF-Tür aus Glas und Stahl",
     ],
+    accessoryAlt: [
+      "Reihe vorgefertigter PAN-Schirmmodule aus Stahl auf roten Stützen in einer Werkshalle",
+      "Zwei zweiflügelige HF-Schirmtüren in roten Rahmen in der Wand einer geschirmten Halle",
+      "Schwellenlose Rampe mit Warnmarkierung, die durch ein geöffnetes Schirmtor in eine absorberbestückte Kammer führt",
+      "Elektroverteilerschränke neben der Schirmtür an der Grenze eines geschirmten Raums",
+      "Wabenkamin als Lüftungs-Hohlleiter, eingebaut in die Stahlwand eines geschirmten Raums",
+      "Messwarte neben der geschirmten Kammer mit Messgeräten und Monitoren auf dem Bedienpult",
+    ],
     ecosystemAlt: [
       "Modulare PAN-Schirmpaneele als Wand eines Schirmraums, getragen von einer selbsttragenden Stahlkonstruktion",
       "Zweiflügelige HF-Schirmtüren in der Fassade eines Schirmraums",
@@ -1001,6 +1017,14 @@ export const copy = {
       "해질 무렵 주택을 단면으로 열어 내부에 설치된 RF 차폐 스틸룸과 바깥에 떠 있는 드론을 함께 보여주는 투시 이미지",
       "밝은 복도로 열린 차폐 강철 도어가 있는 주거용 안전실",
       "흡음 벽 패널과 유리·강철 RF 도어가 있는 차폐 회의실",
+    ],
+    accessoryAlt: [
+      "붉은 지지 기둥 위에 세워진 조립식 PAN 강판 차폐 모듈이 공장 홀에 늘어선 모습",
+      "차폐 홀 벽면에 설치된 붉은 프레임의 양문형 RF 차폐 도어 두 짝",
+      "경고 표시가 있는 무단차 램프가 열린 차폐 게이트를 지나 흡수체 챔버로 이어지는 모습",
+      "차폐실 경계의 차폐 도어 옆에 설치된 배전반 캐비닛",
+      "차폐실 강판 벽에 장착된 허니콤 환기 도파관",
+      "차폐 챔버 옆 제어실의 조작 데스크 위에 놓인 계측기와 모니터",
     ],
     ecosystemAlt: [
       "자립형 강구조에 지지된 차폐실 벽체의 모듈형 PAN 차폐 패널",

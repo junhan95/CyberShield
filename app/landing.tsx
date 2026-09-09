@@ -111,6 +111,8 @@ const ecosystemImages = ["structure", "access", "connectivity", "air", "validati
 // Photography for the six application sectors, in group order: four
 // industrial, then two home security. Index-aligned with `sectorAlt`.
 const sectorImages = ["hyperscale", "colocation", "government", "drone", "home", "chamber"];
+// Photography for the six accessory disciplines, in the order the lists appear.
+const accessoryImages = ["structure", "doors", "ramps", "electrical", "ventilation", "media"];
 
 /** The hero backdrop, in the order it plays.
  *
@@ -779,10 +781,24 @@ export function Landing({ lang }: { lang: Lang }) {
           <p>{t.accessoriesBody}</p>
         </div>
         <div className="accessory-grid">
-          {t.accessories.map(([title, items]) => (
+          {t.accessories.map(([title, items], index) => (
             <section key={title} aria-label={title}>
-              <h4>{title}</h4>
-              <ul>{items.map((item) => <li key={item}>{item}</li>)}</ul>
+              {/* Frankonia's own photography of the equipment each list names —
+                  the standard-equipment set from frankonia-korea.com, and the
+                  flush ramp from the 2025 chambers brochure. */}
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={asset(`/images/accessories/${accessoryImages[index]}.webp`)}
+                width={1000}
+                height={667}
+                loading="lazy"
+                decoding="async"
+                alt={t.accessoryAlt[index]}
+              />
+              <div className="accessory-body">
+                <h4>{title}</h4>
+                <ul>{items.map((item) => <li key={item}>{item}</li>)}</ul>
+              </div>
             </section>
           ))}
         </div>
