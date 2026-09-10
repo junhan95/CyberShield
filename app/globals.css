@@ -410,6 +410,11 @@ h1 span { color: var(--primary-deep); }
    paper, and 20px is not large text. */
 .hero-body { max-width: 600px; color: var(--body-dark); font-size: 20px; line-height: 1.5; }
 .hero-actions { display: flex; align-items: center; gap: 14px; margin-top: 38px; flex-wrap: wrap; }
+/* Three actions abreast come to about 790px and the copy column is 760 — let
+   the row run past the measure rather than drop the brochure onto a line of
+   its own. The buttons carry their own fills, so they read over the plant
+   photograph as well as over paper. Below 700px the row stacks anyway. */
+@media (min-width: 701px) { .hero-actions { width: max-content; max-width: calc(100vw - 8vw); } }
 /* The outline half of the pill pair. It was white-on-ink, and both places that
    render it — the hero actions and the legal pages' Back link, which sits in
    the header — are paper now; a white border on white is nothing. Same
@@ -1048,6 +1053,9 @@ footer a:hover { color: #fff; }
 
 .button span, .text-link span { transition: transform .25s ease; }
 .button:hover span, .text-link:hover span { transform: translate(3px, -3px); }
+/* The download glyph drops rather than lifting: it points where the file goes. */
+.hero-brochure svg { width: 18px; height: 18px; flex: none; transition: transform .25s ease; }
+.hero-brochure:hover svg { transform: translateY(2px); }
 .language, .menu-toggle, .button, .text-link { transition: background .2s, color .2s, border-color .2s, transform .2s; }
 .language:hover { background: rgba(255, 255, 255, .12); }
 .button:hover { transform: translateY(-2px); }

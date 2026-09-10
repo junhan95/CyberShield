@@ -56,6 +56,7 @@ export const copy = {
     heroBody:
       "Engineered, integrated and verified as one system. CyberShield® wraps AI and data workloads, sovereign infrastructure and private safe rooms in the market’s most flexible high-attenuation shielding — installed around live operations and handed over with measured evidence.",
     explore: "Explore the system",
+    heroBrochure: "Download brochure",
     metrics: [
       ["Verified on site", "Shielding performance is measured after installation—not assumed"],
       ["Weld-free assembly", "Bolted modules installed alongside live operations, no hot work"],
@@ -572,6 +573,7 @@ export const copy = {
     heroBody:
       "Geplant, integriert und nachgewiesen als ein System. CyberShield® umschließt KI- und Datenlasten, souveräne Infrastruktur und private Schutzräume mit dem flexibelsten hochdämpfenden Schirmungssystem am Markt – montiert im laufenden Betrieb und mit dokumentiertem Messnachweis übergeben.",
     explore: "System kennenlernen",
+    heroBrochure: "Broschüre herunterladen",
     metrics: [
       ["Vor Ort nachgewiesen", "Die Schirmdämpfung wird nach der Montage gemessen – nicht angenommen"],
       ["Schweißfreie Montage", "Verschraubte Module, Montage im laufenden Betrieb ohne Heißarbeiten"],
@@ -1088,6 +1090,7 @@ export const copy = {
     heroBody:
       "하나의 시스템으로 설계하고, 통합하고, 검증합니다. CyberShield®는 AI·데이터 워크로드와 소버린 인프라, 개인 안전 공간까지 시장에서 가장 유연한 고차폐 시스템으로 감싸며, 운영 중인 시설에 시공하고 측정된 증거와 함께 인도합니다.",
     explore: "시스템 살펴보기",
+    heroBrochure: "브로슈어 다운로드",
     metrics: [
       ["현장 측정 검증", "설치 후 차폐 성능을 현장에서 측정합니다 — 추정이 아닌 증거"],
       ["무용접 모듈 조립", "화기 작업 없는 볼트 체결 — 운영 중인 시설과 병행 시공"],

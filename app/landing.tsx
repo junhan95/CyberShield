@@ -328,6 +328,22 @@ export function Landing({ lang }: { lang: Lang }) {
             <div className="hero-actions">
               <a className="button" href={`${contactPath(lang)}?request=consultation`}>{t.consultation}<span>↗</span></a>
               <a className="text-link" href="#solution">{t.explore}<span>↓</span></a>
+              {/* The brochure is the one thing a first-time visitor most often
+                  wants to take away, so it sits beside the two ways into the
+                  page rather than only at the end of the enquiry form. */}
+              <a
+                className="text-link hero-brochure"
+                href={asset("/downloads/frankonia-cybershield-2026.pdf")}
+                title={t.brochureMeta}
+                download
+              >
+                {t.heroBrochure}
+                <svg viewBox="0 0 20 20" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M10 2.5v10" />
+                  <path d="M6 9l4 4 4-4" />
+                  <path d="M3.5 16.5h13" />
+                </svg>
+              </a>
             </div>
           </div>
         </div>
