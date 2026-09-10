@@ -503,7 +503,7 @@ h1 span { color: var(--primary-deep); }
 .section-dark { background: var(--ink); color: white; }
 .threat-section { padding: 120px max(4vw, calc((100% - 1400px) / 2)); }
 .section-heading { max-width: 900px; margin-bottom: 64px; }
-.section-heading h2, .system-content h2, .verify-content h2, .lifecycle-content h2, .faq-inner h2, .contact-intro h1 {
+.section-heading h2, .system-content h2, .verify-content h2, .lifecycle-content h2, .faq-inner h2 {
   margin-bottom: 26px; font-size: clamp(34px, 3.6vw, 48px); line-height: 1.1; letter-spacing: 0; font-weight: 300;
 }
 .section-heading > p:last-child { max-width: 680px; color: rgba(255, 255, 255, .65); font-size: 18px; line-height: 1.55; }
@@ -879,31 +879,7 @@ h1 span { color: var(--primary-deep); }
    always sat on its own paper rather than on the band. What changes for it is
    only that the red pill is now the single saturated thing in the fold rather
    than a shape competing with the surface behind it. */
-.contact-section { padding: 120px max(4vw, calc((100% - 1400px) / 2)); display: grid; grid-template-columns: .8fr 1.2fr; gap: 6vw; background: var(--canvas-soft); color: var(--ink); border-top: 1px solid var(--line); }
-.contact-intro { position: sticky; top: 120px; align-self: start; }
-/* --primary-deep, not --primary. Brand red on `--canvas-soft` is 4.30:1 and
-   this eyebrow is 15px ExtraBold — not large text, so the floor is 4.5 and it
-   misses by 0.2. The Dark Red plate returns 5.42 on the same field. */
-.contact-intro .eyebrow { color: var(--primary-deep); }
-/* --body-dark, not --body-text: the running gray is only 3.6:1 on the soft
-   band. This is 7.6. */
-.contact-lead { max-width: 520px; color: var(--body-dark); font-size: 18px; line-height: 1.6; }
-.contact-intro > a { display: inline-block; margin-top: 25px; padding-bottom: 6px; border-bottom: 1px solid var(--mute); font-size: 16px; font-weight: 700; }
 
-/* Brochure download, under the e-mail address. Outlined rather than solid: the
-   filled submit button is the primary action here and this should read as the
-   quieter of the two — which is the same reason it was outlined on the red
-   field, drawn now on a light surface. */
-.brochure { margin-top: 36px; }
-.brochure-link {
-  display: inline-flex; align-items: center; gap: 10px;
-  padding: 13px 26px; border: 1px solid var(--mute); border-radius: var(--pill);
-  background: var(--canvas); color: var(--ink);
-  font-size: 16px; font-weight: 700; line-height: 24px;
-}
-.brochure-link svg { width: 19px; height: 19px; flex: none; }
-.brochure-link:hover { border-color: var(--primary); color: var(--primary); background: var(--canvas); }
-.brochure-meta { margin-top: 12px; color: var(--body-dark); font-size: 13px; letter-spacing: .3px; }
 /* The card kept its white fill, and on the soft band that is a 1.07:1 step —
    the form's edge disappeared with the red around it. The hairline is what
    puts it back. */
@@ -937,62 +913,96 @@ legend { margin-bottom: 12px; color: var(--body-text); font-size: 12px; font-wei
 }
 
 /* ── Contact page ─────────────────────────────────────────
-   The enquiry form moved off the landing page onto a route of its own, so the
-   band that used to close the page now opens one. What changed with it: the
-   heading is an h1, the sales address is stated rather than withheld — a
-   contact page that hides its address is a contact page in name only — and the
-   two Frankonia sites this product sits between are linked underneath. The
-   form card, the brochure button and the two request pills are unchanged. */
-.contact-page .contact-section { padding-top: 76px; border-top: 0; }
-.contact-page .contact-intro { top: 100px; }
-/* Three letters each, so the landing page's dropdown would be a control
-   larger than the thing it hides. */
-.contact-langs { display: flex; gap: 6px; margin-right: 6px; }
-.contact-langs a {
-  padding: 7px 11px; border: 1px solid transparent; border-radius: var(--pill);
-  color: var(--body-text); font-size: 12px; font-weight: 800; letter-spacing: .08em;
+   Built to the same shape as the contact page on frankonia-korea.com — page
+   head, enquiry, what to send, the five offices, a closing line — on this
+   site's own type and spacing rather than a second set of rules. It keeps the
+   landing page's navigation bar, so everything below starts under a sticky
+   76px header. */
+.contact-page .page-head {
+  padding: 74px max(4vw, calc((100% - 1400px) / 2)) 78px;
+  background: var(--canvas-soft); border-bottom: 1px solid var(--line);
 }
-.contact-langs a:hover { border-color: var(--mute); color: var(--ink); }
-.contact-langs a.current { border-color: var(--mute); background: var(--canvas-soft); color: var(--primary); }
+.contact-page .page-head h1 {
+  margin: 0 0 18px; max-width: 15ch;
+  font-size: clamp(38px, 4.4vw, 58px); line-height: 1.06; font-weight: 300; letter-spacing: -.5px;
+}
+.contact-page .page-head .eyebrow { color: var(--primary-deep); }
+.page-head-lead { margin: 0; max-width: 60ch; color: var(--body-dark); font-size: 18px; line-height: 1.6; }
 
-.contact-direct { margin-top: 38px; padding-top: 26px; border-top: 1px solid var(--ink); }
+/* Form on the left at the width it is comfortable to fill in, the address,
+   brochure and outbound links beside it. */
+.enquiry-section {
+  padding: 96px max(4vw, calc((100% - 1400px) / 2)) 104px;
+  display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, .75fr);
+  column-gap: 6vw; row-gap: 44px; align-items: start; background: var(--canvas);
+}
+.enquiry-section .section-heading { grid-column: 1 / -1; margin-bottom: 0; }
+.enquiry-section .section-heading p:last-child { max-width: 62ch; }
+.enquiry-aside { position: sticky; top: 108px; }
+
 .contact-direct h2, .contact-links h2 {
   margin-bottom: 10px; color: var(--ink); font-size: 13px; font-weight: 800;
   text-transform: uppercase; letter-spacing: .08em;
 }
-.contact-direct p { margin: 0 0 14px; max-width: 460px; color: var(--body-dark); font-size: 15px; line-height: 1.6; }
+.contact-direct { padding-top: 26px; border-top: 1px solid var(--ink); }
+.contact-direct p { margin: 0 0 14px; max-width: 46ch; color: var(--body-dark); font-size: 15px; line-height: 1.6; }
 .contact-email {
   display: inline-block; padding-bottom: 5px; border-bottom: 1px solid var(--mute);
   color: var(--ink); font-size: 17px; font-weight: 700; word-break: break-all;
 }
 .contact-email:hover { border-color: var(--primary); color: var(--primary); }
 
-.contact-links { margin-top: 38px; padding-top: 26px; border-top: 1px solid var(--line); }
+.brochure { margin-top: 34px; }
+.brochure-link {
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 13px 26px; border: 1px solid var(--mute); border-radius: var(--pill);
+  background: var(--canvas); color: var(--ink);
+  font-size: 16px; font-weight: 700; line-height: 24px;
+}
+.brochure-link svg { width: 19px; height: 19px; flex: none; }
+.brochure-link:hover { border-color: var(--primary); color: var(--primary); }
+.brochure-meta { margin-top: 12px; color: var(--body-dark); font-size: 13px; letter-spacing: .3px; }
+
+.contact-links { margin-top: 34px; padding-top: 26px; border-top: 1px solid var(--line); }
 .contact-links ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 18px; }
 .contact-links li { display: grid; gap: 4px; }
 .contact-links li > a { color: var(--ink); font-size: 16px; font-weight: 700; }
 .contact-links li > a span { margin-left: 6px; color: var(--primary); }
 .contact-links li > a:hover { color: var(--primary); }
-.contact-links li > span { max-width: 420px; color: var(--body-dark); font-size: 14px; line-height: 1.55; }
+.contact-links li > span { max-width: 42ch; color: var(--body-dark); font-size: 14px; line-height: 1.55; }
 
-/* Follows the head-office form, which asks what the enquiry is about rather
-   than making the free-text field carry it. Scoped through .form-grid so these
-   beat the text-field rules that would otherwise stretch a checkbox to the full
-   column width and set its label in uppercase. */
-.interest-set { margin: 0; }
-.interest-set legend { margin-bottom: 10px; }
-.form-grid .interest-set .check {
-  display: flex; align-items: flex-start; gap: 9px; margin-bottom: 9px;
-  color: var(--body-text); font-size: 14px; font-weight: 400;
-  text-transform: none; letter-spacing: .1px; line-height: 1.45; cursor: pointer;
+/* What to send: three numbered columns on the soft band, the same figure
+   treatment the landing page uses for its numbered lists. */
+.send-section { padding: 96px max(4vw, calc((100% - 1400px) / 2)); background: var(--canvas-soft); }
+.send-grid { margin-top: 46px; display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1px solid var(--ink); }
+.send-grid article { padding: 24px 30px 26px 0; margin-right: 30px; border-right: 1px solid var(--line); }
+.send-grid article:last-child { border-right: 0; margin-right: 0; padding-right: 0; }
+.send-grid article > span { color: var(--primary); font-size: 13px; font-weight: 800; }
+.send-grid h3 { margin: 34px 0 12px; font-size: 21px; font-weight: 700; line-height: 1.25; }
+.send-grid p { margin: 0; color: var(--body-dark); font-size: 15px; line-height: 1.6; }
+
+/* The five group offices: name on the left, address and how to reach it on
+   the right, one hairline between each. */
+.offices-section { padding: 96px max(4vw, calc((100% - 1400px) / 2)); background: var(--canvas); }
+.offices-list { list-style: none; margin: 46px 0 0; padding: 0; border-top: 1px solid var(--ink); }
+.offices-list li {
+  display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr); gap: 24px;
+  padding: 22px 0; border-bottom: 1px solid var(--line);
 }
-.form-grid .interest-set .check input {
-  flex: none; width: auto; margin: 2px 0 0; padding: 0;
-  border: 0; border-radius: 0; accent-color: var(--primary);
+.offices-list strong { font-size: 17px; font-weight: 700; line-height: 1.35; }
+.offices-list li > div { display: grid; gap: 6px; justify-items: end; text-align: right; }
+.office-address { color: var(--body-dark); font-size: 14.5px; line-height: 1.5; }
+.office-reach { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; justify-content: flex-end; font-size: 14.5px; }
+.office-reach a { color: var(--body-dark); border-bottom: 1px solid transparent; }
+.office-reach a:hover { color: var(--primary); border-bottom-color: var(--primary); }
+.office-reach i { color: var(--mute); font-style: normal; }
+
+/* The closing line, on the red rule the landing page opens its scenarios with. */
+.contact-closing { padding: 0 max(4vw, calc((100% - 1400px) / 2)) 104px; background: var(--canvas); }
+.contact-closing p {
+  margin: 0; max-width: 24ch; padding-top: 26px; border-top: 3px solid var(--primary);
+  font-size: clamp(26px, 3vw, 40px); line-height: 1.18; font-weight: 300;
 }
-.form-grid .interest-set .check:hover { color: var(--ink); }
-/* Two columns of three at the width the card actually has. */
-.interest-options { display: grid; grid-template-columns: 1fr 1fr; gap: 0 18px; }
 
 /* ── Legal pages: privacy, imprint ────────────────────── */
 .legal-back { padding: 9px 20px; font-size: 15px; line-height: 24px; }
@@ -1112,8 +1122,6 @@ input:focus-visible, select:focus-visible, textarea:focus-visible {
 .standards-row div { transition: border-color .25s ease, background .25s ease, transform .25s ease; }
 .standards-row div:hover { border-color: var(--primary); background: var(--canvas); transform: translateY(-2px); }
 
-.contact-intro > a { transition: border-color .25s ease, color .25s ease; }
-.contact-intro > a:hover { color: var(--primary); border-color: var(--primary); }
 .brochure-link { transition: background .25s ease, border-color .25s ease, color .25s ease; }
 
 .system-image img, .lifecycle-visual img, .verify-visual img, .environment-visual img { transition: transform .7s cubic-bezier(.22, .61, .36, 1); }
@@ -1184,8 +1192,6 @@ input:focus-visible, select:focus-visible, textarea:focus-visible {
   .ecosystem-grid { grid-template-columns: repeat(2, 1fr); }
   .cutaway-groups { grid-template-columns: repeat(2, 1fr); gap: 20px 26px; }
   .scope-list tbody th, .scope-list tbody td { padding-right: 24px; }
-  .contact-section { grid-template-columns: 1fr; }
-  .contact-intro { position: static; }
 }
 
 /* The band gets shorter with the viewport, and 90/100 of padding on a phone
@@ -1219,11 +1225,20 @@ input:focus-visible, select:focus-visible, textarea:focus-visible {
   .metrics div:last-child { border-bottom: 0; }
   .proof-strip { grid-template-columns: 1fr 1fr; padding: 0 18px; }
   .proof-strip span { padding: 17px 7px; font-size: 13px; }
-  .why-section, .threat-section, .applications-section, .verify-section, .scenario-section, .faq-section, .contact-section,
+  .why-section, .threat-section, .applications-section, .verify-section, .scenario-section, .faq-section,
   .ecosystem-section, .attenuation-section, .scope-section, .cutaway-section, .company-section,
   .belief-section, .environment-section { padding: 85px 18px; }
-  .contact-page .contact-section { padding-top: 24px; }
-  .interest-options { grid-template-columns: 1fr; }
+  .contact-page .page-head { padding: 44px 18px 48px; }
+  .enquiry-section, .send-section, .offices-section { padding: 60px 18px 66px; grid-template-columns: 1fr; }
+  .enquiry-aside { position: static; }
+  .send-grid { grid-template-columns: 1fr; }
+  .send-grid article { margin: 0; padding: 20px 0 22px; border-right: 0; border-bottom: 1px solid var(--line); }
+  .send-grid h3 { margin-top: 22px; }
+  .offices-list li { grid-template-columns: 1fr; gap: 8px; }
+  .offices-list li > div { justify-items: start; text-align: left; }
+  .office-reach { justify-content: flex-start; }
+  .contact-closing { padding: 0 18px 66px; }
+  .contact-links li > span, .contact-direct p { max-width: none; }
   .contact-links li > span { max-width: none; }
   .application-group { padding: 36px 0 40px; }
   .sector-grid, .focus-block ul, .accessory-grid, .environment-lists section:first-child ul, .verify-stats { grid-template-columns: 1fr; }
@@ -1241,7 +1256,7 @@ input:focus-visible, select:focus-visible, textarea:focus-visible {
   .cutaway-pin { width: 21px; height: 21px; font-size: 10px; border-width: 1.5px; }
   .cutaway-groups { grid-template-columns: 1fr; }
   .cutaway-caption { padding: 14px 16px; }
-  .section-heading h2, .system-content h2, .verify-content h2, .lifecycle-content h2, .faq-inner h2, .contact-intro h1 { font-size: 32px; }
+  .section-heading h2, .system-content h2, .verify-content h2, .lifecycle-content h2, .faq-inner h2 { font-size: 32px; }
   .section-heading { margin-bottom: 45px; }
   .threat-grid { grid-template-columns: 1fr; }
   .threat-grid article { border-right: 0; border-bottom: 1px solid rgba(255, 255, 255, .15); margin-right: 0; padding-right: 0; min-height: auto; }

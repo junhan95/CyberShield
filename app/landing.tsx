@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { BrandLockup } from "./brand";
+import { SiteHeader } from "./site-header";
 import { CutawayMap } from "./cutaway-map";
 import { StructuredData } from "./structured-data";
 import { copy } from "./copy";
@@ -140,32 +141,12 @@ const heroSlides = [
 const navSectionIds = ["why", "applications", "verification", "solution", "ecosystem", "process", "company"];
 
 export function Landing({ lang }: { lang: Lang }) {
-  const [menuOpen, setMenuOpen] = useState(false);
-  const [langOpen, setLangOpen] = useState(false);
   const metricRef = useRef<HTMLElement>(null);
-  const langRef = useRef<HTMLDivElement>(null);
   const t = copy[lang];
 
   useEffect(() => {
     document.documentElement.lang = lang;
   }, [lang]);
-
-  // Close the language dropdown on an outside click or Escape.
-  useEffect(() => {
-    if (!langOpen) return;
-    const onPointerDown = (event: MouseEvent) => {
-      if (!langRef.current?.contains(event.target as Node)) setLangOpen(false);
-    };
-    const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") setLangOpen(false);
-    };
-    document.addEventListener("mousedown", onPointerDown);
-    document.addEventListener("keydown", onKeyDown);
-    return () => {
-      document.removeEventListener("mousedown", onPointerDown);
-      document.removeEventListener("keydown", onKeyDown);
-    };
-  }, [langOpen]);
 
   // Reveal cards as they scroll into view; anything already on screen stays visible.
   // Cards start hidden, so every path here must end with them shown.
@@ -299,29 +280,6 @@ export function Landing({ lang }: { lang: Lang }) {
     };
   }, [lang]);
 
-  /** Both calls to action now lead to the contact page rather than to a
-   *  section further down; `request` preselects the enquiry it belongs to. */
-  const goContact = (type: "consultation" | "quote") => {
-    setMenuOpen(false);
-    window.location.href = `${contactPath(lang)}?request=${type}`;
-  };
-
-  const navLinks = (
-    <>
-      {/* Listed in the order the sections now appear, so the scroll-spy
-          highlight only ever moves forward as the reader goes down. */}
-      <a href="#why" onClick={() => setMenuOpen(false)}>{t.nav.threats}</a>
-      <a href="#applications" onClick={() => setMenuOpen(false)}>{t.nav.applications}</a>
-      <a href="#verification" onClick={() => setMenuOpen(false)}>{t.nav.verification}</a>
-      <a href="#solution" onClick={() => setMenuOpen(false)}>{t.nav.solution}</a>
-      <a href="#ecosystem" onClick={() => setMenuOpen(false)}>{t.nav.ecosystem}</a>
-      <a href="#process" onClick={() => setMenuOpen(false)}>{t.nav.process}</a>
-      <a href="#company" onClick={() => setMenuOpen(false)}>{t.nav.company}</a>
-      {/* A route, not an anchor: the enquiry form has a page of its own. */}
-      <a href={contactPath(lang)} onClick={() => setMenuOpen(false)}>{t.nav.contact}</a>
-    </>
-  );
-
   return (
     <main>
       <StructuredData
@@ -331,65 +289,7 @@ export function Landing({ lang }: { lang: Lang }) {
         description={t.heroBody}
       />
 
-      <header className="site-header">
-        <a className="brand" href="#top" aria-label="Frankonia CyberShield home">
-          <BrandLockup decorative onLight />
-        </a>
-        <nav className="nav-desktop" aria-label="Primary navigation">
-          {navLinks}
-        </nav>
-        <div className="header-actions">
-          <div className={langOpen ? "language-select open" : "language-select"} ref={langRef}>
-            <button
-              className="language"
-              aria-label={t.langLabel}
-              aria-haspopup="true"
-              aria-expanded={langOpen}
-              onClick={() => setLangOpen(!langOpen)}
-            >
-              {languages.find(([code]) => code === lang)?.[1]}
-              <svg viewBox="0 0 12 8" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="1.6">
-                <path d="M1 2 L6 6.5 L11 2" />
-              </svg>
-            </button>
-            {langOpen && (
-              <ul className="language-menu" aria-label={t.langLabel}>
-                {languages.map(([code, short, label, path]) => (
-                  <li key={code}>
-                    <a
-                      href={route(path)}
-                      hrefLang={code}
-                      lang={code}
-                      className={code === lang ? "current" : ""}
-                      aria-current={code === lang ? "true" : undefined}
-                    >
-                      <b>{short}</b>
-                      <span>{label}</span>
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            )}
-          </div>
-          <button className="button button-small" onClick={() => goContact("quote")}>{t.quote}</button>
-          <button
-            className={menuOpen ? "menu-toggle open" : "menu-toggle"}
-            aria-expanded={menuOpen}
-            aria-label={menuOpen ? t.menuCloseLabel : t.menuOpenLabel}
-            onClick={() => setMenuOpen(!menuOpen)}
-          >
-            <i /><i /><i />
-          </button>
-        </div>
-        <div className="scroll-progress" aria-hidden="true"><i /></div>
-      </header>
-
-      {menuOpen && (
-        <nav className="mobile-menu" aria-label="Mobile navigation">
-          {navLinks}
-          <button className="button" onClick={() => goContact("quote")}>{t.quote}</button>
-        </nav>
-      )}
+      <SiteHeader lang={lang} onLanding />
 
       <section className="hero" id="top">
         {/* The plant behind the headline. Decorative: the h1 states what
@@ -426,7 +326,7 @@ export function Landing({ lang }: { lang: Lang }) {
             <h1>{t.heroTitle}<br /><span>{t.heroAccent}</span></h1>
             <p className="hero-body">{t.heroBody}</p>
             <div className="hero-actions">
-              <button className="button" onClick={() => goContact("consultation")}>{t.consultation}<span>↗</span></button>
+              <a className="button" href={`${contactPath(lang)}?request=consultation`}>{t.consultation}<span>↗</span></a>
               <a className="text-link" href="#solution">{t.explore}<span>↓</span></a>
             </div>
           </div>
@@ -559,9 +459,9 @@ export function Landing({ lang }: { lang: Lang }) {
         })}
         {/* One call to action for the section, not one per sector. */}
         <div className="applications-cta">
-          <button className="button" onClick={() => goContact("consultation")}>
+          <a className="button" href={`${contactPath(lang)}?request=consultation`}>
             {t.consultation}<span>↗</span>
-          </button>
+          </a>
         </div>
       </section>
 

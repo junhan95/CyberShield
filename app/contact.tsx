@@ -2,168 +2,151 @@
 
 import { FormEvent, useEffect, useRef, useState } from "react";
 import { BrandLockup } from "./brand";
+import { SiteHeader } from "./site-header";
 import { copy } from "./copy";
-import { asset, contactPath, languages, route } from "./site-config";
+import { asset, languages, route } from "./site-config";
 import type { Lang } from "./site-config";
 
 type Inquiry = "consultation" | "quote";
-type SendState = "idle" | "sending" | "sent" | "error";
 
 /**
- * The enquiry form, on a page of its own rather than as the last band of the
- * landing page. It carries what the landing page used to hold — the two
- * request types, the brochure and the form — and adds what only a contact page
- * can: the sales address in plain sight and the two Frankonia sites this
- * product sits between.
+ * The enquiry page, built to the same shape as the contact page on
+ * frankonia-korea.com: a page head, the form, the three things worth putting
+ * in the first mail, the five group offices, and a closing line.
  *
- * The field set follows the head-office quotation form at
- * frankonia-solutions.com/contact/quotation-and-info: company and postal
- * address, country, name, phone, e-mail, industry, what the enquiry concerns,
- * and a free-text field. The product checkboxes are the CyberShield lines
- * rather than the chamber catalogue, and the head office's "are you a human?"
- * question is replaced by the honeypot and fill-time check this endpoint
- * already runs — neither of which asks the visitor to prove anything.
+ * Two things differ from that page, both deliberate.
+ *
+ * It carries the landing page's own navigation bar rather than a reduced
+ * header, so a reader who arrives here from a search result has the whole site
+ * in front of them.
+ *
+ * And it sends by mailto. The Korean site posts to a PHP endpoint; here the
+ * submit builds a message from the fields and hands it to the reader's own
+ * mail application, which is why the copy on this page never claims the
+ * enquiry has been sent — it has not, until they send it. `public/api/
+ * inquiry.php` is left in place and is no longer what this form uses.
  */
 export function ContactPage({ lang }: { lang: Lang }) {
   const t = copy[lang];
   const [inquiry, setInquiry] = useState<Inquiry>("consultation");
-  const [sendState, setSendState] = useState<SendState>("idle");
-  const [fallbackHref, setFallbackHref] = useState("");
-  // Bots submit instantly; the endpoint drops anything filled in faster than a
-  // person could plausibly type it. Stamped on mount rather than during render,
-  // which has to stay pure.
-  const formOpenedAt = useRef(0);
+  const [handedOff, setHandedOff] = useState(false);
+  /** The built mail, handed over by clicking a real link rather than by
+   *  assigning to location: browsers are markedly more willing to launch an
+   *  external protocol from a click they can attribute to the submit. */
+  const mailRef = useRef<HTMLAnchorElement>(null);
 
   useEffect(() => {
     document.documentElement.lang = lang;
-    formOpenedAt.current = Date.now();
   }, [lang]);
 
   // The landing page's calls to action arrive here with the request they meant.
-  // The query string is an external system read once at mount — the page is
-  // statically exported, so there is no request-time value to render from.
   useEffect(() => {
     const requested = new URLSearchParams(window.location.search).get("request");
     // eslint-disable-next-line react-hooks/set-state-in-effect
     if (requested === "quote") setInquiry("quote");
   }, []);
 
-  const industries = [
-    t.options.industryDatacenter,
-    t.options.industryGovernment,
-    t.options.industryEnterprise,
-    t.options.industryResidential,
-    t.options.industryOther,
-  ];
-  // The six product lines, named exactly as the ecosystem section names them.
-  const interests = t.ecosystemCards.map(([title]) => title);
-
-  /** The mailto this form used to be. Kept as the escape hatch for when the
-   *  endpoint is unreachable, so a visitor is never left holding an inquiry
-   *  with nowhere to put it. */
-  const mailtoHref = (data: FormData) => {
+  /** The enquiry as a plain-text mail, in the reader's own client. */
+  const submit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const data = new FormData(event.currentTarget);
+    const value = (key: string) => String(data.get(key) ?? "").trim();
     const subject =
       inquiry === "quote"
         ? "[CyberShield] Quote request"
         : "[CyberShield] Consultation request";
     const body = [
-      `Request: ${inquiry}`,
-      `Name: ${data.get("name")}`,
-      `Company: ${data.get("company")}`,
-      `Email: ${data.get("email")}`,
-      `Phone: ${data.get("phone")}`,
-      `Address: ${[data.get("street"), data.get("zip"), data.get("city")].filter(Boolean).join(", ")}`,
-      `Country / region: ${data.get("country")}`,
-      `Industry: ${data.get("industry")}`,
-      `Interest: ${data.getAll("interest").join(", ")}`,
-      `Project type: ${data.get("project")}`,
-      `Project stage: ${data.get("stage")}`,
+      `${t.labels.type}: ${inquiry === "quote" ? t.quote : t.consultation}`,
+      `${t.labels.name}: ${value("name")}`,
+      `${t.labels.company}: ${value("company")}`,
+      `${t.labels.email}: ${value("email")}`,
+      `${t.labels.country}: ${value("country")}`,
+      `${t.labels.project}: ${value("project")}`,
+      `${t.labels.stage}: ${value("stage")}`,
       "",
-      "Requirements:",
-      String(data.get("message") || ""),
-    ].join("\n");
-    return `mailto:${t.contactEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-  };
-
-  const submit = async (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    if (sendState === "sending") return;
-    const form = event.currentTarget;
-    const data = new FormData(form);
-    setFallbackHref(mailtoHref(data));
-    setSendState("sending");
-    try {
-      const response = await fetch(asset("/api/inquiry.php"), {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          request: inquiry,
-          lang,
-          name: data.get("name"),
-          company: data.get("company"),
-          email: data.get("email"),
-          phone: data.get("phone"),
-          street: data.get("street"),
-          zip: data.get("zip"),
-          city: data.get("city"),
-          country: data.get("country"),
-          industry: data.get("industry"),
-          interest: data.getAll("interest"),
-          project: data.get("project"),
-          stage: data.get("stage"),
-          message: data.get("message"),
-          consent: data.get("consent") === "on",
-          website: data.get("website"),
-          elapsed: (Date.now() - formOpenedAt.current) / 1000,
-        }),
-      });
-      const result = response.ok ? await response.json().catch(() => null) : null;
-      if (!result?.ok) throw new Error("rejected");
-      form.reset();
-      setSendState("sent");
-    } catch {
-      setSendState("error");
-    }
+      `${t.labels.message}:`,
+      value("message"),
+    ].join("\r\n");
+    // encodeURIComponent, not URLSearchParams: the latter encodes spaces as
+    // "+", which mail clients render literally in the subject line.
+    const href =
+      `mailto:${t.contactEmail}` +
+      `?subject=${encodeURIComponent(subject)}` +
+      `&body=${encodeURIComponent(body)}`;
+    const link = mailRef.current;
+    if (!link) return;
+    link.href = href;
+    link.click();
+    setHandedOff(true);
   };
 
   return (
     <main className="contact-page">
-      <header className="site-header">
-        <a className="brand" href={route("/")} aria-label="Frankonia CyberShield home">
-          <BrandLockup decorative onLight />
-        </a>
-        <div className="header-actions">
-          {/* No dropdown here: three plain links are shorter than the control
-              that would hide them, and this page has no scroll-spy to keep. */}
-          <nav className="contact-langs" aria-label={t.langLabel}>
-            {languages.map(([code, short]) => (
-              <a
-                key={code}
-                href={contactPath(code)}
-                hrefLang={code}
-                lang={code}
-                className={code === lang ? "current" : ""}
-                aria-current={code === lang ? "true" : undefined}
-              >
-                {short}
-              </a>
-            ))}
-          </nav>
-          <a className="text-link legal-back" href={route("/")}>
-            {t.contactBack}<span>↗</span>
-          </a>
-        </div>
-      </header>
+      <SiteHeader lang={lang} />
 
-      <section className="contact-section" id="contact">
-        <div className="contact-intro">
+      <div className="page-head">
+        <div>
           <p className="eyebrow">{t.contactEyebrow}</p>
           <h1>{t.contactTitle}</h1>
-          <p className="contact-lead">{t.contactBody}</p>
+          <p className="page-head-lead">{t.contactBody}</p>
+        </div>
+      </div>
 
-          {/* On the landing page the address was deliberately withheld so the
-              form stayed the only route in. A contact page is the one place it
-              belongs, so here it is stated. */}
+      <section className="enquiry-section" id="enquiry" aria-labelledby="enquiry-title">
+        <div className="section-heading light">
+          <p className="eyebrow">{t.enquiryEyebrow}</p>
+          <h2 id="enquiry-title">{t.enquiryTitle}</h2>
+          <p>{t.enquiryBody}</p>
+        </div>
+
+        <form onSubmit={submit}>
+          <fieldset className="request-toggle">
+            <legend>{t.labels.type}</legend>
+            <label className={inquiry === "consultation" ? "selected" : ""}>
+              <input type="radio" name="request" value="consultation" checked={inquiry === "consultation"} onChange={() => setInquiry("consultation")} />
+              {t.consultation}
+            </label>
+            <label className={inquiry === "quote" ? "selected" : ""}>
+              <input type="radio" name="request" value="quote" checked={inquiry === "quote"} onChange={() => setInquiry("quote")} />
+              {t.quote}
+            </label>
+          </fieldset>
+          <div className="form-grid">
+            <label>{t.labels.name}<input required name="name" autoComplete="name" /></label>
+            <label>{t.labels.company}<input required name="company" autoComplete="organization" /></label>
+            <label>{t.labels.email}<input required type="email" name="email" autoComplete="email" /></label>
+            <label>{t.labels.country}<input required name="country" autoComplete="country-name" /></label>
+            <label>{t.labels.project}
+              <select name="project" required defaultValue="">
+                <option value="" disabled>—</option>
+                <option>{t.options.newBuild}</option><option>{t.options.retrofit}</option><option>{t.options.confidential}</option>
+              </select>
+            </label>
+            <label>{t.labels.stage}
+              <select name="stage" required defaultValue="">
+                <option value="" disabled>—</option>
+                <option>{t.options.concept}</option><option>{t.options.planning}</option><option>{t.options.procurement}</option><option>{t.options.urgent}</option>
+              </select>
+            </label>
+            <label className="full">{t.labels.message}<textarea required name="message" rows={5} /></label>
+          </div>
+          <label className="consent"><input type="checkbox" name="consent" required /> <span>{t.labels.consent}</span></label>
+          <button className="button submit" type="submit">
+            {inquiry === "quote" ? t.labels.submitQuote : t.labels.submitConsultation}
+            <span>↗</span>
+          </button>
+          {/* Off-screen rather than hidden: a display:none link cannot be
+              clicked in every browser, and this one has to be. */}
+          <a ref={mailRef} className="visually-hidden" aria-hidden="true" tabIndex={-1} href="/">{t.labels.submitConsultation}</a>
+          <p className="form-status" role="status" aria-live="polite">
+            {handedOff && <span className="form-status-ok">{t.mailtoHandedOff}</span>}
+          </p>
+          <p className="email-note">{t.mailtoNote}</p>
+        </form>
+
+        <div className="enquiry-aside">
+          {/* The address in plain sight, for a reader whose browser cannot open
+              a mail client for them. */}
           <div className="contact-direct">
             <h2>{t.contactDirectTitle}</h2>
             <p>{t.contactDirectBody}</p>
@@ -171,11 +154,7 @@ export function ContactPage({ lang }: { lang: Lang }) {
           </div>
 
           <div className="brochure">
-            <a
-              className="brochure-link"
-              href={asset("/downloads/frankonia-cybershield-2026.pdf")}
-              download
-            >
+            <a className="brochure-link" href={asset("/downloads/frankonia-cybershield-2026.pdf")} download>
               <svg viewBox="0 0 20 20" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M10 2.5v10" />
                 <path d="M6 9l4 4 4-4" />
@@ -191,91 +170,57 @@ export function ContactPage({ lang }: { lang: Lang }) {
             <ul>
               {t.contactLinks.map(([name, detail, href]) => (
                 <li key={href}>
-                  <a href={href} target="_blank" rel="noreferrer">
-                    {name}<span aria-hidden="true">↗</span>
-                  </a>
+                  <a href={href} target="_blank" rel="noreferrer">{name}<span aria-hidden="true">↗</span></a>
                   <span>{detail}</span>
                 </li>
               ))}
             </ul>
           </div>
         </div>
+      </section>
 
-        <form onSubmit={submit} action={asset("/api/inquiry.php")} method="post">
-          <fieldset className="request-toggle">
-            <legend>{t.labels.type}</legend>
-            <label className={inquiry === "consultation" ? "selected" : ""}>
-              <input type="radio" name="request" value="consultation" checked={inquiry === "consultation"} onChange={() => setInquiry("consultation")} />
-              {t.consultation}
-            </label>
-            <label className={inquiry === "quote" ? "selected" : ""}>
-              <input type="radio" name="request" value="quote" checked={inquiry === "quote"} onChange={() => setInquiry("quote")} />
-              {t.quote}
-            </label>
-          </fieldset>
-          <div className="form-grid">
-            <label>{t.labels.company}<input required name="company" autoComplete="organization" /></label>
-            <label>{t.labels.name}<input required name="name" autoComplete="name" /></label>
-            <label>{t.labels.email}<input required type="email" name="email" autoComplete="email" /></label>
-            <label>{t.labels.phone}<input required type="tel" name="phone" autoComplete="tel" /></label>
-            {/* Optional, exactly as on the head-office form: an enquiry is not
-                worth losing over a postal address. */}
-            <label className="full">{t.labels.street}<input name="street" autoComplete="street-address" /></label>
-            <label>{t.labels.zip}<input name="zip" autoComplete="postal-code" /></label>
-            <label>{t.labels.city}<input name="city" autoComplete="address-level2" /></label>
-            <label>{t.labels.country}<input required name="country" autoComplete="country-name" /></label>
-            <label>{t.labels.industry}
-              <select name="industry" required defaultValue="">
-                <option value="" disabled>—</option>
-                {industries.map((option) => <option key={option}>{option}</option>)}
-              </select>
-            </label>
-            <label>{t.labels.project}
-              <select name="project" required defaultValue="">
-                <option value="" disabled>—</option>
-                <option>{t.options.newBuild}</option><option>{t.options.retrofit}</option><option>{t.options.confidential}</option>
-              </select>
-            </label>
-            <label>{t.labels.stage}
-              <select name="stage" required defaultValue="">
-                <option value="" disabled>—</option>
-                <option>{t.options.concept}</option><option>{t.options.planning}</option><option>{t.options.procurement}</option><option>{t.options.urgent}</option>
-              </select>
-            </label>
-            <fieldset className="full interest-set">
-              <legend>{t.labels.interest}</legend>
-              <div className="interest-options">
-                {interests.map((option) => (
-                  <label key={option} className="check">
-                    <input type="checkbox" name="interest" value={option} /> <span>{option}</span>
-                  </label>
-                ))}
+      <section className="send-section" aria-labelledby="send-title">
+        <div className="section-heading light">
+          <p className="eyebrow">{t.sendEyebrow}</p>
+          <h2 id="send-title">{t.sendTitle}</h2>
+          <p>{t.sendBody}</p>
+        </div>
+        <div className="send-grid">
+          {t.sendItems.map(([title, body], index) => (
+            <article key={title}>
+              <span>0{index + 1}</span>
+              <h3>{title}</h3>
+              <p>{body}</p>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section className="offices-section" aria-labelledby="offices-title">
+        <div className="section-heading light">
+          <p className="eyebrow">{t.officesEyebrow}</p>
+          <h2 id="offices-title">{t.officesTitle}</h2>
+          <p>{t.officesBody}</p>
+        </div>
+        <ul className="offices-list">
+          {t.offices.map(([name, address, email, phone]) => (
+            <li key={name}>
+              <strong>{name}</strong>
+              <div>
+                <span className="office-address">{address}</span>
+                <span className="office-reach">
+                  <a href={`mailto:${email}`}>{email}</a>
+                  <i aria-hidden="true">·</i>
+                  <a href={`tel:${phone.replace(/[^+\d]/g, "")}`}>{phone}</a>
+                </span>
               </div>
-            </fieldset>
-            <label className="full">{t.labels.message}<textarea required name="message" rows={5} /></label>
-          </div>
-          <label className="consent"><input type="checkbox" name="consent" required /> <span>{t.labels.consent}</span></label>
-          {/* Honeypot. Moved off-screen rather than display:none, because
-              headless browsers routinely skip fields they cannot see. */}
-          <div className="honeypot" aria-hidden="true">
-            <label>{t.formHoneypot}<input type="text" name="website" tabIndex={-1} autoComplete="off" /></label>
-          </div>
-          <button className="button submit" type="submit" disabled={sendState === "sending" || sendState === "sent"}>
-            {sendState === "sending"
-              ? t.formSending
-              : inquiry === "quote" ? t.labels.submitQuote : t.labels.submitConsultation}
-            <span>↗</span>
-          </button>
-          <p className="form-status" role="status" aria-live="polite">
-            {sendState === "sent" && <span className="form-status-ok">{t.formSent}</span>}
-            {sendState === "error" && (
-              <span className="form-status-error">
-                {t.formError} <a href={fallbackHref}>{t.formErrorAction}</a>
-              </span>
-            )}
-          </p>
-          <p className="email-note">{t.emailNote}</p>
-        </form>
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      <section className="contact-closing">
+        <p>{t.contactClosing}</p>
       </section>
 
       <footer>

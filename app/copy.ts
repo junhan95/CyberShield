@@ -446,6 +446,34 @@ export const copy = {
     contactEmail: "sales-cybershield@frankoniagroup.com",
     brochureLabel: "Download the CyberShield brochure",
     brochureMeta: "PDF · 10.3 MB · English",
+    officesEyebrow: "OFFICES",
+    officesTitle: "Five offices",
+    officesBody:
+      "The head office, with design and project management, is in Heideck, Germany; the office nearest you takes the project. Whichever address you write to, it reaches the engineer who answers it.",
+    offices: [
+      ["Frankonia Korea EMC Solutions", "Address to follow", "Junhan.Park@frankoniagroup.com", "+82 10 9458-9328"],
+      ["Frankonia Germany EMC Solutions GmbH", "Industriestraße 16, 91180 Heideck, Germany", "sales@frankoniagroup.com", "+49 9177 98-500"],
+      ["Frankonia EMC Test-Systems GmbH", "Daimlerstr. 17, 91301 Forchheim, Germany", "sales@frankonia-emv.com", "+49 9191 73666-0"],
+      ["Jiashan Frankonia EMC Co., Ltd.", "No.55, Hongqiao Rd, Zone 4, Jiashan, Zhejiang 314100, China", "info@emc-frankonia.com", "+86 573 8473 1555"],
+      ["Frankonia India EMC Solutions Pvt. Ltd.", "18/1 Old 10/1 Lakshmanan Street, T. Nagar, Chennai 600017, India", "sales@frankoniagroup.com", "+91 44 2815 3370"],
+    ],
+    enquiryEyebrow: "ENQUIRY",
+    enquiryTitle: "Send it here",
+    enquiryBody:
+      "Fill this in and your own mail application opens with everything already written. Nothing leaves your computer until you press send, and the mail goes to the CyberShield sales desk.",
+    sendEyebrow: "WHAT TO SEND",
+    sendTitle: "Three things that make the first reply a useful one",
+    sendBody:
+      "Send what you have — the list below is what we would ask for anyway, and putting it in the first mail removes a round trip.",
+    sendItems: [
+      ["What has to be protected", "Compute halls, network entrance rooms, key management, command rooms or a private safe room. What sits inside the boundary sets how much of it there has to be."],
+      ["The attenuation and the standard", "The shielding effectiveness you have to reach and the standard it is measured to — EN 50147-1, IEEE 299, MIL-STD-188-125 or a customer specification. That sets the construction."],
+      ["The room and the schedule", "Internal dimensions and clear height of the space you have, the access route, the floor loading, and when it has to be finished — particularly if it goes inside a building that stays in use. Nothing is welded, so the room goes up without hot work."],
+    ],
+    contactClosing: "Tell us what has to stay inside the boundary; the rest we narrow down together.",
+    mailtoHandedOff: "Your mail application should now be open with the enquiry written out. If nothing happened, write to the address below instead.",
+    mailtoNote:
+      "This opens your own mail application with the details filled in. Nothing is sent until you send it, and nothing is stored on this website.",
     contactBack: "Back to CyberShield",
     contactDirectTitle: "Or write to us directly",
     contactDirectBody:
@@ -939,6 +967,34 @@ export const copy = {
     contactEmail: "sales-cybershield@frankoniagroup.com",
     brochureLabel: "CyberShield Broschüre herunterladen",
     brochureMeta: "PDF · 10,3 MB · Englisch",
+    officesEyebrow: "STANDORTE",
+    officesTitle: "Fünf Standorte",
+    officesBody:
+      "Der Hauptsitz mit Konstruktion und Projektmanagement liegt in Heideck; das Projekt übernimmt der Standort in Ihrer Nähe. An welche Adresse Sie auch schreiben — sie erreicht den Ingenieur, der antwortet.",
+    offices: [
+      ["Frankonia Korea EMC Solutions", "Adresse folgt", "Junhan.Park@frankoniagroup.com", "+82 10 9458-9328"],
+      ["Frankonia Germany EMC Solutions GmbH", "Industriestraße 16, 91180 Heideck, Deutschland", "sales@frankoniagroup.com", "+49 9177 98-500"],
+      ["Frankonia EMC Test-Systems GmbH", "Daimlerstr. 17, 91301 Forchheim, Deutschland", "sales@frankonia-emv.com", "+49 9191 73666-0"],
+      ["Jiashan Frankonia EMC Co., Ltd.", "No.55, Hongqiao Rd, Zone 4, Jiashan, Zhejiang 314100, China", "info@emc-frankonia.com", "+86 573 8473 1555"],
+      ["Frankonia India EMC Solutions Pvt. Ltd.", "18/1 Old 10/1 Lakshmanan Street, T. Nagar, Chennai 600017, Indien", "sales@frankoniagroup.com", "+91 44 2815 3370"],
+    ],
+    enquiryEyebrow: "ANFRAGE",
+    enquiryTitle: "Hier entlang",
+    enquiryBody:
+      "Füllen Sie das Formular aus — Ihr eigenes E-Mail-Programm öffnet sich mit fertig eingetragenem Text. Bis Sie auf Senden drücken, verlässt nichts Ihren Rechner; die Mail geht an den CyberShield-Vertrieb.",
+    sendEyebrow: "WAS SIE MITSCHICKEN SOLLTEN",
+    sendTitle: "Drei Angaben, die die erste Antwort brauchbar machen",
+    sendBody:
+      "Schicken Sie, was vorliegt — die Punkte unten würden wir ohnehin erfragen, und in der ersten Mail sparen sie eine Runde.",
+    sendItems: [
+      ["Was geschützt werden muss", "Rechenräume, Netzeinführungen, Schlüsselverwaltung, Leitstände oder ein privater Schutzraum. Was innerhalb der Grenze liegt, bestimmt, wie groß sie ausfällt."],
+      ["Schirmdämpfung und Norm", "Die geforderte Schirmdämpfung und die Norm, nach der gemessen wird — EN 50147-1, IEEE 299, MIL-STD-188-125 oder eine Kundenspezifikation. Daraus folgt die Konstruktion."],
+      ["Raum und Termin", "Innenmaße und lichte Höhe des vorhandenen Raums, der Anlieferweg, die Bodenlast und der Fertigstellungstermin — besonders, wenn der Raum in ein Gebäude im laufenden Betrieb kommt. Es wird nichts geschweißt, der Raum entsteht ohne Heißarbeiten."],
+    ],
+    contactClosing: "Sagen Sie uns, was innerhalb der Schirmgrenze bleiben muss — den Rest grenzen wir gemeinsam ein.",
+    mailtoHandedOff: "Ihr E-Mail-Programm sollte sich jetzt mit der fertigen Anfrage geöffnet haben. Falls nichts passiert ist, schreiben Sie bitte an die Adresse unten.",
+    mailtoNote:
+      "Dies öffnet Ihr eigenes E-Mail-Programm mit den eingetragenen Angaben. Gesendet wird erst, wenn Sie senden; auf dieser Website wird nichts gespeichert.",
     contactBack: "Zurück zu CyberShield",
     contactDirectTitle: "Oder schreiben Sie uns direkt",
     contactDirectBody:
@@ -1432,6 +1488,34 @@ export const copy = {
     contactEmail: "sales-cybershield@frankoniagroup.com",
     brochureLabel: "CyberShield 브로슈어 내려받기",
     brochureMeta: "PDF · 10.3 MB · 영문",
+    officesEyebrow: "글로벌 거점",
+    officesTitle: "다섯 개 거점",
+    officesBody:
+      "설계와 프로젝트 관리를 담당하는 본사는 독일 하이데크에 있으며, 프로젝트는 가장 가까운 거점이 맡습니다. 어느 주소로 보내시든 답변할 엔지니어에게 전달됩니다.",
+    offices: [
+      ["Frankonia Korea EMC Solutions", "주소 추후 안내", "Junhan.Park@frankoniagroup.com", "+82 10 9458-9328"],
+      ["Frankonia Germany EMC Solutions GmbH", "Industriestraße 16, 91180 Heideck, 독일", "sales@frankoniagroup.com", "+49 9177 98-500"],
+      ["Frankonia EMC Test-Systems GmbH", "Daimlerstr. 17, 91301 Forchheim, 독일", "sales@frankonia-emv.com", "+49 9191 73666-0"],
+      ["Jiashan Frankonia EMC Co., Ltd.", "No.55, Hongqiao Rd, Zone 4, 저장성 자산 314100, 중국", "info@emc-frankonia.com", "+86 573 8473 1555"],
+      ["Frankonia India EMC Solutions Pvt. Ltd.", "18/1 Old 10/1 Lakshmanan Street, T. Nagar, 첸나이 600017, 인도", "sales@frankoniagroup.com", "+91 44 2815 3370"],
+    ],
+    enquiryEyebrow: "문의",
+    enquiryTitle: "여기로 보내십시오",
+    enquiryBody:
+      "아래를 작성하시면 사용하시는 메일 프로그램이 내용이 모두 입력된 상태로 열립니다. 보내기를 누르시기 전에는 아무것도 전송되지 않으며, 메일은 CyberShield 영업 담당에게 전달됩니다.",
+    sendEyebrow: "무엇을 보내면 되는가",
+    sendTitle: "첫 회신을 쓸모 있게 만드는 세 가지",
+    sendBody:
+      "가지고 계신 만큼만 보내시면 됩니다. 아래 항목은 저희가 어차피 여쭤볼 내용이라, 첫 메일에 담기면 한 번의 왕복이 줄어듭니다.",
+    sendItems: [
+      ["무엇을 보호해야 하는가", "전산실, 회선 인입실, 키 관리 구역, 통제실, 또는 개인 안전 공간. 경계 안에 무엇이 들어가는지가 경계의 규모를 결정합니다."],
+      ["요구 차폐 성능과 규격", "달성해야 할 차폐 성능과 측정 기준 규격 — EN 50147-1, IEEE 299, MIL-STD-188-125 또는 고객 사양. 이것이 구조를 결정합니다."],
+      ["공간과 일정", "확보된 공간의 내부 치수와 유효 높이, 반입 동선, 바닥 하중, 그리고 완공 시점 — 특히 운영 중인 건물 안에 들어가는 경우에 중요합니다. 용접을 하지 않으므로 화기 작업 없이 시공됩니다."],
+    ],
+    contactClosing: "경계 안에 무엇이 남아야 하는지 알려 주십시오. 나머지는 함께 좁혀 나가겠습니다.",
+    mailtoHandedOff: "메일 프로그램이 문의 내용이 작성된 상태로 열렸을 것입니다. 아무 일도 일어나지 않았다면 아래 주소로 직접 보내 주십시오.",
+    mailtoNote:
+      "사용 중인 메일 프로그램이 작성된 내용과 함께 열립니다. 직접 보내기를 누르시기 전에는 전송되지 않으며, 이 웹사이트에는 아무것도 저장되지 않습니다.",
     contactBack: "CyberShield로 돌아가기",
     contactDirectTitle: "메일로 직접 문의",
     contactDirectBody:

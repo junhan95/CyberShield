@@ -78,21 +78,18 @@ export default function Privacy() {
       <section>
         <h2>5. Contact form and inquiries</h2>
         <p>
-          When you submit the inquiry form, the details you entered — your name, company, e-mail
-          address, telephone number, postal address, country, industry, what the enquiry concerns,
-          project type, project stage and the requirements you describe — are
-          transmitted over an encrypted connection to this website&rsquo;s own server and forwarded
-          by e-mail to the Frankonia sales contact responsible for your region. Inquiries submitted
-          from the Korean version of the site go to Frankonia Korea EMC Solutions. The form sets no
-          cookies, and the submission is not passed to any third-party form or marketing service.
+          The inquiry form on the contact page does not send anything to this website. When you
+          submit it, the details you entered — your name, company, e-mail address, country, project
+          type, project stage and the requirements you describe — are assembled into a draft e-mail
+          and handed to the e-mail application on your own device, addressed to the CyberShield
+          sales contact. Nothing is transmitted until you send that e-mail yourself, and no copy of
+          it reaches a server belonging to this website.
         </p>
         <p>
-          Ticking the consent box is what permits us to use these details to answer you. To limit
-          automated abuse, the server briefly keeps a one-way hash of the e-mail address used, so
-          that the same address cannot submit the form more than five times an hour; the hash is not
-          reversible, is not linked to any other data, and expires within the hour. Your IP address
-          is not stored with the inquiry. If the submission cannot be delivered, the page offers to
-          open your own e-mail application instead, in which case nothing reaches our server.
+          Because the form does not transmit anything, it stores no data, sets no cookies, keeps no
+          record of the submission and is not connected to any third-party form or marketing
+          service. Your IP address is not processed in connection with it. Ticking the consent box
+          records, in the draft, that you agree we may use the details to answer you.
         </p>
         <p>
           Once you send us an e-mail, we process the data it contains — typically your name, company,
