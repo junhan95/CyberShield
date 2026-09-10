@@ -883,18 +883,18 @@ h1 span { color: var(--primary-deep); }
 /* The card kept its white fill, and on the soft band that is a 1.07:1 step —
    the form's edge disappeared with the red around it. The hairline is what
    puts it back. */
-form { padding: 40px; background: var(--canvas); color: var(--ink); border: 1px solid var(--line); border-radius: var(--radius); }
-fieldset { border: 0; padding: 0; margin: 0 0 32px; }
+form { padding: 30px; background: var(--canvas); color: var(--ink); border: 1px solid var(--line); border-radius: var(--radius); }
+fieldset { border: 0; padding: 0; margin: 0 0 24px; }
 legend { margin-bottom: 12px; color: var(--body-text); font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: .5px; }
 .request-toggle { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
 .request-toggle legend { grid-column: 1 / -1; }
-.request-toggle label { display: flex; align-items: center; justify-content: center; min-height: 52px; padding: 12px 16px; border: 1px solid var(--mute); border-radius: var(--pill); font-size: 15px; font-weight: 700; cursor: pointer; transition: border-color .2s, color .2s; }
+.request-toggle label { display: flex; align-items: center; justify-content: center; min-height: 46px; padding: 10px 16px; border: 1px solid var(--mute); border-radius: var(--pill); font-size: 15px; font-weight: 700; cursor: pointer; transition: border-color .2s, color .2s; }
 .request-toggle label.selected { border-color: var(--primary); background: #fdf0f0; color: var(--primary); }
 .request-toggle input { margin-right: 10px; accent-color: var(--primary); }
-.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px 18px; }
+.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px 16px; }
 .form-grid label { color: var(--ink); font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: .5px; }
 .form-grid input, .form-grid select, .form-grid textarea {
-  width: 100%; margin-top: 8px; padding: 12px 14px;
+  width: 100%; margin-top: 6px; padding: 10px 13px;
   border: 1px solid var(--ink); border-radius: var(--radius);
   outline: none; background: var(--canvas); color: var(--ink);
   font-size: 16px; text-transform: none; letter-spacing: 0;
@@ -902,7 +902,7 @@ legend { margin-bottom: 12px; color: var(--body-text); font-size: 12px; font-wei
 .form-grid input:focus, .form-grid select:focus, .form-grid textarea:focus { border-color: var(--primary); }
 .form-grid .full { grid-column: 1 / -1; }
 .form-grid textarea { resize: vertical; }
-.consent { display: flex; gap: 10px; align-items: flex-start; margin: 26px 0; color: var(--body-text); font-size: 14px; line-height: 1.5; }
+.consent { display: flex; gap: 10px; align-items: flex-start; margin: 20px 0; color: var(--body-text); font-size: 14px; line-height: 1.5; }
 .consent input { margin-top: 3px; accent-color: var(--primary); }
 .submit { width: 100%; }
 .email-note { margin: 14px 0 0; color: var(--body-text); font-size: 13px; line-height: 1.5; text-align: center; }
@@ -933,14 +933,14 @@ legend { margin-bottom: 12px; color: var(--body-text); font-size: 12px; font-wei
    brochure and outbound links beside it. */
 .enquiry-section {
   padding: 96px max(4vw, calc((100% - 1400px) / 2)) 104px;
-  display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, .75fr);
+  display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, .9fr);
   column-gap: 6vw; row-gap: 44px; align-items: start; background: var(--canvas);
 }
 .enquiry-section .section-heading { grid-column: 1 / -1; margin-bottom: 0; }
 .enquiry-section .section-heading p:last-child { max-width: 62ch; }
 .enquiry-aside { position: sticky; top: 108px; }
 
-.contact-direct h2, .contact-links h2 {
+.contact-direct h2 {
   margin-bottom: 10px; color: var(--ink); font-size: 13px; font-weight: 800;
   text-transform: uppercase; letter-spacing: .08em;
 }
@@ -963,13 +963,6 @@ legend { margin-bottom: 12px; color: var(--body-text); font-size: 12px; font-wei
 .brochure-link:hover { border-color: var(--primary); color: var(--primary); }
 .brochure-meta { margin-top: 12px; color: var(--body-dark); font-size: 13px; letter-spacing: .3px; }
 
-.contact-links { margin-top: 34px; padding-top: 26px; border-top: 1px solid var(--line); }
-.contact-links ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 18px; }
-.contact-links li { display: grid; gap: 4px; }
-.contact-links li > a { color: var(--ink); font-size: 16px; font-weight: 700; }
-.contact-links li > a span { margin-left: 6px; color: var(--primary); }
-.contact-links li > a:hover { color: var(--primary); }
-.contact-links li > span { max-width: 42ch; color: var(--body-dark); font-size: 14px; line-height: 1.55; }
 
 /* What to send: three numbered columns on the soft band, the same figure
    treatment the landing page uses for its numbered lists. */
@@ -1238,8 +1231,7 @@ input:focus-visible, select:focus-visible, textarea:focus-visible {
   .offices-list li > div { justify-items: start; text-align: left; }
   .office-reach { justify-content: flex-start; }
   .contact-closing { padding: 0 18px 66px; }
-  .contact-links li > span, .contact-direct p { max-width: none; }
-  .contact-links li > span { max-width: none; }
+  .contact-direct p { max-width: none; }
   .application-group { padding: 36px 0 40px; }
   .sector-grid, .focus-block ul, .accessory-grid, .environment-lists section:first-child ul, .verify-stats { grid-template-columns: 1fr; }
   .sector-body { padding: 22px 20px 26px; }

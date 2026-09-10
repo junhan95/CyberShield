@@ -478,11 +478,6 @@ export const copy = {
     contactDirectTitle: "Or write to us directly",
     contactDirectBody:
       "If you would rather put the details together yourself, this address reaches the same team.",
-    contactLinksTitle: "Frankonia online",
-    contactLinks: [
-      ["Frankonia Group", "The group behind CyberShield — chambers, test systems and shielding since 1987.", "https://frankonia-solutions.com/"],
-      ["Frankonia Korea", "EMC chambers, test systems and CyberShield for the Korean market.", "https://www.frankonia-korea.com/"],
-    ],
     labels: {
       type: "Request type",
       name: "Name",
@@ -999,11 +994,6 @@ export const copy = {
     contactDirectTitle: "Oder schreiben Sie uns direkt",
     contactDirectBody:
       "Wenn Sie die Angaben lieber selbst zusammenstellen: Diese Adresse erreicht dasselbe Team.",
-    contactLinksTitle: "Frankonia online",
-    contactLinks: [
-      ["Frankonia Group", "Die Gruppe hinter CyberShield – Kammern, Prüfsysteme und Schirmung seit 1987.", "https://frankonia-solutions.com/"],
-      ["Frankonia Korea", "EMV-Kammern, Prüfsysteme und CyberShield für den koreanischen Markt.", "https://www.frankonia-korea.com/"],
-    ],
     labels: {
       type: "Art der Anfrage",
       name: "Name",
@@ -1520,11 +1510,6 @@ export const copy = {
     contactDirectTitle: "메일로 직접 문의",
     contactDirectBody:
       "직접 내용을 정리해 보내시려면 아래 주소로 연락 주십시오. 같은 담당 팀에 전달됩니다.",
-    contactLinksTitle: "Frankonia 온라인",
-    contactLinks: [
-      ["Frankonia Group", "CyberShield를 만드는 그룹 — 1987년부터 챔버와 시험 시스템, 차폐 솔루션을 공급해 왔습니다.", "https://frankonia-solutions.com/"],
-      ["Frankonia Korea", "한국 시장을 위한 EMC 챔버, 시험 시스템 및 CyberShield.", "https://www.frankonia-korea.com/"],
-    ],
     labels: {
       type: "문의 유형",
       name: "이름",

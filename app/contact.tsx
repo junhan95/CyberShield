@@ -128,7 +128,7 @@ export function ContactPage({ lang }: { lang: Lang }) {
                 <option>{t.options.concept}</option><option>{t.options.planning}</option><option>{t.options.procurement}</option><option>{t.options.urgent}</option>
               </select>
             </label>
-            <label className="full">{t.labels.message}<textarea required name="message" rows={5} /></label>
+            <label className="full">{t.labels.message}<textarea required name="message" rows={4} /></label>
           </div>
           <label className="consent"><input type="checkbox" name="consent" required /> <span>{t.labels.consent}</span></label>
           <button className="button submit" type="submit">
@@ -137,7 +137,7 @@ export function ContactPage({ lang }: { lang: Lang }) {
           </button>
           {/* Off-screen rather than hidden: a display:none link cannot be
               clicked in every browser, and this one has to be. */}
-          <a ref={mailRef} className="visually-hidden" aria-hidden="true" tabIndex={-1} href="/">{t.labels.submitConsultation}</a>
+          <a ref={mailRef} className="visually-hidden" aria-hidden="true" tabIndex={-1} href={`mailto:${t.contactEmail}`}>{t.labels.submitConsultation}</a>
           <p className="form-status" role="status" aria-live="polite">
             {handedOff && <span className="form-status-ok">{t.mailtoHandedOff}</span>}
           </p>
@@ -165,17 +165,6 @@ export function ContactPage({ lang }: { lang: Lang }) {
             <p className="brochure-meta">{t.brochureMeta}</p>
           </div>
 
-          <div className="contact-links">
-            <h2>{t.contactLinksTitle}</h2>
-            <ul>
-              {t.contactLinks.map(([name, detail, href]) => (
-                <li key={href}>
-                  <a href={href} target="_blank" rel="noreferrer">{name}<span aria-hidden="true">↗</span></a>
-                  <span>{detail}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
         </div>
       </section>
 
